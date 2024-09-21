@@ -189,6 +189,25 @@ namespace CUE4Parse.UE4.Readers
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Dictionary<TKey, TValue> ReadMap<TKey, TValue>(int length, Func<TKey> keyGetter, Func<TValue> valueGetter) where TKey : notnull
+        {
+            var res = new Dictionary<TKey, TValue>(length);
+            for (var i = 0; i < length; i++)
+            {
+                res[keyGetter()] = valueGetter();
+            }
+
+            return res;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Dictionary<TKey, TValue> ReadMap<TKey, TValue>(Func<TKey> keyGetter, Func<TValue> valueGetter) where TKey : notnull
+        {
+            var length = Read<int>();
+            return ReadMap(length, keyGetter, valueGetter);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Dictionary<TKey, TValue> ReadMap<TKey, TValue>(Func<(TKey, TValue)> getter) where TKey : notnull
         {
             var length = Read<int>();
@@ -502,6 +521,10 @@ namespace CUE4Parse.UE4.Readers
 
         public void CheckReadSize(int length)
         {
+            if (length < 0)
+            {
+                throw new ParserException(this, "Read size is smaller than zero.");
+            }
             if (Position + length > Length)
             {
                 throw new ParserException(this, "Read size is bigger than remaining archive length.");
