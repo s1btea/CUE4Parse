@@ -372,6 +372,22 @@ public class UObject : IPropertyHolder
 
     public T GetByIndex<T>(int index) => PropertyUtil.GetByIndex<T>(this, index);
 
+    public T GetOrDefaultFromDataList<T>(string name, T defaultValue = default, StringComparison comparisonType = StringComparison.Ordinal)
+        {
+            if (!TryGetValue(out FInstancedStruct[] dataList, "DataList"))
+            {
+                return defaultValue;
+            }
+            foreach (var item in dataList)
+            {
+                if (item.NonConstStruct?.Properties.Exists(p => p.Name.Text == name) == true)
+                {
+                    return PropertyUtil.GetOrDefault(item.NonConstStruct, name, defaultValue, comparisonType);
+                }
+            }
+            return defaultValue;
+        }
+
     public bool TryGetValue<T>(out T obj, params string[] names)
     {
         foreach (string name in names)
