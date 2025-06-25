@@ -20,7 +20,7 @@ namespace CUE4Parse.UE4.Objects.Engine.Animation
         public override void Deserialize(FAssetArchive Ar, long validPos)
         {
             base.Deserialize(Ar, validPos);
-            
+
             PoseContainer = GetOrDefault<FPoseDataContainer>(nameof(PoseContainer));
             bAdditivePose = GetOrDefault<bool>(nameof(bAdditivePose));
             BasePoseIndex = GetOrDefault<int>(nameof(BasePoseIndex));
@@ -92,7 +92,7 @@ namespace CUE4Parse.UE4.Objects.Engine.Animation
             {
                 return PoseNames_DEPRECATED.Select(x => x.DisplayName.Text);
             }
-            
+
             if (PoseFNames is not null)
             {
                 return PoseFNames.Select(x => x.Text);

@@ -27,34 +27,34 @@ public class FCustomVersionContainer
         switch (format)
         {
             case ECustomVersionSerializationFormat.Enums:
-            {
-                var oldTags = Ar.ReadArray<FEnumCustomVersion_DEPRECATED>();
-
-                Versions = new FCustomVersion[oldTags.Length];
-                for (var i = 0; i < Versions.Length; ++i)
                 {
-                    Versions[i] = oldTags[i].ToCustomVersion();
-                }
+                    var oldTags = Ar.ReadArray<FEnumCustomVersion_DEPRECATED>();
 
-                break;
-            }
+                    Versions = new FCustomVersion[oldTags.Length];
+                    for (var i = 0; i < Versions.Length; ++i)
+                    {
+                        Versions[i] = oldTags[i].ToCustomVersion();
+                    }
+
+                    break;
+                }
             case ECustomVersionSerializationFormat.Guids:
-            {
-                var versionArray = Ar.ReadArray(() => new FGuidCustomVersion_DEPRECATED(Ar));
-
-                Versions = new FCustomVersion[versionArray.Length];
-                for (var i = 0; i < Versions.Length; ++i)
                 {
-                    Versions[i] = versionArray[i].ToCustomVersion();
-                }
+                    var versionArray = Ar.ReadArray(() => new FGuidCustomVersion_DEPRECATED(Ar));
 
-                break;
-            }
+                    Versions = new FCustomVersion[versionArray.Length];
+                    for (var i = 0; i < Versions.Length; ++i)
+                    {
+                        Versions[i] = versionArray[i].ToCustomVersion();
+                    }
+
+                    break;
+                }
             case ECustomVersionSerializationFormat.Optimized:
-            {
-                Versions = Ar.ReadArray<FCustomVersion>();
-                break;
-            }
+                {
+                    Versions = Ar.ReadArray<FCustomVersion>();
+                    break;
+                }
         }
     }
 

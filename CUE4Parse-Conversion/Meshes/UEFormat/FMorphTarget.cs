@@ -10,7 +10,7 @@ public readonly struct FMorphTarget : ISerializable
 {
     private readonly string MorphName;
     private readonly List<FMorphData> MorphData = [];
-    
+
     public FMorphTarget(string morphName, FMorphTargetLODModel morphLod)
     {
         MorphName = morphName;
@@ -19,7 +19,7 @@ public readonly struct FMorphTarget : ISerializable
             MorphData.Add(new FMorphData(delta.PositionDelta, delta.TangentZDelta, delta.SourceIdx));
         }
     }
-    
+
     public void Serialize(FArchiveWriter Ar)
     {
         Ar.WriteFString(MorphName);
@@ -37,13 +37,13 @@ public readonly struct FMorphData : ISerializable
     {
         PositionDelta = positionDelta;
         PositionDelta.Y = -PositionDelta.Y;
-        
+
         TangentZDelta = tangentZDelta;
         TangentZDelta.Y = -TangentZDelta.Y;
-        
+
         VertexIndex = vertexIndex;
     }
-    
+
     public void Serialize(FArchiveWriter Ar)
     {
         PositionDelta.Serialize(Ar);

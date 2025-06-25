@@ -81,7 +81,7 @@ namespace CUE4Parse.GameTypes.FN.Assets.Exports
             Version = version;
         }
 
-        public override object Clone() => new FLevelSaveRecordArchive((FArchive) InnerArchive.Clone(), Version);
+        public override object Clone() => new FLevelSaveRecordArchive((FArchive)InnerArchive.Clone(), Version);
     }
 
     [StructFallback]
@@ -131,7 +131,7 @@ namespace CUE4Parse.GameTypes.FN.Assets.Exports
 
             var crc = new CRC32();
             crc.SlurpBlock(ActorData, 0, ActorData.Length);
-            var hash = (uint) crc.Crc32Result;
+            var hash = (uint)crc.Crc32Result;
 
             if (Ar.Version < ELevelSaveRecordVersion.AddingDataHash)
             {
@@ -212,7 +212,7 @@ namespace CUE4Parse.GameTypes.FN.Assets.Exports
 
             var crc = new CRC32();
             crc.SlurpBlock(ComponentData, 0, ComponentData.Length);
-            var hash = (uint) crc.Crc32Result;
+            var hash = (uint)crc.Crc32Result;
 
             if (Ar.Version < ELevelSaveRecordVersion.AddingDataHash)
             {
@@ -370,7 +370,7 @@ namespace CUE4Parse.GameTypes.FN.Assets.Exports
                 {
                     var templateRecord = kv.Value?.GetValue<FActorTemplateRecord>();
                     if (templateRecord is null) continue;
-                    
+
                     var templateIndex = kv.Key.GetValue<int>();
                     TemplateRecords[templateIndex] = templateRecord;
                     ActorData.Add(templateRecord.ReadActorData(Owner, SaveVersion));
@@ -387,7 +387,7 @@ namespace CUE4Parse.GameTypes.FN.Assets.Exports
             }
 
             writer.WritePropertyName("SaveVersion");
-            writer.WriteValue((short) SaveVersion);
+            writer.WriteValue((short)SaveVersion);
 
             writer.WritePropertyName("bCompressed");
             writer.WriteValue(bCompressed);
@@ -506,7 +506,7 @@ namespace CUE4Parse.GameTypes.FN.Assets.Exports
 
             if (SaveVersion > ELevelSaveRecordVersion.LatestVersion)
             {
-                Log.Warning("Unsupported level save record version " + (short) SaveVersion);
+                Log.Warning("Unsupported level save record version " + (short)SaveVersion);
             }
 
             bCompressed = Ar.ReadBoolean();

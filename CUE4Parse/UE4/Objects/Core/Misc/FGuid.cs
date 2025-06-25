@@ -10,13 +10,13 @@ namespace CUE4Parse.UE4.Objects.Core.Misc
 {
     public enum EGuidFormats
     {
-		Digits, // "00000000000000000000000000000000"
-		DigitsWithHyphens, // 00000000-0000-0000-0000-000000000000
-		DigitsWithHyphensInBraces, // {00000000-0000-0000-0000-000000000000}
-		DigitsWithHyphensInParentheses, // (00000000-0000-0000-0000-000000000000)
-		HexValuesInBraces, // {0x00000000,0x0000,0x0000,{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}
-		UniqueObjectGuid, // 00000000-00000000-00000000-00000000
-		Short, // AQsMCQ0PAAUKCgQEBAgADQ
+        Digits, // "00000000000000000000000000000000"
+        DigitsWithHyphens, // 00000000-0000-0000-0000-000000000000
+        DigitsWithHyphensInBraces, // {00000000-0000-0000-0000-000000000000}
+        DigitsWithHyphensInParentheses, // (00000000-0000-0000-0000-000000000000)
+        HexValuesInBraces, // {0x00000000,0x0000,0x0000,{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}
+        UniqueObjectGuid, // 00000000-00000000-00000000-00000000
+        Short, // AQsMCQ0PAAUKCgQEBAgADQ
         Base36Encoded, // 1DPF6ARFCM4XH5RMWPU8TGR0J
     };
 
@@ -58,13 +58,17 @@ namespace CUE4Parse.UE4.Objects.Core.Misc
         {
             switch (guidFormat)
             {
-                case EGuidFormats.DigitsWithHyphens: return
+                case EGuidFormats.DigitsWithHyphens:
+                    return
                     $"{A:X8}-{B >> 16:X4}-{B & 0xFFFF:X4}-{C >> 16:X4}-{C & 0xFFFF:X4}{D:X8}";
-                case EGuidFormats.DigitsWithHyphensInBraces: return
+                case EGuidFormats.DigitsWithHyphensInBraces:
+                    return
                     $"{{{A:X8}-{B >> 16:X4}-{B & 0xFFFF:X4}-{C >> 16:X4}-{C & 0xFFFF:X4}{D:X8}}}";
-                case EGuidFormats.DigitsWithHyphensInParentheses: return
+                case EGuidFormats.DigitsWithHyphensInParentheses:
+                    return
                     $"({A:X8}-{B >> 16:X4}-{B & 0xFFFF:X4}-{C >> 16:X4}-{C & 0xFFFF:X4}{D:X8})";
-                case EGuidFormats.HexValuesInBraces: return
+                case EGuidFormats.HexValuesInBraces:
+                    return
                     $"{{0x{A:X8},0x{B >> 16:X4},0x{B & 0xFFFF:X4},{{0x{C >> 24:X2},0x{(C >> 16) & 0xFF:X2},0x{(C >> 8) & 0xFF:X2},0x{C & 0XFF:X2},0x{D >> 24:X2},0x{(D >> 16) & 0XFF:X2},0x{(D >> 8) & 0XFF:X2},0x{D & 0XFF:X2}}}}}";
                 case EGuidFormats.UniqueObjectGuid: return $"{A:X8}-{B:X8}-{C:X8}-{D:X8}";
                 case EGuidFormats.Short:
@@ -85,9 +89,9 @@ namespace CUE4Parse.UE4.Objects.Core.Misc
                             'W', 'X', 'Y', 'Z'
                         };
 
-                        FUInt128 zero = new (0);
-                        FUInt128 value = new (A, B, C, D);
-                        StringBuilder builder = new (26);
+                        FUInt128 zero = new(0);
+                        FUInt128 value = new(A, B, C, D);
+                        StringBuilder builder = new(26);
                         while (value.IsGreater(zero))
                         {
                             value = value.Divide(36, out var remainder);

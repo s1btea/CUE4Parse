@@ -120,7 +120,7 @@ public class FVirtualTextureBuiltData
             TileOffsetInChunk = Ar.ReadArray<uint>();
         }
 
-        LayerTypes = Ar.ReadArray((int) NumLayers, () => (EPixelFormat) Enum.Parse(typeof(EPixelFormat), Ar.ReadFString()));
+        LayerTypes = Ar.ReadArray((int)NumLayers, () => (EPixelFormat)Enum.Parse(typeof(EPixelFormat), Ar.ReadFString()));
 
         if (Ar.Game >= EGame.GAME_UE5_0)
         {
@@ -147,7 +147,7 @@ public class FVirtualTextureBuiltData
     public int GetNumTileHeaders() => TileOffsetInChunk?.Length ?? 0;
 
     public int GetChunkIndex(int vLevel)
-        => ChunkIndexPerMip != null && vLevel < ChunkIndexPerMip.Length ? (int) ChunkIndexPerMip[vLevel] : -1;
+        => ChunkIndexPerMip != null && vLevel < ChunkIndexPerMip.Length ? (int)ChunkIndexPerMip[vLevel] : -1;
 
     public int GetChunkIndex_Legacy(uint tileIndex)
     {

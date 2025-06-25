@@ -43,7 +43,7 @@ namespace CUE4Parse_Conversion.Materials
             }
         }
 
-        private readonly object _texture = new ();
+        private readonly object _texture = new();
         public override bool TryWriteToDir(DirectoryInfo baseDirectory, out string label, out string savedFilePath)
         {
             label = string.Empty;
@@ -67,7 +67,7 @@ namespace CUE4Parse_Conversion.Materials
                         ETextureFormat.Dds => "dds",
                         _ => "png"
                     };
-                    
+
                     var texturePath = FixAndCreatePath(baseDirectory, t.Owner?.Name ?? t.Name, ext);
                     using var fs = new FileStream(texturePath, FileMode.Create, FileAccess.Write);
                     using var data = bitmap.Encode(Options.TextureFormat, 100);

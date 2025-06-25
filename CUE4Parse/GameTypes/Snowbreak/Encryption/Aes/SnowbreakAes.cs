@@ -23,7 +23,7 @@ public static class SnowbreakAes
         if (!_aesKeys.TryGetValue(reader, out var key))
         {
             key = ConvertSnowbreakAes(reader.Name, reader.AesKey);
-            lock(_aesKeys)
+            lock (_aesKeys)
             {
                 _aesKeys[reader] = key;
             }

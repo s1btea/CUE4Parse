@@ -33,8 +33,8 @@ namespace CUE4Parse.FileProvider
             if (!_workingDirectory.Exists)
                 throw new DirectoryNotFoundException("Given working directory must exist");
 
-            var availableFiles = new List<Dictionary<string, GameFile>> {IterateFiles(_workingDirectory, _searchOption)};
-            if (_extraDirectories is {Length: > 0})
+            var availableFiles = new List<Dictionary<string, GameFile>> { IterateFiles(_workingDirectory, _searchOption) };
+            if (_extraDirectories is { Length: > 0 })
             {
                 availableFiles.AddRange(_extraDirectories.Select(directory => IterateFiles(directory, _searchOption)));
             }

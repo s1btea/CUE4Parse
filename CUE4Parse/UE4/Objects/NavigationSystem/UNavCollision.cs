@@ -31,7 +31,7 @@ namespace CUE4Parse.UE4.Objects.NavigationSystem
 
             var _ = Ar.Read<FGuid>(); // Zeroed GUID, unused
             var bCooked = Ar.ReadBoolean();
-            
+
             if (bCooked)
                 CookedFormatData = new FFormatContainer(Ar);
 

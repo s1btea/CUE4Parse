@@ -24,17 +24,17 @@ namespace CUE4Parse.UE4.IO.Objects
     public enum EIoContainerFlags : byte
     {
         None,
-        Compressed	= (1 << 0),
-        Encrypted	= (1 << 1),
-        Signed		= (1 << 2),
-        Indexed		= (1 << 3),
-        OnDemand	= (1 << 4),
+        Compressed = (1 << 0),
+        Encrypted = (1 << 1),
+        Signed = (1 << 2),
+        Indexed = (1 << 3),
+        OnDemand = (1 << 4),
     }
 
     public class FIoStoreTocHeader
     {
         public const int SIZE = 144;
-        public static byte[] TOC_MAGIC = {0x2D, 0x3D, 0x3D, 0x2D, 0x2D, 0x3D, 0x3D, 0x2D, 0x2D, 0x3D, 0x3D, 0x2D, 0x2D, 0x3D, 0x3D, 0x2D}; // -==--==--==--==-
+        public static byte[] TOC_MAGIC = { 0x2D, 0x3D, 0x3D, 0x2D, 0x2D, 0x3D, 0x3D, 0x2D, 0x2D, 0x3D, 0x3D, 0x2D, 0x2D, 0x3D, 0x3D, 0x2D }; // -==--==--==--==-
 
         public readonly byte[] TocMagic;
         public readonly EIoStoreTocVersion Version;

@@ -59,20 +59,20 @@ namespace CUE4Parse.UE4.Objects.Core.Math
 
         public FQuat(TIntVector4<double> quat)
         {
-            X = (float) quat.X;
-            Y = (float) quat.Y;
-            Z = (float) quat.Z;
-            W = (float) quat.W;
+            X = (float)quat.X;
+            Y = (float)quat.Y;
+            Z = (float)quat.Z;
+            W = (float)quat.W;
         }
 
         public FQuat(FArchive Ar)
         {
             if (Ar.Ver >= EUnrealEngineObjectUE5Version.LARGE_WORLD_COORDINATES)
             {
-                X = (float) Ar.Read<double>();
-                Y = (float) Ar.Read<double>();
-                Z = (float) Ar.Read<double>();
-                W = (float) Ar.Read<double>();
+                X = (float)Ar.Read<double>();
+                Y = (float)Ar.Read<double>();
+                Z = (float)Ar.Read<double>();
+                W = (float)Ar.Read<double>();
             }
             else
             {
@@ -83,7 +83,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
             }
         }
 
-        private static int[] matrixNxt = {1, 2, 0};
+        private static int[] matrixNxt = { 1, 2, 0 };
         public FQuat(FMatrix m)
         {
             // If Matrix is NULL, return Identity quaternion. If any of them is 0, you won't be able to construct rotation
@@ -123,13 +123,13 @@ namespace CUE4Parse.UE4.Objects.Core.Math
                 if (m.M11 > m.M00)
                     i = 1;
 
-                if (m.M22 > m[4*i+i])
+                if (m.M22 > m[4 * i + i])
                     i = 2;
 
                 var j = matrixNxt[i];
                 var k = matrixNxt[j];
 
-                s = m[4*i+i] - m[4*j+j] - m[4*k+k] + 1.0f;
+                s = m[4 * i + i] - m[4 * j + j] - m[4 * k + k] + 1.0f;
 
                 var invS = 1.0f / Sqrt(s);
 
@@ -138,9 +138,9 @@ namespace CUE4Parse.UE4.Objects.Core.Math
 
                 s = 0.5f * invS;
 
-                qt[3] = (m[4*j+k] - m[4*k+j]) * s;
-                qt[j] = (m[4*i+j] + m[4*j+i]) * s;
-                qt[k] = (m[4*i+k] + m[4*k+i]) * s;
+                qt[3] = (m[4 * j + k] - m[4 * k + j]) * s;
+                qt[j] = (m[4 * i + j] + m[4 * j + i]) * s;
+                qt[k] = (m[4 * i + k] + m[4 * k + i]) * s;
 
                 X = qt[0];
                 Y = qt[1];

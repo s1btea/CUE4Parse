@@ -17,10 +17,10 @@ public static class TextureEncoder
             using var writer = new BinaryWriter(stream);
             var header = new byte[18];
             header[2] = 2; // uncompressed
-            header[12] = (byte) (bitmap.Width & 0xFF);
-            header[13] = (byte) (bitmap.Width >> 8);
-            header[14] = (byte) (bitmap.Height & 0xFF);
-            header[15] = (byte) (bitmap.Height >> 8);
+            header[12] = (byte)(bitmap.Width & 0xFF);
+            header[13] = (byte)(bitmap.Width >> 8);
+            header[14] = (byte)(bitmap.Height & 0xFF);
+            header[15] = (byte)(bitmap.Height >> 8);
             header[16] = 32; // 32 bit
             header[17] = 32; // 8 bits of alpha
             writer.Write(header);

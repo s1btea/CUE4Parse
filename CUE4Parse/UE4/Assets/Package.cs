@@ -36,7 +36,7 @@ namespace CUE4Parse.UE4.Assets
             : base(uasset.Name.SubstringBeforeLast('.'), provider, mappings)
         {
             // We clone the version container because it can be modified with package specific versions when reading the summary
-            uasset.Versions = (VersionContainer) uasset.Versions.Clone();
+            uasset.Versions = (VersionContainer)uasset.Versions.Clone();
             FAssetArchive uassetAr;
             ACE7XORKey? xorKey = null;
             ACE7Decrypt? decryptor = null;
@@ -75,7 +75,7 @@ namespace CUE4Parse.UE4.Assets
             if (Summary.DataResourceOffset > 0)
             {
                 uassetAr.SeekAbsolute(Summary.DataResourceOffset, SeekOrigin.Begin);
-                var dataResourceVersion = (EObjectDataResourceVersion) uassetAr.Read<uint>();
+                var dataResourceVersion = (EObjectDataResourceVersion)uassetAr.Read<uint>();
                 if (dataResourceVersion > EObjectDataResourceVersion.Invalid && dataResourceVersion <= EObjectDataResourceVersion.Latest)
                 {
                     DataResourceMap = uassetAr.ReadArray(() => new FObjectDataResource(uassetAr));
@@ -87,8 +87,9 @@ namespace CUE4Parse.UE4.Assets
             {
                 if (uasset.Game == EGame.GAME_AceCombat7 && decryptor != null && xorKey != null)
                 {
-                    uexpAr = new FAssetArchive(decryptor.DecryptUexpArchive(uexp, xorKey), this, (int) uassetAr.Length);
-                } else uexpAr = new FAssetArchive(uexp, this, (int) uassetAr.Length);
+                    uexpAr = new FAssetArchive(decryptor.DecryptUexpArchive(uexp, xorKey), this, (int)uassetAr.Length);
+                }
+                else uexpAr = new FAssetArchive(uexp, this, (int)uassetAr.Length);
             }
             else uexpAr = uassetAr;
 
@@ -115,15 +116,15 @@ namespace CUE4Parse.UE4.Assets
                     export.ExportObject = new Lazy<UObject>(() =>
                     {
                         // Create
-                        var obj = ConstructObject(ResolvePackageIndex(export.ClassIndex)?.Object?.Value as UStruct, this, (EObjectFlags) export.ObjectFlags);
+                        var obj = ConstructObject(ResolvePackageIndex(export.ClassIndex)?.Object?.Value as UStruct, this, (EObjectFlags)export.ObjectFlags);
                         obj.Name = export.ObjectName.Text;
                         obj.Outer = (ResolvePackageIndex(export.OuterIndex) as ResolvedExportObject)?.Object.Value ?? this;
                         obj.Super = ResolvePackageIndex(export.SuperIndex) as ResolvedExportObject;
                         obj.Template = ResolvePackageIndex(export.TemplateIndex) as ResolvedExportObject;
-                        obj.Flags |= (EObjectFlags) export.ObjectFlags; // We give loaded objects the RF_WasLoaded flag in ConstructObject, so don't remove it again in here
+                        obj.Flags |= (EObjectFlags)export.ObjectFlags; // We give loaded objects the RF_WasLoaded flag in ConstructObject, so don't remove it again in here
 
                         // Serialize
-                        var Ar = (FAssetArchive) uexpAr.Clone();
+                        var Ar = (FAssetArchive)uexpAr.Clone();
                         Ar.SeekAbsolute(export.SerialOffset, SeekOrigin.Begin);
                         DeserializeObject(obj, Ar, export.SerialSize);
                         // TODO right place ???
@@ -148,12 +149,14 @@ namespace CUE4Parse.UE4.Assets
         public Package(FArchive uasset, FArchive? uexp, FArchive? ubulk = null, FArchive? uptnl = null,
             IFileProvider? provider = null, TypeMappings? mappings = null, bool useLazySerialization = true)
             : this(uasset, uexp, ubulk != null ? new Lazy<FArchive?>(() => ubulk) : null,
-                uptnl != null ? new Lazy<FArchive?>(() => uptnl) : null, provider, mappings, useLazySerialization) { }
+                uptnl != null ? new Lazy<FArchive?>(() => uptnl) : null, provider, mappings, useLazySerialization)
+        { }
 
         public Package(string name, byte[] uasset, byte[]? uexp, byte[]? ubulk = null, byte[]? uptnl = null, IFileProvider? provider = null, bool useLazySerialization = true)
             : this(new FByteArchive($"{name}.uasset", uasset), uexp != null ? new FByteArchive($"{name}.uexp", uexp) : null,
                 ubulk != null ? new FByteArchive($"{name}.ubulk", ubulk) : null,
-                uptnl != null ? new FByteArchive($"{name}.uptnl", uptnl) : null, provider, null, useLazySerialization) { }
+                uptnl != null ? new FByteArchive($"{name}.uptnl", uptnl) : null, provider, null, useLazySerialization)
+        { }
 
         public override UObject? GetExportOrNull(string name, StringComparison comparisonType = StringComparison.Ordinal)
         {
@@ -254,7 +257,7 @@ namespace CUE4Parse.UE4.Assets
             }
 
             public override FName Name => _export?.ObjectName ?? "None";
-            public override ResolvedObject Outer => Package.ResolvePackageIndex(_export.OuterIndex) ?? new ResolvedLoadedObject((UObject) Package);
+            public override ResolvedObject Outer => Package.ResolvePackageIndex(_export.OuterIndex) ?? new ResolvedLoadedObject((UObject)Package);
             public override ResolvedObject? Class => Package.ResolvePackageIndex(_export.ClassIndex);
             public override ResolvedObject? Super => Package.ResolvePackageIndex(_export.SuperIndex);
             public override Lazy<UObject> Object => _export.ExportObject;
@@ -386,7 +389,7 @@ namespace CUE4Parse.UE4.Assets
             {
                 Trace.Assert(_phase == LoadPhase.Create);
                 _phase = LoadPhase.Serialize;
-                _object = ConstructObject(_package.ResolvePackageIndex(_export.ClassIndex)?.Object?.Value as UStruct, _package, (EObjectFlags) _export.ObjectFlags);
+                _object = ConstructObject(_package.ResolvePackageIndex(_export.ClassIndex)?.Object?.Value as UStruct, _package, (EObjectFlags)_export.ObjectFlags);
                 _object.Name = _export.ObjectName.Text;
                 if (!_export.OuterIndex.IsNull)
                 {
@@ -399,14 +402,14 @@ namespace CUE4Parse.UE4.Assets
                 }
                 _object.Super = _package.ResolvePackageIndex(_export.SuperIndex) as ResolvedExportObject;
                 _object.Template = _package.ResolvePackageIndex(_export.TemplateIndex) as ResolvedExportObject;
-                _object.Flags |= (EObjectFlags) _export.ObjectFlags; // We give loaded objects the RF_WasLoaded flag in ConstructObject, so don't remove it again in here
+                _object.Flags |= (EObjectFlags)_export.ObjectFlags; // We give loaded objects the RF_WasLoaded flag in ConstructObject, so don't remove it again in here
             }
 
             private void Serialize()
             {
                 Trace.Assert(_phase == LoadPhase.Serialize);
                 _phase = LoadPhase.Complete;
-                var Ar = (FAssetArchive) _archive.Clone();
+                var Ar = (FAssetArchive)_archive.Clone();
                 Ar.SeekAbsolute(_export.SerialOffset, SeekOrigin.Begin);
                 DeserializeObject(_object, Ar, _export.SerialSize);
                 // TODO right place ???

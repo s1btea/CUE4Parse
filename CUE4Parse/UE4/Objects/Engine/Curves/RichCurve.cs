@@ -380,7 +380,7 @@ namespace CUE4Parse.UE4.Objects.Engine.Curves
 
             if (numResults == 1)
             {
-                newInterp = (float) results[0];
+                newInterp = (float)results[0];
             }
             else
             {
@@ -391,7 +391,7 @@ namespace CUE4Parse.UE4.Objects.Engine.Curves
                     {
                         if (newInterp < 0.0f || result > newInterp)
                         {
-                            newInterp = (float) result;
+                            newInterp = (float)result;
                         }
                     }
                 }
@@ -402,7 +402,7 @@ namespace CUE4Parse.UE4.Objects.Engine.Curves
                 }
             }
 
-            var outVal = BezierInterp(p0, (float) key1TanY, (float) key2TanY, p3, newInterp);
+            var outVal = BezierInterp(p0, (float)key1TanY, (float)key2TanY, p3, newInterp);
             return outVal;
         }
 
@@ -473,9 +473,9 @@ namespace CUE4Parse.UE4.Objects.Engine.Curves
         {
             var rangeDataOffset = (keyTimesOffset + (numKeys * sizeof(ushort))).Align(sizeof(float));
             KeyDataOffset = rangeDataOffset + RangeDataSize;
-            var rangeData = (float*) (basePtr + rangeDataOffset);
+            var rangeData = (float*)(basePtr + rangeDataOffset);
 
-            KeyTimes = (ushort*) (basePtr + keyTimesOffset);
+            KeyTimes = (ushort*)(basePtr + keyTimesOffset);
             MinTime = rangeData[0];
             DeltaTime = rangeData[1];
         }
@@ -497,7 +497,7 @@ namespace CUE4Parse.UE4.Objects.Engine.Curves
 
         public Float32BitKeyTimeAdapter(byte* basePtr, int keyTimesOffset, int numKeys)
         {
-            KeyTimes = (float*) (basePtr + keyTimesOffset);
+            KeyTimes = (float*)(basePtr + keyTimesOffset);
             KeyDataOffset = (keyTimesOffset + (numKeys * sizeof(float))).Align(sizeof(float));
         }
 
@@ -512,7 +512,7 @@ namespace CUE4Parse.UE4.Objects.Engine.Curves
         public UniformKeyDataAdapter(ERichCurveCompressionFormat format, byte* basePtr, IKeyTimeAdapter keyTimeAdapter)
         {
             _format = format;
-            _keyData = (float*) (basePtr + keyTimeAdapter.KeyDataOffset);
+            _keyData = (float*)(basePtr + keyTimeAdapter.KeyDataOffset);
         }
 
         public int GetKeyDataHandle(int keyIndexToQuery) => _format == RCCF_Cubic ? (keyIndexToQuery * 3) : keyIndexToQuery;
@@ -533,14 +533,14 @@ namespace CUE4Parse.UE4.Objects.Engine.Curves
         public MixedKeyDataAdapter(byte* basePtr, int interpModesOffset, IKeyTimeAdapter keyTimeAdapter)
         {
             _interpModes = basePtr + interpModesOffset;
-            _keyData = (float*) (basePtr + keyTimeAdapter.KeyDataOffset);
+            _keyData = (float*)(basePtr + keyTimeAdapter.KeyDataOffset);
         }
 
         public int GetKeyDataHandle(int keyIndexToQuery) => keyIndexToQuery * 3;
         public float GetKeyValue(int handle) => _keyData[handle];
         public float GetKeyArriveTangent(int handle) => _keyData[handle + 1];
         public float GetKeyLeaveTangent(int handle) => _keyData[handle + 2];
-        public ERichCurveCompressionFormat GetKeyInterpMode(int keyIndex) => (ERichCurveCompressionFormat) _interpModes[keyIndex];
+        public ERichCurveCompressionFormat GetKeyInterpMode(int keyIndex) => (ERichCurveCompressionFormat)_interpModes[keyIndex];
         public ERichCurveTangentWeightMode GetKeyTangentWeightMode(int keyIndex) => RCTWM_WeightedNone;
         public float GetKeyArriveTangentWeight(int handle) => 0.0f;
         public float GetKeyLeaveTangentWeight(int handle) => 0.0f;
@@ -554,7 +554,7 @@ namespace CUE4Parse.UE4.Objects.Engine.Curves
         public WeightedKeyDataAdapter(byte* basePtr, int interpModesOffset, IKeyTimeAdapter keyTimeAdapter)
         {
             _interpModes = basePtr + interpModesOffset;
-            _keyData = (float*) (basePtr + keyTimeAdapter.KeyDataOffset);
+            _keyData = (float*)(basePtr + keyTimeAdapter.KeyDataOffset);
         }
 
         public int GetKeyDataHandle(int keyIndexToQuery) => keyIndexToQuery * 5;
@@ -563,7 +563,7 @@ namespace CUE4Parse.UE4.Objects.Engine.Curves
         public float GetKeyLeaveTangent(int handle) => _keyData[handle + 2];
         public float GetKeyArriveTangentWeight(int handle) => _keyData[handle + 3];
         public float GetKeyLeaveTangentWeight(int handle) => _keyData[handle + 4];
-        public ERichCurveCompressionFormat GetKeyInterpMode(int keyIndex) => (ERichCurveCompressionFormat) _interpModes[keyIndex];
-        public ERichCurveTangentWeightMode GetKeyTangentWeightMode(int keyIndex) => (ERichCurveTangentWeightMode) _interpModes[keyIndex + 1];
+        public ERichCurveCompressionFormat GetKeyInterpMode(int keyIndex) => (ERichCurveCompressionFormat)_interpModes[keyIndex];
+        public ERichCurveTangentWeightMode GetKeyTangentWeightMode(int keyIndex) => (ERichCurveTangentWeightMode)_interpModes[keyIndex + 1];
     }
 }

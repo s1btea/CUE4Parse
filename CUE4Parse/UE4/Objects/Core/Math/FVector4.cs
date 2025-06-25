@@ -34,10 +34,10 @@ public struct FVector4 : IUStruct
     {
         if (Ar.Ver >= EUnrealEngineObjectUE5Version.LARGE_WORLD_COORDINATES)
         {
-            X = (float) Ar.Read<double>();
-            Y = (float) Ar.Read<double>();
-            Z = (float) Ar.Read<double>();
-            W = (float) Ar.Read<double>();
+            X = (float)Ar.Read<double>();
+            Y = (float)Ar.Read<double>();
+            Z = (float)Ar.Read<double>();
+            W = (float)Ar.Read<double>();
         }
         else
         {

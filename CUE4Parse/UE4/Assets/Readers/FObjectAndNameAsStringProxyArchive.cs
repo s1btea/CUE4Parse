@@ -59,7 +59,7 @@ namespace CUE4Parse.UE4.Assets.Readers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override void ReadArray<T>(T[] array) => InnerArchive.ReadArray(array);
 
-        public override object Clone() => new FObjectAndNameAsStringProxyArchive((FArchive) InnerArchive.Clone());
+        public override object Clone() => new FObjectAndNameAsStringProxyArchive((FArchive)InnerArchive.Clone());
 
         public override FName ReadFName() => ReadFString();
 

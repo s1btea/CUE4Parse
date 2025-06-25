@@ -150,7 +150,8 @@ namespace CUE4Parse_Conversion.Meshes
                     HasTangents = true,
                     Indices = new Lazy<FRawStaticIndexBuffer>(() => new FRawStaticIndexBuffer
                     {
-                        Indices16 = srcLod.Indices.Indices16, Indices32 = srcLod.Indices.Indices32
+                        Indices16 = srcLod.Indices.Indices16,
+                        Indices32 = srcLod.Indices.Indices32
                     }),
                     Sections = new Lazy<CMeshSection[]>(() =>
                     {
@@ -163,9 +164,9 @@ namespace CUE4Parse_Conversion.Meshes
                                 materialIndex = 0;
                             }
                             else while (materialIndex >= originalMesh.Materials?.Length)
-                            {
-                                materialIndex--;
-                            }
+                                {
+                                    materialIndex--;
+                                }
 
                             if (materialIndex < 0) sections[j] = new CMeshSection(srcLod.Sections[j]);
                             else
@@ -241,10 +242,10 @@ namespace CUE4Parse_Conversion.Meshes
                         var v0 = vertBuffer.VertsHalf[vert];
                         v = v0;
 
-                        skeletalMeshLod.Verts[vert].UV = (FMeshUVFloat) v0.UV[0]; // UV: convert half -> float
+                        skeletalMeshLod.Verts[vert].UV = (FMeshUVFloat)v0.UV[0]; // UV: convert half -> float
                         for (var texCoordIndex = 1; texCoordIndex < numTexCoords; texCoordIndex++)
                         {
-                            skeletalMeshLod.ExtraUV.Value[texCoordIndex - 1][vert] = (FMeshUVFloat) v0.UV[texCoordIndex];
+                            skeletalMeshLod.ExtraUV.Value[texCoordIndex - 1][vert] = (FMeshUVFloat)v0.UV[texCoordIndex];
                         }
                     }
                     else

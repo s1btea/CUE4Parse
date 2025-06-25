@@ -26,7 +26,7 @@ namespace CUE4Parse.UE4.IO
                     throw new KeyNotFoundException("Couldn't find LoaderGlobalNameHashes chunk in IoStore " + globalReader.Name);
                 }
 
-                var nameCount = (int) (nameHashesChunk.Length / sizeof(ulong) - 1);
+                var nameCount = (int)(nameHashesChunk.Length / sizeof(ulong) - 1);
 
                 var nameAr = new FByteArchive("LoaderGlobalNames", globalReader.Read(new FIoChunkId(0, 0, EIoChunkType.LoaderGlobalNames)));
                 GlobalNameMap = FNameEntrySerialized.LoadNameBatch(nameAr, nameCount);

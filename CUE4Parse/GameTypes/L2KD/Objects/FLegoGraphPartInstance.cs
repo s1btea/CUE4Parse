@@ -10,7 +10,8 @@ namespace CUE4Parse.GameTypes.L2KD.Objects
         public readonly uint Id;
         public readonly uint Color;
 
-        public FLegoGraphPartInstance(FAssetArchive Ar) {
+        public FLegoGraphPartInstance(FAssetArchive Ar)
+        {
             Id = Ar.Read<uint>();
             Color = Ar.Read<uint>();
         }

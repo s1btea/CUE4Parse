@@ -372,20 +372,20 @@ public class UObject : IPropertyHolder
     public T GetByIndex<T>(int index) => PropertyUtil.GetByIndex<T>(this, index);
 
     public T GetOrDefaultFromDataList<T>(string name, T defaultValue = default, StringComparison comparisonType = StringComparison.Ordinal)
+    {
+        if (!TryGetValue(out FInstancedStruct[] dataList, "DataList"))
         {
-            if (!TryGetValue(out FInstancedStruct[] dataList, "DataList"))
-            {
-                return defaultValue;
-            }
-            foreach (var item in dataList)
-            {
-                if (item.NonConstStruct?.Properties.Exists(p => p.Name.Text == name) == true)
-                {
-                    return PropertyUtil.GetOrDefault(item.NonConstStruct, name, defaultValue, comparisonType);
-                }
-            }
             return defaultValue;
         }
+        foreach (var item in dataList)
+        {
+            if (item.NonConstStruct?.Properties.Exists(p => p.Name.Text == name) == true)
+            {
+                return PropertyUtil.GetOrDefault(item.NonConstStruct, name, defaultValue, comparisonType);
+            }
+        }
+        return defaultValue;
+    }
 
     public bool TryGetValue<T>(out T obj, params string[] names)
     {
@@ -414,7 +414,8 @@ public class UObject : IPropertyHolder
         }
 
         obj = new T[maxIndex + 1];
-        foreach (var prop in collected) {
+        foreach (var prop in collected)
+        {
             obj[prop.ArrayIndex] = (T)prop.Tag?.GetValue(typeof(T))!;
         }
 
@@ -563,14 +564,14 @@ public class FLifetimeProperty
 
     public FLifetimeProperty(int repIndex)
     {
-        RepIndex = (ushort) repIndex;
+        RepIndex = (ushort)repIndex;
         Condition = ELifetimeCondition.COND_None;
         RepNotifyCondition = ELifetimeRepNotifyCondition.REPNOTIFY_OnChanged;
     }
 
     public FLifetimeProperty(int repIndex, ELifetimeCondition condition, ELifetimeRepNotifyCondition repNotifyCondition = ELifetimeRepNotifyCondition.REPNOTIFY_OnChanged)
     {
-        RepIndex = (ushort) repIndex;
+        RepIndex = (ushort)repIndex;
         Condition = condition;
         RepNotifyCondition = repNotifyCondition;
     }
@@ -585,12 +586,12 @@ public class FLifetimeProperty
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
         if (obj.GetType() != this.GetType()) return false;
-        return Equals((FLifetimeProperty) obj);
+        return Equals((FLifetimeProperty)obj);
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(RepIndex, (int) Condition, (int) RepNotifyCondition);
+        return HashCode.Combine(RepIndex, (int)Condition, (int)RepNotifyCondition);
     }
 
     public static bool operator ==(FLifetimeProperty a, FLifetimeProperty b) => a.RepIndex == b.RepIndex && a.Condition == b.Condition && a.RepNotifyCondition == b.RepNotifyCondition;
@@ -600,12 +601,12 @@ public class FLifetimeProperty
 [Flags]
 public enum EClassSerializationControlExtension : byte
 {
-    NoExtension					= 0x00,
-    ReserveForFutureUse			= 0x01, // Can be use to add a next group of extension
+    NoExtension = 0x00,
+    ReserveForFutureUse = 0x01, // Can be use to add a next group of extension
 
     ////////////////////////////////////////////////
     // First extension group
-    OverridableSerializationInformation	= 0x02,
+    OverridableSerializationInformation = 0x02,
 
     //
     // Add more extension for the first group here

@@ -63,6 +63,6 @@ namespace CUE4Parse.UE4.AssetRegistry.Objects
             assetData.TaggedAssetBundles = new FAssetBundleData();
         }
 
-        public override object Clone() => new FNameTableArchiveReader((FArchive) baseArchive.Clone(), Header);
+        public override object Clone() => new FNameTableArchiveReader((FArchive)baseArchive.Clone(), Header);
     }
 }

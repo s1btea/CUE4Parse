@@ -7,28 +7,28 @@ namespace CUE4Parse.UE4.IO.Objects
 {
     public enum EOnDemandTocVersion : uint
     {
-        Invalid			= 0,
-        Initial			= 1,
-        UTocHash		= 2,
-        BlockHash32		= 3,
-        NoRawHash		= 4,
-        Meta			= 5,
-        ContainerId		= 6,
-        AdditionalFiles	= 7,
-        TagSets			= 8,
-        ContainerFlags	= 9,
+        Invalid = 0,
+        Initial = 1,
+        UTocHash = 2,
+        BlockHash32 = 3,
+        NoRawHash = 4,
+        Meta = 5,
+        ContainerId = 6,
+        AdditionalFiles = 7,
+        TagSets = 8,
+        ContainerFlags = 9,
 
         LatestPlusOne,
-        Latest			= (LatestPlusOne - 1)
+        Latest = (LatestPlusOne - 1)
     }
 
     public enum EOnDemandChunkVersion : uint
     {
-        Invalid			= 0,
-        Initial			= 1,
+        Invalid = 0,
+        Initial = 1,
 
         LatestPlusOne,
-        Latest			= (LatestPlusOne - 1)
+        Latest = (LatestPlusOne - 1)
     }
 
     public class FOnDemandTocHeader

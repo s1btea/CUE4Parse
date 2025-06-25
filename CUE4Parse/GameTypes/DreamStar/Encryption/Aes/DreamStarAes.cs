@@ -19,7 +19,7 @@ public static class DreamStarAes
 
         for (var i = 0; i < count; i++)
         {
-            output[i] = (byte) (((output[i] ^ 0x5F) << 5) | ((output[i] ^ 0x5F) >> 3));
+            output[i] = (byte)(((output[i] ^ 0x5F) << 5) | ((output[i] ^ 0x5F) >> 3));
         }
 
         return output;

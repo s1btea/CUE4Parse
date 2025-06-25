@@ -17,7 +17,7 @@ namespace CUE4Parse.Utils
                 throw new ArgumentNullException(nameof(buffer));
             }
 
-            var len = (uint) buffer.Length;
+            var len = (uint)buffer.Length;
 
             fixed (byte* pBuffer = buffer)
             {
@@ -37,7 +37,7 @@ namespace CUE4Parse.Utils
                 var v = WeakHashLen32WithSeeds(s + len - 64, len, z);
                 var w = WeakHashLen32WithSeeds(s + len - 32, y + K1, x);
                 x = x * K1 + Fetch64(s);
-                len = (uint) (len - 1 & ~63);
+                len = (uint)(len - 1 & ~63);
 
                 do
                 {
@@ -74,14 +74,14 @@ namespace CUE4Parse.Utils
                 ulong d = (Rotate(a, 25) + b) * mul;
                 return HashLen16(c, d, mul);
             }
-            
+
             if (len >= 4)
             {
                 ulong mul = K2 + len * 2;
                 ulong a = Fetch32(s);
                 return HashLen16(len + (a << 3), Fetch32(s + len - 4), mul);
             }
-            
+
             if (len > 0)
             {
                 byte a = s[0];
@@ -91,7 +91,7 @@ namespace CUE4Parse.Utils
                 uint z = len + ((uint)c << 2);
                 return ShiftMix(y * K2 ^ z * K0) * K2;
             }
-            
+
             return K2;
         }
 
@@ -130,13 +130,13 @@ namespace CUE4Parse.Utils
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static uint Fetch32(byte* p)
         {
-            return *(uint*) p;
+            return *(uint*)p;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static ulong Fetch64(byte* p)
         {
-            return *(ulong*) p;
+            return *(ulong*)p;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

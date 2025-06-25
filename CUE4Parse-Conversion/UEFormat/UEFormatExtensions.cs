@@ -18,22 +18,22 @@ public static class UEFormatExtensions
         var array = enumerable.ToArray();
         Ar.WriteArray(array, it => it.Serialize(Ar));
     }
-    
+
     public static void WriteArray<T>(this FArchiveWriter Ar, IEnumerable<T> enumerable, Action<T> action)
     {
         var items = enumerable.ToArray();
-        
+
         Ar.Write(items.Length);
         foreach (var item in items)
         {
             action(item);
         }
     }
-    
+
     public static void WriteArray<T>(this FArchiveWriter Ar, IEnumerable<T> enumerable, Action<FArchiveWriter, T> action)
     {
         var items = enumerable.ToArray();
-        
+
         Ar.Write(items.Length);
         foreach (var item in items)
         {

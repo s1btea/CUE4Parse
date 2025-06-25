@@ -14,7 +14,7 @@ namespace CUE4Parse.UE4.IO.Objects
         public const ulong Invalid = ~0UL;
 
         public readonly ulong TypeAndId;
-        public EType Type => (EType) (TypeAndId >> TypeShift);
+        public EType Type => (EType)(TypeAndId >> TypeShift);
         public ulong Value => TypeAndId & IndexMask;
 
         public bool IsNull => TypeAndId == Invalid;
@@ -22,12 +22,12 @@ namespace CUE4Parse.UE4.IO.Objects
         public bool IsImport => IsScriptImport || IsPackageImport;
         public bool IsScriptImport => Type == EType.ScriptImport;
         public bool IsPackageImport => Type == EType.PackageImport;
-        public uint AsExport => (uint) TypeAndId;
+        public uint AsExport => (uint)TypeAndId;
 
         public FPackageImportReference AsPackageImportRef => new()
         {
-            ImportedPackageIndex = (uint) ((TypeAndId & IndexMask) >> 32),
-            ImportedPublicExportHashIndex = (uint) TypeAndId
+            ImportedPackageIndex = (uint)((TypeAndId & IndexMask) >> 32),
+            ImportedPublicExportHashIndex = (uint)TypeAndId
         };
 
         public FPackageObjectIndex(ulong typeAndId)

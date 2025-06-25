@@ -142,7 +142,7 @@ public class FKismetArchive : FArchive
     {
         var eos = Array.IndexOf<byte>(_data, 0, (int)Position);
         if (eos == -1) throw new ParserException("Couldn't find end of the string");
-        return Encoding.ASCII.GetString(ReadBytes(eos-(int)Position));
+        return Encoding.ASCII.GetString(ReadBytes(eos - (int)Position));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -192,7 +192,7 @@ public class FKismetArchive : FArchive
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override int Read(byte[] buffer, int offset, int count)
     {
-        int n = (int) (Length - Position);
+        int n = (int)(Length - Position);
         if (n > count) n = count;
         if (n <= 0)
             return 0;
@@ -204,7 +204,7 @@ public class FKismetArchive : FArchive
                 buffer[offset + byteCount] = _data[Position + byteCount];
         }
         else
-            Buffer.BlockCopy(_data, (int) Position, buffer, offset, n);
+            Buffer.BlockCopy(_data, (int)Position, buffer, offset, n);
         Position += n;
 
         return n;
@@ -247,5 +247,5 @@ public class FKismetArchive : FArchive
         return result;
     }
 
-    public override object Clone() => new FKismetArchive(Name, _data, Owner, Versions) {Position = Position};
+    public override object Clone() => new FKismetArchive(Name, _data, Owner, Versions) { Position = Position };
 }

@@ -71,7 +71,7 @@ namespace CUE4Parse.UE4.Objects.Engine.Curves
             if (!UnrealMath.IsNearlyEqual(AdjustBrightnessCurve, 1.0f, UnrealMath.KindaSmallNumber) && AdjustBrightnessCurve != 0.0f)
             {
                 // Raise HSV.V to the specified power
-                pixelValue = (float) Math.Pow(pixelValue, AdjustBrightnessCurve);
+                pixelValue = (float)Math.Pow(pixelValue, AdjustBrightnessCurve);
             }
 
             // Apply "vibrancy" adjustment
@@ -82,7 +82,7 @@ namespace CUE4Parse.UE4.Objects.Engine.Curves
                 var halfVibrance = clampedVibrance * 0.5f;
                 var satProduct = halfVibrance * invSatRaised;
 
-                pixelSaturation += (float) satProduct;
+                pixelSaturation += (float)satProduct;
             }
 
             // Apply saturation adjustment

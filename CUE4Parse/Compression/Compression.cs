@@ -66,12 +66,12 @@ namespace CUE4Parse.Compression
                     if (result != uncompressedSize) throw new FileLoadException($"Failed to decompress LZ4 data (Expected: {uncompressedSize}, Result: {result})");
                     return;
                 case CompressionMethod.Zstd:
-                {
-                    var compressionStream = new DecompressionStream(srcStream);
-                    compressionStream.Read(uncompressed, uncompressedOffset, uncompressedSize);
-                    compressionStream.Dispose();
-                    return;
-                }
+                    {
+                        var compressionStream = new DecompressionStream(srcStream);
+                        compressionStream.Read(uncompressed, uncompressedOffset, uncompressedSize);
+                        compressionStream.Dispose();
+                        return;
+                    }
                 default:
                     if (reader != null) throw new UnknownCompressionMethodException(reader, $"Compression method \"{method}\" is unknown");
                     else throw new UnknownCompressionMethodException($"Compression method \"{method}\" is unknown");

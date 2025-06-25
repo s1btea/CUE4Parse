@@ -7,7 +7,7 @@ namespace CUE4Parse.UE4.Assets.Exports;
 public class UObjectRedirector : UObject
 {
     public FPackageIndex? DestinationObject;
-    
+
     public override void Deserialize(FAssetArchive Ar, long validPos)
     {
         base.Deserialize(Ar, validPos);
@@ -18,7 +18,7 @@ public class UObjectRedirector : UObject
     protected internal override void WriteJson(JsonWriter writer, JsonSerializer serializer)
     {
         base.WriteJson(writer, serializer);
-        
+
         writer.WritePropertyName("DestinationObject");
         serializer.Serialize(writer, DestinationObject);
     }

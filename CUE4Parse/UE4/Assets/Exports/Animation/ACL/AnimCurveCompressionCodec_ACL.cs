@@ -27,7 +27,7 @@ public class AnimCurveCompressionCodec_ACL : UAnimCurveCompressionCodec
         {
             nReadCurveACLData(compressedTracks.Handle, floatKeysPtr);
         }
-        
+
         var floatCurves = new FFloatCurve[numCurves];
         for (var curveIndex = 0; curveIndex < numCurves; curveIndex++)
         {
@@ -43,7 +43,7 @@ public class AnimCurveCompressionCodec_ACL : UAnimCurveCompressionCodec
                     Keys = new FRichCurveKey[numSamples]
                 }
             };
-            
+
             for (var sampleIndex = 0; sampleIndex < numSamples; sampleIndex++)
             {
                 floatCurve.FloatCurve.Keys[sampleIndex] = new FRichCurveKey
@@ -58,7 +58,7 @@ public class AnimCurveCompressionCodec_ACL : UAnimCurveCompressionCodec
 
         return floatCurves;
     }
-    
+
     [DllImport(ACLNative.LIB_NAME)]
     private static extern unsafe void nReadCurveACLData(IntPtr compressedTracks, float* outFloatKeys);
 }

@@ -95,7 +95,7 @@ namespace CUE4Parse.UE4.Readers
             // We only support forward seeking.
             Trace.Assert(difference >= 0);
             // Seek by serializing data, albeit with NULL destination so it's just decompressing data.
-            Read(null, 0, (int) difference);
+            Read(null, 0, (int)difference);
             return Position;
         }
 
@@ -118,7 +118,7 @@ namespace CUE4Parse.UE4.Readers
             _shouldSerializeFromArray = false;
             // Buffer is filled again, reset.
             _tmpDataPos = 0;
-            _tmpDataSize = (int) decompressedLength;
+            _tmpDataSize = (int)decompressedLength;
         }
     }
 }

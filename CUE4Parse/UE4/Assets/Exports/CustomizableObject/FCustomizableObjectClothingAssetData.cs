@@ -16,7 +16,7 @@ public class FCustomizableObjectClothingAssetData
     public string PhysicsAssetPath;
     public FName Name;
     public FGuid OriginalAssetGuid;
-    
+
     public FCustomizableObjectClothingAssetData(FAssetArchive Ar)
     {
         LodData = Ar.ReadArray(() => new FClothLODDataCommon(Ar));

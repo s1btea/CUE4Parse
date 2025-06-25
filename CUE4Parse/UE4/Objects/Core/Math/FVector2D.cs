@@ -25,8 +25,8 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         {
             if (Ar.Ver >= EUnrealEngineObjectUE5Version.LARGE_WORLD_COORDINATES)
             {
-                X = (float) Ar.Read<double>();
-                Y = (float) Ar.Read<double>();
+                X = (float)Ar.Read<double>();
+                Y = (float)Ar.Read<double>();
             }
             else
             {

@@ -19,10 +19,10 @@ namespace CUE4Parse.UE4.Objects.Core.Misc
         public FSHAHash(FIoChunkHash InChunkHash)
         {
             Hash = new byte[SIZE];
-            Unsafe.CopyBlock(ref Hash[0], ref InChunkHash.Hash[0], (uint) Hash.Length);
+            Unsafe.CopyBlock(ref Hash[0], ref InChunkHash.Hash[0], (uint)Hash.Length);
         }
 
-        public static implicit operator FSHAHash(FIoChunkHash InChunkHash) => new (InChunkHash);
+        public static implicit operator FSHAHash(FIoChunkHash InChunkHash) => new(InChunkHash);
 
         public override string ToString()
         {

@@ -79,7 +79,7 @@ namespace CUE4Parse.FileProvider
                             {
                                 var stringTablePath = g.Value.SubstringAfter("LOCTABLE(\"").SubstringBeforeLast("\",");
 
-                                var stringTable =  Task.Run(() => this.LoadObject<UStringTable>(stringTablePath)).Result;
+                                var stringTable = Task.Run(() => this.LoadObject<UStringTable>(stringTablePath)).Result;
                                 if (stringTable != null)
                                 {
                                     var keyName = g.Value.SubstringAfterLast(", \"").SubstringBeforeLast("\")"); // LOCTABLE("/Game/Narrative/LocalisedStrings/UI_Strings.UI_Strings", "23138_ui_pc_game_name_titlebar")
@@ -520,7 +520,7 @@ namespace CUE4Parse.FileProvider
         public virtual IPackage LoadPackage(GameFile file) => LoadPackageAsync(file).Result;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual IoPackage LoadPackage(FPackageId id) => (IoPackage) LoadPackage(FilesById[id]);
+        public virtual IoPackage LoadPackage(FPackageId id) => (IoPackage)LoadPackage(FilesById[id]);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual bool TryLoadPackage(string path, out IPackage package)
@@ -546,7 +546,7 @@ namespace CUE4Parse.FileProvider
         {
             if (FilesById.TryGetValue(id, out var file) && TryLoadPackage(file, out IPackage loaded))
             {
-                package = (IoPackage) loaded;
+                package = (IoPackage)loaded;
                 return true;
             }
 
@@ -581,7 +581,7 @@ namespace CUE4Parse.FileProvider
                 throw new ParserException("Found IoStore Package but global data is missing, can't serialize");
             }
 
-            var containerHeader = ((FIoStoreEntry) file).IoStoreReader.ContainerHeader;
+            var containerHeader = ((FIoStoreEntry)file).IoStoreReader.ContainerHeader;
             return new IoPackage(uasset, vfsFileProvider.GlobalData, containerHeader, ubulk, uptnl, this, MappingsForGame);
         }
 
@@ -620,7 +620,7 @@ namespace CUE4Parse.FileProvider
 
                 if (file is FIoStoreEntry ioStoreEntry)
                 {
-                    var globalData = ((IVfsFileProvider) this).GlobalData;
+                    var globalData = ((IVfsFileProvider)this).GlobalData;
                     return globalData != null ? new IoPackage(uasset, globalData, ioStoreEntry.IoStoreReader.ContainerHeader, lazyUbulk, lazyUptnl, this, MappingsForGame) : null;
                 }
 

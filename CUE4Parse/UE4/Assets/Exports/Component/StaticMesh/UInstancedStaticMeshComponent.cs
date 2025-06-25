@@ -44,7 +44,7 @@ public class UInstancedStaticMeshComponent : UStaticMeshComponent
             }
 
             var renderDataSizeBytes = Ar.Read<ulong>();
-            Ar.Position += (long) renderDataSizeBytes;
+            Ar.Position += (long)renderDataSizeBytes;
         }
     }
 

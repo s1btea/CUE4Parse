@@ -218,7 +218,7 @@ public class FShaderParameterBindings
     public FShaderParameterBindings(FMemoryImageArchive Ar)
     {
         Parameters = Ar.ReadArray<FParameter>();
-        if (Ar.Game>= EGame.GAME_UE4_26)
+        if (Ar.Game >= EGame.GAME_UE4_26)
         {
             ResourceParameters = Ar.ReadArray<FResourceParameter>();
         }
@@ -937,10 +937,10 @@ public class FRHIUniformBufferLayoutInitializer
         {
             ConstantBufferSize = Ar.Read<uint>();
             StaticSlot = Ar.Read<byte>();
-            Ar.Position +=1;
+            Ar.Position += 1;
             RenderTargetsOffset = Ar.Read<ushort>();
             bHasNonGraphOutputs = Ar.ReadFlag();
-            Ar.Position +=7;
+            Ar.Position += 7;
             Resources = Ar.ReadArray<FRHIUniformBufferResource>();
             GraphResources = Ar.ReadArray<FRHIUniformBufferResource>();
             GraphTextures = Ar.ReadArray<FRHIUniformBufferResource>();
@@ -1014,7 +1014,7 @@ public class FMemoryImageResult()
         LayoutParameters = bUseNewFormat ? new FPlatformTypeLayoutParameters(Ar) : new();
 
         var frozenSize = Ar.Read<uint>();
-        FrozenObject = Ar.ReadBytes((int) frozenSize);
+        FrozenObject = Ar.ReadBytes((int)frozenSize);
 
         if (bUseNewFormat)
         {
@@ -1193,19 +1193,19 @@ public class FMaterialShaderMapId
     public FSHAHash? CookedShaderMapIdHash;
     public FPlatformTypeLayoutParameters? LayoutParams;
 
-    public FMaterialShaderMapId() {}
+    public FMaterialShaderMapId() { }
     public FMaterialShaderMapId(FArchive Ar)
     {
         var bIsLegacyPackage = Ar.Ver < EUnrealEngineObjectUE4Version.PURGED_FMATERIAL_COMPILE_OUTPUTS;
 
         if (!bIsLegacyPackage)
         {
-            QualityLevel = Ar.Game >= EGame.GAME_UE5_2 ? (EMaterialQualityLevel) Ar.Read<byte>() : (EMaterialQualityLevel) Ar.Read<int>();//changed to byte in FN 23.20
-            FeatureLevel = (ERHIFeatureLevel) Ar.Read<int>();
+            QualityLevel = Ar.Game >= EGame.GAME_UE5_2 ? (EMaterialQualityLevel)Ar.Read<byte>() : (EMaterialQualityLevel)Ar.Read<int>();//changed to byte in FN 23.20
+            FeatureLevel = (ERHIFeatureLevel)Ar.Read<int>();
         }
         else
         {
-            var legacyQualityLevel = (EMaterialQualityLevel) Ar.Read<byte>(); // Is it enum?
+            var legacyQualityLevel = (EMaterialQualityLevel)Ar.Read<byte>(); // Is it enum?
         }
 
         CookedShaderMapIdHash = new FSHAHash(Ar);
@@ -1246,23 +1246,23 @@ public class FPlatformTypeLayoutParameters
 
 public enum EShaderPlatform : byte
 {
-    SP_PCD3D_SM5					= 0,
-    SP_METAL						= 11,
-    SP_METAL_MRT					= 12,
-    SP_PCD3D_ES3_1					= 14,
-    SP_OPENGL_PCES3_1				= 15,
-    SP_METAL_SM5					= 16,
-    SP_VULKAN_PCES3_1				= 17,
-    SP_METAL_SM5_NOTESS_REMOVED		= 18,
-    SP_VULKAN_SM5					= 20,
-    SP_VULKAN_ES3_1_ANDROID			= 21,
-    SP_METAL_MACES3_1 				= 22,
-    SP_OPENGL_ES3_1_ANDROID			= 24,
-    SP_METAL_MRT_MAC				= 27,
-    SP_VULKAN_SM5_LUMIN_REMOVED		= 28,
-    SP_VULKAN_ES3_1_LUMIN_REMOVED	= 29,
-    SP_METAL_TVOS					= 30,
-    SP_METAL_MRT_TVOS				= 31,
+    SP_PCD3D_SM5 = 0,
+    SP_METAL = 11,
+    SP_METAL_MRT = 12,
+    SP_PCD3D_ES3_1 = 14,
+    SP_OPENGL_PCES3_1 = 15,
+    SP_METAL_SM5 = 16,
+    SP_VULKAN_PCES3_1 = 17,
+    SP_METAL_SM5_NOTESS_REMOVED = 18,
+    SP_VULKAN_SM5 = 20,
+    SP_VULKAN_ES3_1_ANDROID = 21,
+    SP_METAL_MACES3_1 = 22,
+    SP_OPENGL_ES3_1_ANDROID = 24,
+    SP_METAL_MRT_MAC = 27,
+    SP_VULKAN_SM5_LUMIN_REMOVED = 28,
+    SP_VULKAN_ES3_1_LUMIN_REMOVED = 29,
+    SP_METAL_TVOS = 30,
+    SP_METAL_MRT_TVOS = 31,
     /**********************************************************************************/
     /* !! Do not add any new platforms here. Add them below SP_StaticPlatform_Last !! */
     /**********************************************************************************/
@@ -1273,13 +1273,13 @@ public enum EShaderPlatform : byte
 
     DDPI_EXTRA_SHADERPLATFORMS,
 
-    SP_StaticPlatform_Last  = SP_StaticPlatform_First + 16 - 1,
+    SP_StaticPlatform_Last = SP_StaticPlatform_First + 16 - 1,
 
     //  Add new platforms below this line, starting from (SP_StaticPlatform_Last + 1)
     //---------------------------------------------------------------------------------
-    SP_VULKAN_SM5_ANDROID			= SP_StaticPlatform_Last+1,
+    SP_VULKAN_SM5_ANDROID = SP_StaticPlatform_Last + 1,
     SP_PCD3D_SM6,
 
     SP_NumPlatforms,
-    SP_NumBits						= 7,
+    SP_NumBits = 7,
 }

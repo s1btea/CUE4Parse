@@ -56,7 +56,7 @@ public class UScriptArray
             var enumprop = (InnerTagData?.EnumName != null && !InnerTagData.EnumName.Equals("None", StringComparison.OrdinalIgnoreCase)) || Ar.TestReadFName();
             for (var i = 0; i < elementCount; i++)
             {
-                var property = enumprop ? (FPropertyTagType?) new EnumProperty(Ar, InnerTagData, ReadType.ARRAY) : new ByteProperty(Ar, ReadType.ARRAY);
+                var property = enumprop ? (FPropertyTagType?)new EnumProperty(Ar, InnerTagData, ReadType.ARRAY) : new ByteProperty(Ar, ReadType.ARRAY);
                 if (property != null)
                     Properties.Add(property);
                 else

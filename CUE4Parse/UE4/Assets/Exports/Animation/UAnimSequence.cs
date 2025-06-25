@@ -377,7 +377,8 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation
 
         public FTrackToSkeletonMap[] GetTrackMap() => CompressedTrackToSkeletonMapTable.Length > 0 ? CompressedTrackToSkeletonMapTable : TrackToSkeletonMapTable ?? [];
 
-        public int FindTrackForBoneIndex(int boneIndex) {
+        public int FindTrackForBoneIndex(int boneIndex)
+        {
             var trackMap = GetTrackMap();
             for (var trackIndex = 0; trackIndex < trackMap.Length; trackIndex++)
             {
@@ -393,7 +394,7 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation
         {
             var dst = new byte[src.Length];
 
-            var compressedData = (FUECompressedAnimData) CompressedDataStructure;
+            var compressedData = (FUECompressedAnimData)CompressedDataStructure;
             var compressedTrackOffsets = compressedData.CompressedTrackOffsets;
             var compressedScaleOffsets = compressedData.CompressedScaleOffsets;
 
@@ -440,9 +441,9 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation
                     var packedInfo = BitConverter.ToUInt32(src, srcOffset);
                     Copy(sizeof(uint));
 
-                    var keyFormat = (AnimationCompressionFormat) (packedInfo >> 28);
-                    var componentMask = (int) ((packedInfo >> 24) & 0xF);
-                    var numKeys = (int) (packedInfo & 0xFFFFFF);
+                    var keyFormat = (AnimationCompressionFormat)(packedInfo >> 28);
+                    var componentMask = (int)((packedInfo >> 24) & 0xF);
+                    var numKeys = (int)(packedInfo & 0xFFFFFF);
                     var hasTimeTracks = (componentMask & 8) != 0;
 
                     var numComponents = NumComponentsPerMask[componentMask & 7];

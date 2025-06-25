@@ -20,7 +20,7 @@ namespace CUE4Parse.UE4.Objects.UObject
             RepNotifyFunc = Ar.ReadFName();
             if (FReleaseObjectVersion.Get(Ar) >= FReleaseObjectVersion.Type.PropertiesSerializeRepCondition)
             {
-                BlueprintReplicationCondition = (ELifetimeCondition) Ar.Read<byte>();
+                BlueprintReplicationCondition = (ELifetimeCondition)Ar.Read<byte>();
             }
         }
 

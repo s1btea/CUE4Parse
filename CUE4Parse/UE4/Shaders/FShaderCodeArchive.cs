@@ -28,30 +28,30 @@ namespace CUE4Parse.UE4.Shaders
             switch (archiveVersion)
             {
                 case 2:
-                {
-                    var shaders = new FSerializedShaderArchive(Ar);
-                    ShaderCode = new byte[shaders.ShaderEntries.Length][];
-                    for (var i = 0; i < shaders.ShaderEntries.Length; i++)
                     {
-                        ShaderCode[i] = Ar.ReadBytes((int) shaders.ShaderEntries[i].Size);
+                        var shaders = new FSerializedShaderArchive(Ar);
+                        ShaderCode = new byte[shaders.ShaderEntries.Length][];
+                        for (var i = 0; i < shaders.ShaderEntries.Length; i++)
+                        {
+                            ShaderCode[i] = Ar.ReadBytes((int)shaders.ShaderEntries[i].Size);
+                        }
+
+                        SerializedShaders = shaders;
+                        break;
                     }
-
-                    SerializedShaders = shaders;
-                    break;
-                }
                 case 1 when bIsIoStore: // I/O Store-based ushaderbytecode files start at version 1 now, same as old pak versions.
-                {
-                    var shaders = new FIoStoreShaderCodeArchive(Ar);
-                    // ShaderCode = new byte[shaders.ShaderEntries.Length][];
-                    // for (var i = 0; i < shaders.ShaderEntries.Length; i++)
-                    // {
-                    //     ShaderCode[i] = Ar.ReadBytes((int) shaders.ShaderEntries[i].UncompressedSize);
-                    // }
+                    {
+                        var shaders = new FIoStoreShaderCodeArchive(Ar);
+                        // ShaderCode = new byte[shaders.ShaderEntries.Length][];
+                        // for (var i = 0; i < shaders.ShaderEntries.Length; i++)
+                        // {
+                        //     ShaderCode[i] = Ar.ReadBytes((int) shaders.ShaderEntries[i].UncompressedSize);
+                        // }
 
-                    SerializedShaders = shaders;
+                        SerializedShaders = shaders;
 
-                    break;
-                }
+                        break;
+                    }
                 case 1 when !bIsIoStore:
                     // TODO - Need to figure out how this should work
                     // https://github.com/EpicGames/UnrealEngine/blob/4.22/Engine/Source/Runtime/RenderCore/Private/ShaderCodeLibrary.cpp#L910

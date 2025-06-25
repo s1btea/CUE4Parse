@@ -16,11 +16,11 @@ namespace CUE4Parse_Conversion.Sounds.ADPCM
                 throw new Exception($"Invalid RIFF identifier (should be {EChunkIdentifier.RIFF} but actually is {rfId})");
 
             var fileSize = Ar.Read<uint>();
-            
+
             var wvId = Ar.Read<EChunkIdentifier>();
             if (wvId != EChunkIdentifier.WAVE)
                 throw new Exception($"Invalid WAVE identifier (should be {EChunkIdentifier.WAVE} but actually is {wvId})");
-            
+
             var ftId = Ar.Read<EChunkIdentifier>();
             if (ftId != EChunkIdentifier.FMT)
                 throw new Exception($"Invalid FMT identifier (should be {EChunkIdentifier.FMT} but actually is {ftId})");
@@ -38,7 +38,7 @@ namespace CUE4Parse_Conversion.Sounds.ADPCM
                 Ar.Position = savePos + ftSize;
                 return wFormatTag;
             }
-            
+
             var cbSize = Ar.Read<ushort>();
             if (wFormatTag < EAudioFormat.WAVE_FORMAT_EXTENSIBLE)
             {
@@ -48,7 +48,7 @@ namespace CUE4Parse_Conversion.Sounds.ADPCM
 
             if (wBitsPerSample != (8 * nBlockAlign / nChannels))
                 throw new Exception("The original bits/sample field does not match the container size");
-            
+
             var wValidBitsPerSample = Ar.Read<ushort>();
             var dwChannelMask = Ar.Read<uint>();
             wFormatTag = Ar.Read<EAudioFormat>();

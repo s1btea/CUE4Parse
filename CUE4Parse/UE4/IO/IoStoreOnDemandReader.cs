@@ -36,7 +36,7 @@ namespace CUE4Parse.UE4.IO
             if (onDemandEntry == null) throw new ParserException("Can't read unknown on-demand entry");
             if (TryResolve(onDemandEntry.ChunkId, out var offsetLength))
             {
-                return Read(onDemandEntry.Hash.ToString().ToLower(), (long) offsetLength.Offset, (long) offsetLength.Length);
+                return Read(onDemandEntry.Hash.ToString().ToLower(), (long)offsetLength.Offset, (long)offsetLength.Length);
             }
             throw new KeyNotFoundException($"Couldn't find chunk {onDemandEntry.ChunkId} in IoStoreOnDemand {Name}");
         }
@@ -47,8 +47,8 @@ namespace CUE4Parse.UE4.IO
 
             var compressionBlockSize = TocResource.Header.CompressionBlockSize;
             var dst = new byte[length];
-            var firstBlockIndex = (int) (offset / compressionBlockSize);
-            var lastBlockIndex = (int) (((offset + dst.Length).Align((int) compressionBlockSize) - 1) / compressionBlockSize);
+            var firstBlockIndex = (int)(offset / compressionBlockSize);
+            var lastBlockIndex = (int)(((offset + dst.Length).Align((int)compressionBlockSize) - 1) / compressionBlockSize);
             var offsetInBlock = offset % compressionBlockSize;
             var remainingSize = length;
             var dstOffset = 0;
@@ -74,8 +74,8 @@ namespace CUE4Parse.UE4.IO
                     uncompressedBuffer = new byte[uncompressedSize];
                 }
 
-                reader.Read(compressedBuffer, 0, (int) rawSize);
-                compressedBuffer = DecryptIfEncrypted(compressedBuffer, 0, (int) rawSize);
+                reader.Read(compressedBuffer, 0, (int)rawSize);
+                compressedBuffer = DecryptIfEncrypted(compressedBuffer, 0, (int)rawSize);
 
                 byte[] src;
                 if (compressionBlock.CompressionMethodIndex == 0)
@@ -85,12 +85,12 @@ namespace CUE4Parse.UE4.IO
                 else
                 {
                     var compressionMethod = TocResource.CompressionMethods[compressionBlock.CompressionMethodIndex];
-                    Compression.Compression.Decompress(compressedBuffer, 0, (int) rawSize, uncompressedBuffer, 0, (int) uncompressedSize, compressionMethod);
+                    Compression.Compression.Decompress(compressedBuffer, 0, (int)rawSize, uncompressedBuffer, 0, (int)uncompressedSize, compressionMethod);
                     src = uncompressedBuffer;
                 }
 
-                var sizeInBlock = (int) Math.Min(compressionBlockSize - offsetInBlock, remainingSize);
-                Buffer.BlockCopy(src, (int) offsetInBlock, dst, dstOffset, sizeInBlock);
+                var sizeInBlock = (int)Math.Min(compressionBlockSize - offsetInBlock, remainingSize);
+                Buffer.BlockCopy(src, (int)offsetInBlock, dst, dstOffset, sizeInBlock);
                 offsetInBlock = 0;
                 remainingSize -= sizeInBlock;
                 dstOffset += sizeInBlock;

@@ -71,12 +71,12 @@ namespace CUE4Parse.UE4.Objects.Engine.Curves
 
             if (inTime > maxTime)
             {
-                cycleCount = (int) ((maxTime - inTime) / duration);
+                cycleCount = (int)((maxTime - inTime) / duration);
                 inTime += duration * cycleCount;
             }
             else if (inTime < minTime)
             {
-                cycleCount = (int) ((inTime - minTime) / duration);
+                cycleCount = (int)((inTime - minTime) / duration);
                 inTime -= duration * cycleCount;
             }
 

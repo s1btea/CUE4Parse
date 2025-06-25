@@ -29,79 +29,79 @@ public class FExpressionEvaluator
                 switch (op)
                 {
                     case EOperator.Negate:
-                    {
-                        valueStack[^1] = -valueStack[^1];
-                        break;
-                    }
+                        {
+                            valueStack[^1] = -valueStack[^1];
+                            break;
+                        }
                     case EOperator.Add:
-                    {
-                        var v = valueStack.Pop();
-                        valueStack[^1] += v;
-                        break;
-                    }
+                        {
+                            var v = valueStack.Pop();
+                            valueStack[^1] += v;
+                            break;
+                        }
                     case EOperator.Subtract:
-                    {
-                        var v = valueStack.Pop();
-                        valueStack[^1] -= v;
-                        break;
-                    }
+                        {
+                            var v = valueStack.Pop();
+                            valueStack[^1] -= v;
+                            break;
+                        }
                     case EOperator.Multiply:
-                    {
-                        var v = valueStack.Pop();
-                        valueStack[^1] *= v;
-                        break;
-                    }
+                        {
+                            var v = valueStack.Pop();
+                            valueStack[^1] *= v;
+                            break;
+                        }
                     case EOperator.Divide:
-                    {
-                        var v = valueStack.Pop();
-                        if (UnrealMath.IsNearlyZero(v))
                         {
-                            valueStack[^1] = 0.0f;
+                            var v = valueStack.Pop();
+                            if (UnrealMath.IsNearlyZero(v))
+                            {
+                                valueStack[^1] = 0.0f;
+                            }
+                            else
+                            {
+                                valueStack[^1] /= v;
+                            }
+                            break;
                         }
-                        else
-                        {
-                            valueStack[^1] /= v;
-                        }
-                        break;
-                    }
                     case EOperator.Modulo:
-                    {
-                        var v = valueStack.Pop();
-                        if (UnrealMath.IsNearlyZero(v))
                         {
-                            valueStack[^1] = 0.0f;
+                            var v = valueStack.Pop();
+                            if (UnrealMath.IsNearlyZero(v))
+                            {
+                                valueStack[^1] = 0.0f;
+                            }
+                            else
+                            {
+                                valueStack[^1] %= v;
+                            }
+                            break;
                         }
-                        else
-                        {
-                            valueStack[^1] %= v;
-                        }
-                        break;
-                    }
                     case EOperator.Power:
-                    {
-                        var v = valueStack.Pop();
-                        valueStack[^1] = MathF.Pow(valueStack[^1], v);
-                        if (!float.IsFinite(valueStack[^1]))
                         {
-                            valueStack[^1] = 0.0f;
+                            var v = valueStack.Pop();
+                            valueStack[^1] = MathF.Pow(valueStack[^1], v);
+                            if (!float.IsFinite(valueStack[^1]))
+                            {
+                                valueStack[^1] = 0.0f;
+                            }
+                            break;
                         }
-                        break;
-                    }
                     case EOperator.FloorDivide:
-                    {
-                        var v = valueStack.Pop();
-                        if (UnrealMath.IsNearlyZero(v))
                         {
-                            valueStack[^1] = 0.0f;
-                        }
-                        else
-                        {
-                            valueStack[^1] /= v;
-                        }
+                            var v = valueStack.Pop();
+                            if (UnrealMath.IsNearlyZero(v))
+                            {
+                                valueStack[^1] = 0.0f;
+                            }
+                            else
+                            {
+                                valueStack[^1] /= v;
+                            }
 
-                        valueStack[^1] = MathF.Floor(valueStack[^1]);
-                        break;
-                    }
+                            valueStack[^1] = MathF.Floor(valueStack[^1]);
+                            break;
+                        }
                 }
             }
             else if (token.TryGet<FFunctionRef>(out var funcRef))
@@ -122,7 +122,7 @@ public class FExpressionEvaluator
                 {
                     arguments[index] = valueStack.Pop();
                 }
-                
+
                 valueStack.Add(functionInfo.Function(arguments));
             }
         }
@@ -157,7 +157,7 @@ public static class GBuiltInFunctions
 
         CE_EXPR("sqrt", 1, args => MathF.Sqrt(args[0]));
         CE_EXPR("isqrt", 1, args => 1 / MathF.Sqrt(args[0]));
-        
+
         CE_EXPR("pi", 0, _ => MathF.PI);
         CE_EXPR("e", 0, _ => MathF.E);
         CE_EXPR("undef", 0, _ => float.NaN);

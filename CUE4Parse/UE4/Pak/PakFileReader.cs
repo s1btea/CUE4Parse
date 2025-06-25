@@ -48,24 +48,24 @@ namespace CUE4Parse.UE4.Pak
                 Ar.Game != EGame.GAME_TorchlightInfinite && Ar.Game != EGame.GAME_DeadByDaylight &&
                 Ar.Game != EGame.GAME_QQ && Ar.Game != EGame.GAME_DreamStar) // These games use version >= 12 to indicate their custom formats
             {
-                log.Warning($"Pak file \"{Name}\" has unsupported version {(int) Info.Version}");
+                log.Warning($"Pak file \"{Name}\" has unsupported version {(int)Info.Version}");
             }
         }
 
         public PakFileReader(string filePath, VersionContainer? versions = null)
-            : this(new FileInfo(filePath), versions) {}
+            : this(new FileInfo(filePath), versions) { }
         public PakFileReader(FileInfo file, VersionContainer? versions = null)
-            : this(file.FullName, file.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite), versions) {}
+            : this(file.FullName, file.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite), versions) { }
         public PakFileReader(string filePath, Stream stream, VersionContainer? versions = null)
-            : this(new FStreamArchive(filePath, stream, versions)) {}
+            : this(new FStreamArchive(filePath, stream, versions)) { }
         public PakFileReader(string filePath, IRandomAccessStream stream, VersionContainer? versions = null)
-            : this(new FRandomAccessStreamArchive(filePath, stream, versions)) {}
+            : this(new FRandomAccessStreamArchive(filePath, stream, versions)) { }
 
         public override byte[] Extract(VfsEntry entry)
         {
             if (entry is not FPakEntry pakEntry || entry.Vfs != this) throw new ArgumentException($"Wrong pak file reader, required {entry.Vfs.Name}, this is {Name}");
             // If this reader is used as a concurrent reader create a clone of the main reader to provide thread safety
-            var reader = IsConcurrent ? (FArchive) Ar.Clone() : Ar;
+            var reader = IsConcurrent ? (FArchive)Ar.Clone() : Ar;
             if (pakEntry.IsCompressed)
             {
 #if DEBUG
@@ -81,20 +81,20 @@ namespace CUE4Parse.UE4.Pak
                         return RennsportCompressedExtract(reader, pakEntry);
                 }
 
-                var uncompressed = new byte[(int) pakEntry.UncompressedSize];
+                var uncompressed = new byte[(int)pakEntry.UncompressedSize];
                 var uncompressedOff = 0;
                 foreach (var block in pakEntry.CompressionBlocks)
                 {
-                    var blockSize = (int) block.Size;
+                    var blockSize = (int)block.Size;
                     var srcSize = blockSize.Align(pakEntry.IsEncrypted ? Aes.ALIGN : 1);
                     // Read the compressed block
                     var compressed = ReadAndDecryptAt(block.CompressedStart, srcSize, reader, pakEntry.IsEncrypted);
                     // Calculate the uncompressed size,
                     // its either just the compression block size,
                     // or if it's the last block, it's the remaining data size
-                    var uncompressedSize = (int) Math.Min(pakEntry.CompressionBlockSize, pakEntry.UncompressedSize - uncompressedOff);
+                    var uncompressedSize = (int)Math.Min(pakEntry.CompressionBlockSize, pakEntry.UncompressedSize - uncompressedOff);
                     Decompress(compressed, 0, blockSize, uncompressed, uncompressedOff, uncompressedSize, pakEntry.CompressionMethod);
-                    uncompressedOff += (int) pakEntry.CompressionBlockSize;
+                    uncompressedOff += (int)pakEntry.CompressionBlockSize;
                 }
 
                 return uncompressed;
@@ -111,10 +111,10 @@ namespace CUE4Parse.UE4.Pak
             // Pak Entry is written before the file data,
             // but it's the same as the one from the index, just without a name
             // We don't need to serialize that again so + file.StructSize
-            var size = (int) pakEntry.UncompressedSize.Align(pakEntry.IsEncrypted ? Aes.ALIGN : 1);
+            var size = (int)pakEntry.UncompressedSize.Align(pakEntry.IsEncrypted ? Aes.ALIGN : 1);
             var data = ReadAndDecryptAt(pakEntry.Offset + pakEntry.StructSize /* Doesn't seem to be the case with older pak versions */,
                 size, reader, pakEntry.IsEncrypted);
-            return size != pakEntry.UncompressedSize ? data.SubByteArray((int) pakEntry.UncompressedSize) : data;
+            return size != pakEntry.UncompressedSize ? data.SubByteArray((int)pakEntry.UncompressedSize) : data;
         }
 
         public override IReadOnlyDictionary<string, GameFile> Mount(bool caseInsensitive = false)
@@ -142,7 +142,7 @@ namespace CUE4Parse.UE4.Pak
                     sb.Append($" ({EncryptedFileCount} encrypted)");
                 if (MountPoint.Contains("/"))
                     sb.Append($", mount point: \"{MountPoint}\"");
-                sb.Append($", version {(int) Info.Version} in {elapsed}");
+                sb.Append($", version {(int)Info.Version} in {elapsed}");
                 log.Information(sb.ToString());
             }
 
@@ -152,7 +152,7 @@ namespace CUE4Parse.UE4.Pak
         private void ReadIndexLegacy(bool caseInsensitive)
         {
             Ar.Position = Info.IndexOffset;
-            var index = new FByteArchive($"{Name} - Index", ReadAndDecrypt((int) Info.IndexSize), Versions);
+            var index = new FByteArchive($"{Name} - Index", ReadAndDecrypt((int)Info.IndexSize), Versions);
 
             string mountPoint;
             try
@@ -197,7 +197,7 @@ namespace CUE4Parse.UE4.Pak
         {
             // Prepare primary index and decrypt if necessary
             Ar.Position = Info.IndexOffset;
-            FArchive primaryIndex = new FByteArchive($"{Name} - Primary Index", ReadAndDecrypt((int) Info.IndexSize));
+            FArchive primaryIndex = new FByteArchive($"{Name} - Primary Index", ReadAndDecrypt((int)Info.IndexSize));
 
             int fileCount = 0;
             EncryptedFileCount = 0;
@@ -246,7 +246,7 @@ namespace CUE4Parse.UE4.Pak
             if (Ar.Game == EGame.GAME_Rennsport)
             {
                 primaryIndex.Position -= 4;
-                encodedPakEntriesSize = (int) (primaryIndex.Length - primaryIndex.Position - 6);
+                encodedPakEntriesSize = (int)(primaryIndex.Length - primaryIndex.Position - 6);
             }
             var encodedPakEntries = primaryIndex.ReadBytes(encodedPakEntriesSize);
 
@@ -255,13 +255,13 @@ namespace CUE4Parse.UE4.Pak
 
             // Read FDirectoryIndex
             Ar.Position = directoryIndexOffset;
-            var directoryIndex = new FByteArchive($"{Name} - Directory Index", ReadAndDecrypt((int) directoryIndexSize));
+            var directoryIndex = new FByteArchive($"{Name} - Directory Index", ReadAndDecrypt((int)directoryIndexSize));
             if (Ar.Game == EGame.GAME_Rennsport)
             {
                 Ar.Position = directoryIndexOffset;
                 directoryIndex = new FByteArchive($"{Name} - Directory Index",
-                    RennsportAes.RennsportDecrypt(Ar.ReadBytes((int) directoryIndexSize), 0,
-                        (int) directoryIndexSize, true, this, true));
+                    RennsportAes.RennsportDecrypt(Ar.ReadBytes((int)directoryIndexSize), 0,
+                        (int)directoryIndexSize, true, this, true));
             }
             var directoryIndexLength = directoryIndex.Read<int>();
             var files = new Dictionary<string, GameFile>(fileCount);
@@ -305,7 +305,7 @@ namespace CUE4Parse.UE4.Pak
         private void ReadFrozenIndex(bool caseInsensitive)
         {
             this.Ar.Position = Info.IndexOffset;
-            var Ar = new FMemoryImageArchive(new FByteArchive("FPakFileData", this.Ar.ReadBytes((int) Info.IndexSize)), 8);
+            var Ar = new FMemoryImageArchive(new FByteArchive("FPakFileData", this.Ar.ReadBytes((int)Info.IndexSize)), 8);
 
             var mountPoint = Ar.ReadFString();
             ValidateMountPoint(ref mountPoint);
@@ -357,9 +357,9 @@ namespace CUE4Parse.UE4.Pak
 
         public override byte[] MountPointCheckBytes()
         {
-            var reader = IsConcurrent ? (FArchive) Ar.Clone() : Ar;
+            var reader = IsConcurrent ? (FArchive)Ar.Clone() : Ar;
             reader.Position = Info.IndexOffset;
-            var size = Math.Min((int) Info.IndexSize, 4 + MAX_MOUNTPOINT_TEST_LENGTH * 2);
+            var size = Math.Min((int)Info.IndexSize, 4 + MAX_MOUNTPOINT_TEST_LENGTH * 2);
             return reader.ReadBytes(size.Align(Aes.ALIGN));
         }
 

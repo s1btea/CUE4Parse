@@ -45,31 +45,31 @@ public abstract class FPropertyTagType
         {
             case FPropertyTagType<FScriptStruct> structProp when type.IsInstanceOfType(structProp.Value!.StructType):
                 return structProp.Value.StructType;
-            case FPropertyTagType<FScriptStruct> {Value.StructType: FStructFallback fallback} when type.GetCustomAttribute<StructFallback>() != null:
+            case FPropertyTagType<FScriptStruct> { Value.StructType: FStructFallback fallback } when type.GetCustomAttribute<StructFallback>() != null:
                 return fallback.MapToClass(type);
             case FPropertyTagType<UScriptArray> arrayProp when type.IsArray:
-            {
-                var array = arrayProp.Value!.Properties;
-                var contentType = type.GetElementType()!;
-                var result = Array.CreateInstance(contentType, array.Count);
-                for (var i = 0; i < array.Count; i++)
                 {
-                    result.SetValue(array[i].GetValue(contentType), i);
+                    var array = arrayProp.Value!.Properties;
+                    var contentType = type.GetElementType()!;
+                    var result = Array.CreateInstance(contentType, array.Count);
+                    for (var i = 0; i < array.Count; i++)
+                    {
+                        result.SetValue(array[i].GetValue(contentType), i);
+                    }
+                    return result;
                 }
-                return result;
-            }
             case FPropertyTagType<UScriptArray> arrayProp when typeof(IList).IsAssignableFrom(type):
-            {
-                var array = arrayProp.Value!.Properties;
-                var contentType = type.GenericTypeArguments[0];
-                var listType = typeof(List<>).MakeGenericType(contentType);
-                var result = (IList) Activator.CreateInstance(listType, array.Count)!;
-                foreach (var element in array)
                 {
-                    result.Add(element.GetValue(contentType));
+                    var array = arrayProp.Value!.Properties;
+                    var contentType = type.GenericTypeArguments[0];
+                    var listType = typeof(List<>).MakeGenericType(contentType);
+                    var result = (IList)Activator.CreateInstance(listType, array.Count)!;
+                    foreach (var element in array)
+                    {
+                        result.Add(element.GetValue(contentType));
+                    }
+                    return result;
                 }
-                return result;
-            }
             case FPropertyTagType<FPackageIndex> objProp when typeof(UObject).IsAssignableFrom(type):
                 if (objProp.Value!.TryLoad(out var objExport) && type.IsInstanceOfType(objExport))
                     return objExport;
@@ -95,7 +95,7 @@ public abstract class FPropertyTagType
 
     public T? GetValue<T>()
     {
-        return (T?) GetValue(typeof(T));
+        return (T?)GetValue(typeof(T));
     }
 
     public abstract override string ToString();
@@ -109,7 +109,7 @@ public abstract class FPropertyTagType
             "AssetClassProperty" => new AssetObjectProperty(Ar, type),
             "BoolProperty" => new BoolProperty(Ar, tagData, type),
             "ByteProperty" => (tagData?.EnumName != null && !tagData.EnumName.Equals("None", StringComparison.OrdinalIgnoreCase)) || (type is ReadType.MAP && Ar.TestReadFName())
-                ? (FPropertyTagType?) new EnumProperty(Ar, tagData, type)
+                ? (FPropertyTagType?)new EnumProperty(Ar, tagData, type)
                 : new ByteProperty(Ar, type),
             "ClassProperty" => new ClassProperty(Ar, type),
             "DelegateProperty" => new DelegateProperty(Ar, type),

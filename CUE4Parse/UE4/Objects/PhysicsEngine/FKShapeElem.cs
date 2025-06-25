@@ -11,7 +11,7 @@ public class FKShapeElem
     public FName Name;
     public bool bContributeToMass;
     public ECollisionEnabled CollisionEnabled;
-    
+
     public FKShapeElem(FStructFallback fallback)
     {
         RestOffset = fallback.GetOrDefault<float>(nameof(RestOffset));

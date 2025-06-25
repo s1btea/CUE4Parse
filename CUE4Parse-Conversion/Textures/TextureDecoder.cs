@@ -32,9 +32,9 @@ public static class TextureDecoder
     {
         if (texture.PlatformData is { FirstMipToSerialize: >= 0, VTData: { } vt } && vt.IsInitialized())
         {
-            var tileSize = (int) vt.TileSize;
-            var tileBorderSize = (int) vt.TileBorderSize;
-            var tilePixelSize = (int) vt.GetPhysicalTileSize();
+            var tileSize = (int)vt.TileSize;
+            var tileBorderSize = (int)vt.TileBorderSize;
+            var tilePixelSize = (int)vt.GetPhysicalTileSize();
             const int level = 0;
 
             FVirtualTextureTileOffsetData tileOffsetData;
@@ -52,8 +52,8 @@ public static class TextureDecoder
                 tileOffsetData = vt.TileOffsetData[level];
             }
 
-            var bitmapWidth = (int) tileOffsetData.Width * tileSize;
-            var bitmapHeight = (int) tileOffsetData.Height * tileSize;
+            var bitmapWidth = (int)tileOffsetData.Width * tileSize;
+            var bitmapHeight = (int)tileOffsetData.Height * tileSize;
             var maxLevel = Math.Ceiling(Math.Log2(Math.Max(tileOffsetData.Width, tileOffsetData.Height)));
             if (tileOffsetData.MaxAddress > 1 && (maxLevel == 0 || vt.IsLegacyData()))
             {
@@ -76,7 +76,7 @@ public static class TextureDecoder
             for (uint layer = 0; layer < vt.NumLayers; layer++)
             {
                 var layerFormat = vt.LayerTypes[layer];
-                if (PixelFormatUtils.PixelFormats.ElementAtOrDefault((int) layerFormat) is not { Supported: true } formatInfo || formatInfo.BlockBytes == 0)
+                if (PixelFormatUtils.PixelFormats.ElementAtOrDefault((int)layerFormat) is not { Supported: true } formatInfo || formatInfo.BlockBytes == 0)
                     throw new NotImplementedException($"The supplied pixel format {layerFormat} is not supported!");
 
                 var tileWidthInBlocks = tilePixelSize.DivideAndRoundUp(formatInfo.BlockSizeX);
@@ -228,7 +228,7 @@ public static class TextureDecoder
     public static void DecodeTexture(FTexture2DMipMap? mip, int sizeX, int sizeY, int sizeZ, EPixelFormat format, bool isNormalMap, ETexturePlatform platform, out byte[] data, out SKColorType colorType)
     {
         if (mip?.BulkData.Data is not { Length: > 0 }) throw new ParserException("Supplied MipMap is null or has empty data!");
-        if (PixelFormatUtils.PixelFormats.ElementAtOrDefault((int) format) is not { Supported: true } formatInfo || formatInfo.BlockBytes == 0) throw new NotImplementedException($"The supplied pixel format {format} is not supported!");
+        if (PixelFormatUtils.PixelFormats.ElementAtOrDefault((int)format) is not { Supported: true } formatInfo || formatInfo.BlockBytes == 0) throw new NotImplementedException($"The supplied pixel format {format} is not supported!");
 
         var isXBPS = platform == ETexturePlatform.XboxAndPlaystation;
         var isNX = platform == ETexturePlatform.NintendoSwitch;
@@ -256,19 +256,19 @@ public static class TextureDecoder
         switch (formatInfo.UnrealFormat)
         {
             case EPixelFormat.PF_DXT1:
-            {
-                if (UseAssetRipperTextureDecoder)
                 {
-                    Bc1.Decompress(bytes, sizeX, sizeY, out data);
-                    colorType = SKColorType.Bgra8888;
+                    if (UseAssetRipperTextureDecoder)
+                    {
+                        Bc1.Decompress(bytes, sizeX, sizeY, out data);
+                        colorType = SKColorType.Bgra8888;
+                    }
+                    else
+                    {
+                        data = DXTDecoder.DXT1(bytes, sizeX, sizeY, sizeZ);
+                        colorType = SKColorType.Rgba8888;
+                    }
+                    break;
                 }
-                else
-                {
-                    data = DXTDecoder.DXT1(bytes, sizeX, sizeY, sizeZ);
-                    colorType = SKColorType.Rgba8888;
-                }
-                break;
-            }
             case EPixelFormat.PF_DXT5:
                 if (UseAssetRipperTextureDecoder)
                 {
@@ -427,7 +427,7 @@ public static class TextureDecoder
         var ret = new byte[width * height * 4];
         for (int y = 0; y < height; y++)
         {
-            var srcPtr = (ushort*) (inp + y * srcPitch);
+            var srcPtr = (ushort*)(inp + y * srcPitch);
             var destPtr = y * width * 4;
             for (int x = 0; x < width; x++)
             {
@@ -452,7 +452,7 @@ public static class TextureDecoder
         {
             for (int y = 0; y < height; y++)
             {
-                var srcPtr = (ushort*) (inp + z * height * srcPitch + y * srcPitch);
+                var srcPtr = (ushort*)(inp + z * height * srcPitch + y * srcPitch);
                 var destPtr = z * height * width * 4 + y * width * 4;
 
                 for (int x = 0; x < width; x++)
@@ -479,10 +479,10 @@ public static class TextureDecoder
         var bitmap = new SKBitmap();
         unsafe
         {
-            var pixelsPtr = NativeMemory.Alloc((nuint) data.Length);
+            var pixelsPtr = NativeMemory.Alloc((nuint)data.Length);
             fixed (byte* p = data)
             {
-                Unsafe.CopyBlockUnaligned(pixelsPtr, p, (uint) data.Length);
+                Unsafe.CopyBlockUnaligned(pixelsPtr, p, (uint)data.Length);
             }
 
             bitmap.InstallPixels(info, new IntPtr(pixelsPtr), info.RowBytes, (address, _) => NativeMemory.Free(address.ToPointer()));

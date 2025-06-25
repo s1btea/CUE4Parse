@@ -72,7 +72,7 @@ namespace CUE4Parse_Conversion.Materials
                 _textures[t.Owner?.Name ?? t.Name] = t.Decode(Options.Platform);
             }
 
-            if (unrealMaterial is UMaterialInstanceConstant {Parent: not null } material)
+            if (unrealMaterial is UMaterialInstanceConstant { Parent: not null } material)
                 _parentData = new MaterialExporter(material.Parent) { Options = Options };
         }
 

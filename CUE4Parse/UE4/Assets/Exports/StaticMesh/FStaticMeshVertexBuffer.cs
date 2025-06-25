@@ -55,31 +55,31 @@ namespace CUE4Parse.UE4.Assets.Exports.StaticMesh
                         throw new ParserException($"Read incorrect amount of tangent bytes, at {Ar.Position}, should be: {position + itemSize * itemCount} behind: {position + (itemSize * itemCount) - Ar.Position}");
 
                     texture_coordinates:
-                        itemSize = Ar.Read<int>();
-                        itemCount = Ar.Read<int>();
-                        position = Ar.Position;
+                    itemSize = Ar.Read<int>();
+                    itemCount = Ar.Read<int>();
+                    position = Ar.Position;
 
-                        if (itemCount != NumVertices * NumTexCoords)
-                            throw new ParserException($"NumVertices={itemCount} != {NumVertices * NumTexCoords}");
+                    if (itemCount != NumVertices * NumTexCoords)
+                        throw new ParserException($"NumVertices={itemCount} != {NumVertices * NumTexCoords}");
 
-                        var uv = Ar.ReadArray(NumVertices, () => FStaticMeshUVItem.SerializeTexcoords(Ar, NumTexCoords, UseFullPrecisionUVs));
-                        if (Ar.Position - position != itemCount * itemSize)
-                            throw new ParserException($"Read incorrect amount of Texture Coordinate bytes, at {Ar.Position}, should be: {position + itemSize * itemCount} behind: {position + (itemSize * itemCount) - Ar.Position}");
+                    var uv = Ar.ReadArray(NumVertices, () => FStaticMeshUVItem.SerializeTexcoords(Ar, NumTexCoords, UseFullPrecisionUVs));
+                    if (Ar.Position - position != itemCount * itemSize)
+                        throw new ParserException($"Read incorrect amount of Texture Coordinate bytes, at {Ar.Position}, should be: {position + itemSize * itemCount} behind: {position + (itemSize * itemCount) - Ar.Position}");
 
-                        UV = new FStaticMeshUVItem[NumVertices];
-                        for (var i = 0; i < NumVertices; i++)
+                    UV = new FStaticMeshUVItem[NumVertices];
+                    for (var i = 0; i < NumVertices; i++)
+                    {
+                        if (Ar.Game is EGame.GAME_StarWarsJediFallenOrder or EGame.GAME_StarWarsJediSurvivor && tempTangents.Length == 0)
                         {
-                            if (Ar.Game is EGame.GAME_StarWarsJediFallenOrder or EGame.GAME_StarWarsJediSurvivor && tempTangents.Length == 0)
-                            {
-                                UV[i] = new FStaticMeshUVItem(new [] { new FPackedNormal(0), new FPackedNormal(0), new FPackedNormal(0) }, uv[i]);
-                            }
-                            else
-                            {
-                                UV[i] = new FStaticMeshUVItem(tempTangents[i], uv[i]);
-                            }
+                            UV[i] = new FStaticMeshUVItem(new[] { new FPackedNormal(0), new FPackedNormal(0), new FPackedNormal(0) }, uv[i]);
                         }
+                        else
+                        {
+                            UV[i] = new FStaticMeshUVItem(tempTangents[i], uv[i]);
+                        }
+                    }
 
-                        if (Ar.Game == EGame.GAME_TorchlightInfinite) Ar.SkipBulkArrayData();
+                    if (Ar.Game == EGame.GAME_TorchlightInfinite) Ar.SkipBulkArrayData();
                 }
             }
             else

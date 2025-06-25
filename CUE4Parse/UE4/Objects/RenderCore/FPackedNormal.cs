@@ -11,10 +11,10 @@ namespace CUE4Parse.UE4.Objects.RenderCore
     public class FPackedNormal
     {
         public uint Data;
-        public float X => (Data & 0xFF) / (float) 127.5 - 1;
-        public float Y => ((Data >> 8) & 0xFF) / (float) 127.5 - 1;
-        public float Z => ((Data >> 16) & 0xFF) / (float) 127.5 - 1;
-        public float W => ((Data >> 24) & 0xFF) / (float) 127.5 - 1;
+        public float X => (Data & 0xFF) / (float)127.5 - 1;
+        public float Y => ((Data >> 8) & 0xFF) / (float)127.5 - 1;
+        public float Z => ((Data >> 16) & 0xFF) / (float)127.5 - 1;
+        public float W => ((Data >> 24) & 0xFF) / (float)127.5 - 1;
 
         public FPackedNormal(FArchive Ar)
         {
@@ -30,22 +30,22 @@ namespace CUE4Parse.UE4.Objects.RenderCore
 
         public FPackedNormal(FVector vector)
         {
-            Data = (uint) ((int) (vector.X + 1 * 127.5) + (int) (vector.Y + 1 * 127.5) << 8 + (int) (vector.Z + 1 * 127.5) << 16);
+            Data = (uint)((int)(vector.X + 1 * 127.5) + (int)(vector.Y + 1 * 127.5) << 8 + (int)(vector.Z + 1 * 127.5) << 16);
         }
 
         public FPackedNormal(FVector4 vector)// is this broken?
         {
-            Data = (uint) ((int) (vector.X + 1 * 127.5) + (int) (vector.Y + 1 * 127.5) << 8 + (int) (vector.Z + 1 * 127.5) << 16 + (int) (vector.W + 1 * 127.5) << 24);
+            Data = (uint)((int)(vector.X + 1 * 127.5) + (int)(vector.Y + 1 * 127.5) << 8 + (int)(vector.Z + 1 * 127.5) << 16 + (int)(vector.W + 1 * 127.5) << 24);
         }
 
         public void SetW(float value)
         {
-            Data = (Data & 0xFFFFFF) | (uint) ((int) Math.Round(value * 127.0f) << 24);
+            Data = (Data & 0xFFFFFF) | (uint)((int)Math.Round(value * 127.0f) << 24);
         }
 
         public float GetW()
         {
-            return (byte) (Data >> 24) / 127.0f;
+            return (byte)(Data >> 24) / 127.0f;
         }
 
         public static explicit operator FVector(FPackedNormal packedNormal) => new(packedNormal.X, packedNormal.Y, packedNormal.Z);
@@ -70,6 +70,6 @@ namespace CUE4Parse.UE4.Objects.RenderCore
             return VectorMultiplyAdd(vectorToUnpack, new FVector4(1.0f / 127.5f), new FVector4(-1.0f));
         }
 
-        public static explicit operator FVector(FDeprecatedSerializedPackedNormal packed) => (FVector) (FVector4) packed;
+        public static explicit operator FVector(FDeprecatedSerializedPackedNormal packed) => (FVector)(FVector4)packed;
     }
 }

@@ -10,7 +10,7 @@ namespace CUE4Parse.UE4.AssetRegistry.Objects
         {
             Bundles = [];
         }
-        
+
         public FAssetBundleData(FAssetRegistryArchive Ar)
         {
             Bundles = Ar.ReadArray(() => new FAssetBundleEntry(Ar));

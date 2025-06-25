@@ -15,7 +15,7 @@ public class VMorphData
         TangentZDelta = tangentZDelta;
         PointIdx = pointIdx;
     }
-    
+
     public void Serialize(FArchiveWriter Ar)
     {
         PositionDelta.Serialize(Ar);

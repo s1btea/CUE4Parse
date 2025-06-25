@@ -9,10 +9,10 @@ namespace CUE4Parse.UE4.Assets.Exports.Sound;
 
 public enum ESoundWaveFlag : uint
 {
-    CookedFlag					= 1 << 0,
-    HasOwnerLoadingBehaviorFlag	= 1 << 1,
-    LoadingBehaviorShift		= 2,
-    LoadingBehaviorMask			= 0b00000111,
+    CookedFlag = 1 << 0,
+    HasOwnerLoadingBehaviorFlag = 1 << 1,
+    LoadingBehaviorShift = 2,
+    LoadingBehaviorMask = 0b00000111,
 }
 
 public class USoundWave : USoundBase

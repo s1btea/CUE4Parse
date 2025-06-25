@@ -54,10 +54,10 @@ namespace CUE4Parse.Utils
         public static float Square(this float val) => val * val;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int TruncToInt(this float f) => (int) f;
+        public static int TruncToInt(this float f) => (int)f;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int TruncToInt(this double f) => (int) f;
+        public static int TruncToInt(this double f) => (int)f;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int FloorToInt(this float f) => Math.Floor(f).TruncToInt();

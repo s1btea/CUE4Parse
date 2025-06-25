@@ -2481,7 +2481,7 @@ public class FConnectivityCubeConverter : JsonConverter<FConnectivityCube>
         for (int i = 0; i < value.Faces.Length; i++)
         {
             var face = value.Faces[i];
-            writer.WritePropertyName(((EFortConnectivityCubeFace) i).ToString());
+            writer.WritePropertyName(((EFortConnectivityCubeFace)i).ToString());
             writer.WriteStartArray();
             for (int j = 0; j < face.Length; j++)
             {

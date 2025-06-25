@@ -7,7 +7,7 @@ public class FOnDemandTocTagSet
 {
     public string Tag;
     public FOnDemandTocTagSetPackageList[] Packages;
-    
+
     public FOnDemandTocTagSet(FArchive Ar)
     {
         Tag = Ar.ReadFString();

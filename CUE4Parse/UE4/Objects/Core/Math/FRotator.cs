@@ -29,7 +29,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         public float Roll;
 
         public FRotator() { }
-        public FRotator(EForceInit forceInit) : this(0, 0, 0) {}
+        public FRotator(EForceInit forceInit) : this(0, 0, 0) { }
         public FRotator(float f) : this(f, f, f) { }
         public FRotator(float pitch, float yaw, float roll)
         {
@@ -39,18 +39,18 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         }
         public FRotator(double pitch, double yaw, double roll)
         {
-            Pitch = (float) pitch;
-            Yaw = (float) yaw;
-            Roll = (float) roll;
+            Pitch = (float)pitch;
+            Yaw = (float)yaw;
+            Roll = (float)roll;
         }
 
         public FRotator(FArchive Ar)
         {
             if (Ar.Ver >= EUnrealEngineObjectUE5Version.LARGE_WORLD_COORDINATES)
             {
-                Pitch = (float) Ar.Read<double>();
-                Yaw = (float) Ar.Read<double>();
-                Roll = (float) Ar.Read<double>();
+                Pitch = (float)Ar.Read<double>();
+                Yaw = (float)Ar.Read<double>();
+                Roll = (float)Ar.Read<double>();
             }
             else
             {
@@ -77,11 +77,11 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         {
             float cp, sp, cy, sy;
             var pitchRadians = Pitch.ToRadians();
-            sp = (float) System.Math.Sin(pitchRadians);
-            cp = (float) System.Math.Cos(pitchRadians);
+            sp = (float)System.Math.Sin(pitchRadians);
+            cp = (float)System.Math.Cos(pitchRadians);
             var yawRadians = Yaw.ToRadians();
-            sy = (float) System.Math.Sin(yawRadians);
-            cy = (float) System.Math.Cos(yawRadians);
+            sy = (float)System.Math.Sin(yawRadians);
+            cy = (float)System.Math.Cos(yawRadians);
 
             return new FVector(cp * cy, cp * sy, sp);
         }
@@ -89,17 +89,17 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         public FQuat Quaternion()
         {
             //PLATFORM_ENABLE_VECTORINTRINSICS
-            const float DEG_TO_RAD = (float) (System.Math.PI / 180.0f);
+            const float DEG_TO_RAD = (float)(System.Math.PI / 180.0f);
             const float DIVIDE_BY_2 = DEG_TO_RAD / 2.0f;
             float sp, sy, sr;
             float cp, cy, cr;
 
-            sp = (float) System.Math.Sin(Pitch * DIVIDE_BY_2);
-            cp = (float) System.Math.Cos(Pitch * DIVIDE_BY_2);
-            sy = (float) System.Math.Sin(Yaw * DIVIDE_BY_2);
-            cy = (float) System.Math.Cos(Yaw * DIVIDE_BY_2);
-            sr = (float) System.Math.Sin(Roll * DIVIDE_BY_2);
-            cr = (float) System.Math.Cos(Roll * DIVIDE_BY_2);
+            sp = (float)System.Math.Sin(Pitch * DIVIDE_BY_2);
+            cp = (float)System.Math.Cos(Pitch * DIVIDE_BY_2);
+            sy = (float)System.Math.Sin(Yaw * DIVIDE_BY_2);
+            cy = (float)System.Math.Cos(Yaw * DIVIDE_BY_2);
+            sr = (float)System.Math.Sin(Roll * DIVIDE_BY_2);
+            cr = (float)System.Math.Cos(Roll * DIVIDE_BY_2);
 
             var rotationQuat = new FQuat
             {
@@ -160,7 +160,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         public static byte CompressAxisToByte(float angle)
         {
             // map [0->360) to [0->256) and mask off any winding
-            return (byte) ((angle * 256.0f / 360.0f).RoundToInt() & 0xFF);
+            return (byte)((angle * 256.0f / 360.0f).RoundToInt() & 0xFF);
         }
         public static float DecompressAxisFromByte(byte angle)
         {
@@ -171,7 +171,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         public static ushort CompressAxisToShort(float angle)
         {
             // map [0->360) to [0->65536) and mask off any winding
-            return (ushort) ((angle * 65536.0f / 360.0f).RoundToInt() & 0xFFF);
+            return (ushort)((angle * 65536.0f / 360.0f).RoundToInt() & 0xFFF);
         }
         public static float DecompressAxisFromShort(ushort angle)
         {
@@ -184,7 +184,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
                                                                     MathF.Abs(NormalizeAxis(Yaw - r.Yaw)) <= tolerance &&
                                                                     MathF.Abs(NormalizeAxis(Roll - r.Roll)) <= tolerance;
 
-        public void Serialize(FArchiveWriter Ar) 
+        public void Serialize(FArchiveWriter Ar)
         {
             Ar.Write(Pitch);
             Ar.Write(Yaw);

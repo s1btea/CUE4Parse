@@ -4,7 +4,7 @@ using CUE4Parse.UE4.Objects.UObject;
 
 namespace CUE4Parse_Conversion.Meshes.PSK
 {
-    public class CSkelMeshBone: ICloneable
+    public class CSkelMeshBone : ICloneable
     {
         public FName Name;
         public int ParentIndex;

@@ -8,7 +8,7 @@ namespace CUE4Parse.UE4.IO.Objects
         ExportCommandType_Serialize,
         ExportCommandType_Count
     };
-    
+
     [StructLayout(LayoutKind.Sequential)]
     public readonly struct FExportBundleEntry
     {

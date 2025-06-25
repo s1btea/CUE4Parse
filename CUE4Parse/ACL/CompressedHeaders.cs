@@ -23,6 +23,6 @@ namespace CUE4Parse.ACL
         public bool GetHasScale() => (MiscPacked & 1) != 0;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetDefaultScale() => (int) (MiscPacked >> 1) & 1;
+        public int GetDefaultScale() => (int)(MiscPacked >> 1) & 1;
     }
 }

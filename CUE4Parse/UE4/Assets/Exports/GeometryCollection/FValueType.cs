@@ -13,7 +13,7 @@ namespace CUE4Parse.UE4.Assets.Exports.GeometryCollection
         public FValueType(FAssetArchive Ar, int version)
         {
             var arrayTypeAsInt = Ar.Read<int>();
-            ArrayType = (EManagedArrayType) arrayTypeAsInt;
+            ArrayType = (EManagedArrayType)arrayTypeAsInt;
 
             if (version < 4)
             {

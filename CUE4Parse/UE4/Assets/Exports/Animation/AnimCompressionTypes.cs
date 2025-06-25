@@ -112,7 +112,7 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation
 
             if (baseFirst)
             {
-                ((ICompressedAnimData) this).BaseSerializeCompressedData(Ar);
+                ((ICompressedAnimData)this).BaseSerializeCompressedData(Ar);
             }
 
             KeyEncodingFormat = Ar.Read<AnimationKeyFormat>();
@@ -122,7 +122,7 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation
 
             if (!baseFirst)
             {
-                ((ICompressedAnimData) this).BaseSerializeCompressedData(Ar);
+                ((ICompressedAnimData)this).BaseSerializeCompressedData(Ar);
             }
 
             if (baseFirst)

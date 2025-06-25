@@ -11,5 +11,5 @@ public class FFloatKey : FAnimKey<float>
         base.Serialize(Ar);
         Ar.Write(Value);
     }
-    
+
 }

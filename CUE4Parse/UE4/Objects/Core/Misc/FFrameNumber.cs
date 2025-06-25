@@ -11,5 +11,5 @@ public readonly struct FFrameNumber : IUStruct
 
     public override string ToString() => Value.ToString();
 
-    public static implicit operator FFrameNumber(float value) => new((int) value);
+    public static implicit operator FFrameNumber(float value) => new((int)value);
 }

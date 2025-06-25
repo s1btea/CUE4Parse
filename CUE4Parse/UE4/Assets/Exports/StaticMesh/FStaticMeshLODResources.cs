@@ -48,7 +48,7 @@ namespace CUE4Parse.UE4.Assets.Exports.StaticMesh
 
             if (!Ar.Versions["StaticMesh.UseNewCookedFormat"])
             {
-                if (!stripDataFlags.IsDataStrippedForServer() && !stripDataFlags.IsClassDataStripped((byte) EClassDataStripFlag.CDSF_MinLodData))
+                if (!stripDataFlags.IsDataStrippedForServer() && !stripDataFlags.IsClassDataStripped((byte)EClassDataStripFlag.CDSF_MinLodData))
                 {
                     SerializeBuffersLegacy(Ar, stripDataFlags);
                 }
@@ -67,7 +67,7 @@ namespace CUE4Parse.UE4.Assets.Exports.StaticMesh
                 {
                     var bHasRayTracingGeometry = Ar.ReadBoolean();
                 }
-                
+
                 if (bInlined)
                 {
                     SerializeBuffers(Ar);
@@ -94,14 +94,14 @@ namespace CUE4Parse.UE4.Assets.Exports.StaticMesh
                     // https://github.com/EpicGames/UnrealEngine/blob/4.27/Engine/Source/Runtime/Engine/Private/StaticMesh.cpp#L560
                     Ar.Position += 8; // DepthOnlyNumTriangles + Packed
                     Ar.Position += 4 * 4 + 2 * 4 + 2 * 4 + 5 * 2 * 4;
-                                // StaticMeshVertexBuffer = 2x int32, 2x bool
-                                // PositionVertexBuffer = 2x int32
-                                // ColorVertexBuffer = 2x int32
-                                // IndexBuffer = int32 + bool
-                                // ReversedIndexBuffer
-                                // DepthOnlyIndexBuffer
-                                // ReversedDepthOnlyIndexBuffer
-                                // WireframeIndexBuffer
+                    // StaticMeshVertexBuffer = 2x int32, 2x bool
+                    // PositionVertexBuffer = 2x int32
+                    // ColorVertexBuffer = 2x int32
+                    // IndexBuffer = int32 + bool
+                    // ReversedIndexBuffer
+                    // DepthOnlyIndexBuffer
+                    // ReversedDepthOnlyIndexBuffer
+                    // WireframeIndexBuffer
                     if (FUE5ReleaseStreamObjectVersion.Get(Ar) < FUE5ReleaseStreamObjectVersion.Type.RemovingTessellation)
                     {
                         Ar.Position += 2 * 4; // AdjacencyIndexBuffer
@@ -148,9 +148,9 @@ namespace CUE4Parse.UE4.Assets.Exports.StaticMesh
 
             IndexBuffer = new FRawStaticIndexBuffer(Ar);
 
-            if (Ar.Game != EGame.GAME_PlayerUnknownsBattlegrounds || !stripDataFlags.IsClassDataStripped((byte) EClassDataStripFlag.CDSF_StripIndexBuffers))
+            if (Ar.Game != EGame.GAME_PlayerUnknownsBattlegrounds || !stripDataFlags.IsClassDataStripped((byte)EClassDataStripFlag.CDSF_StripIndexBuffers))
             {
-                if (Ar.Ver >= EUnrealEngineObjectUE4Version.SOUND_CONCURRENCY_PACKAGE && !stripDataFlags.IsClassDataStripped((byte) EClassDataStripFlag.CDSF_ReversedIndexBuffer))
+                if (Ar.Ver >= EUnrealEngineObjectUE4Version.SOUND_CONCURRENCY_PACKAGE && !stripDataFlags.IsClassDataStripped((byte)EClassDataStripFlag.CDSF_ReversedIndexBuffer))
                 {
                     ReversedIndexBuffer = new FRawStaticIndexBuffer(Ar);
                     DepthOnlyIndexBuffer = new FRawStaticIndexBuffer(Ar);
@@ -170,7 +170,7 @@ namespace CUE4Parse.UE4.Assets.Exports.StaticMesh
                 if (!stripDataFlags.IsEditorDataStripped())
                     WireframeIndexBuffer = new FRawStaticIndexBuffer(Ar);
 
-                if (!stripDataFlags.IsClassDataStripped((byte) EClassDataStripFlag.CDSF_AdjacencyData))
+                if (!stripDataFlags.IsClassDataStripped((byte)EClassDataStripFlag.CDSF_AdjacencyData))
                     AdjacencyIndexBuffer = new FRawStaticIndexBuffer(Ar);
             }
 
@@ -202,23 +202,23 @@ namespace CUE4Parse.UE4.Assets.Exports.StaticMesh
 
             IndexBuffer = new FRawStaticIndexBuffer(Ar);
 
-            if (!stripDataFlags.IsClassDataStripped((byte) EClassDataStripFlag.CDSF_ReversedIndexBuffer))
+            if (!stripDataFlags.IsClassDataStripped((byte)EClassDataStripFlag.CDSF_ReversedIndexBuffer))
             {
                 ReversedIndexBuffer = new FRawStaticIndexBuffer(Ar);
             }
 
             DepthOnlyIndexBuffer = new FRawStaticIndexBuffer(Ar);
 
-            if (!stripDataFlags.IsClassDataStripped((byte) EClassDataStripFlag.CDSF_ReversedIndexBuffer))
+            if (!stripDataFlags.IsClassDataStripped((byte)EClassDataStripFlag.CDSF_ReversedIndexBuffer))
                 ReversedDepthOnlyIndexBuffer = new FRawStaticIndexBuffer(Ar);
 
             if (!stripDataFlags.IsEditorDataStripped())
                 WireframeIndexBuffer = new FRawStaticIndexBuffer(Ar);
 
-            if (FUE5ReleaseStreamObjectVersion.Get(Ar) < FUE5ReleaseStreamObjectVersion.Type.RemovingTessellation && !stripDataFlags.IsClassDataStripped((byte) EClassDataStripFlag.CDSF_AdjacencyData))
+            if (FUE5ReleaseStreamObjectVersion.Get(Ar) < FUE5ReleaseStreamObjectVersion.Type.RemovingTessellation && !stripDataFlags.IsClassDataStripped((byte)EClassDataStripFlag.CDSF_AdjacencyData))
                 AdjacencyIndexBuffer = new FRawStaticIndexBuffer(Ar);
 
-            if (Ar.Versions["StaticMesh.HasRayTracingGeometry"] && !stripDataFlags.IsClassDataStripped((byte) EClassDataStripFlag.CDSF_RayTracingResources))
+            if (Ar.Versions["StaticMesh.HasRayTracingGeometry"] && !stripDataFlags.IsClassDataStripped((byte)EClassDataStripFlag.CDSF_RayTracingResources))
             {
                 _ = Ar.ReadBulkArray<byte>(); // rayTracingGeometry
             }

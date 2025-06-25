@@ -8,7 +8,7 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation.CurveExpression;
 public class FExpressionObject
 {
     public List<OpElement> Expression = [];
-    
+
     public FExpressionObject(FArchive Ar)
     {
         var operandCount = Ar.Read<int>();
@@ -17,33 +17,33 @@ public class FExpressionObject
             var operandType = Ar.Read<int>();
             switch (operandType)
             {
-                case OpElement.EOperator: 
-                {
-                    var operatorType = Ar.Read<int>();
-                    Expression.Add(new OpElement<EOperator>((EOperator) operatorType));
-                    break;
-                }
+                case OpElement.EOperator:
+                    {
+                        var operatorType = Ar.Read<int>();
+                        Expression.Add(new OpElement<EOperator>((EOperator)operatorType));
+                        break;
+                    }
                 case OpElement.FName:
-                {
-                    Expression.Add(new OpElement<FName>(Ar.ReadFName()));
-                    break;
-                }
+                    {
+                        Expression.Add(new OpElement<FName>(Ar.ReadFName()));
+                        break;
+                    }
                 case OpElement.FFunctionRef:
-                {
-                    var functionIndex = Ar.Read<int>();
-                    Expression.Add(new OpElement<FFunctionRef>(new FFunctionRef(functionIndex)));
-                    break;
-                }
+                    {
+                        var functionIndex = Ar.Read<int>();
+                        Expression.Add(new OpElement<FFunctionRef>(new FFunctionRef(functionIndex)));
+                        break;
+                    }
                 case OpElement.Float:
-                {
-                    var value = Ar.Read<float>();
-                    Expression.Add(new OpElement<float>(value));
-                    break;
-                }
+                    {
+                        var value = Ar.Read<float>();
+                        Expression.Add(new OpElement<float>(value));
+                        break;
+                    }
                 default:
-                {
-                    throw new ParserException($"Invalid operand type: {operandType}");
-                }
+                    {
+                        throw new ParserException($"Invalid operand type: {operandType}");
+                    }
             }
         }
     }
@@ -64,7 +64,7 @@ public enum EOperator : int
 public struct FFunctionRef
 {
     public int Index;
-    
+
     public FFunctionRef(int index)
     {
         Index = index;

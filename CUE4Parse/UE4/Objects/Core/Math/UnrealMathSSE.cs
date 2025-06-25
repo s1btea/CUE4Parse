@@ -11,7 +11,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
 
         public static byte ShuffleMask(byte A0, byte A1, byte B2, byte B3)
         {
-            return (byte) (A0 | (A1 << 2) | (B2 << 4) | (B3 << 6));
+            return (byte)(A0 | (A1 << 2) | (B2 << 4) | (B3 << 6));
         }
 
         // public static Vector128<float> MakeVectorRegister(float x, float y, float z, float w)

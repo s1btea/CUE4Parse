@@ -29,7 +29,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         public float M20, M21, M22, M23;
         public float M30, M31, M32, M33;
 
-        public FMatrix() {}
+        public FMatrix() { }
 
         public FMatrix(FMatrix m)
         {
@@ -57,22 +57,22 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         {
             if (readDouble)
             {
-                M00 = (float) Ar.Read<double>();
-                M01 = (float) Ar.Read<double>();
-                M02 = (float) Ar.Read<double>();
-                M03 = (float) Ar.Read<double>();
-                M10 = (float) Ar.Read<double>();
-                M11 = (float) Ar.Read<double>();
-                M12 = (float) Ar.Read<double>();
-                M13 = (float) Ar.Read<double>();
-                M20 = (float) Ar.Read<double>();
-                M21 = (float) Ar.Read<double>();
-                M22 = (float) Ar.Read<double>();
-                M23 = (float) Ar.Read<double>();
-                M30 = (float) Ar.Read<double>();
-                M31 = (float) Ar.Read<double>();
-                M32 = (float) Ar.Read<double>();
-                M33 = (float) Ar.Read<double>();
+                M00 = (float)Ar.Read<double>();
+                M01 = (float)Ar.Read<double>();
+                M02 = (float)Ar.Read<double>();
+                M03 = (float)Ar.Read<double>();
+                M10 = (float)Ar.Read<double>();
+                M11 = (float)Ar.Read<double>();
+                M12 = (float)Ar.Read<double>();
+                M13 = (float)Ar.Read<double>();
+                M20 = (float)Ar.Read<double>();
+                M21 = (float)Ar.Read<double>();
+                M22 = (float)Ar.Read<double>();
+                M23 = (float)Ar.Read<double>();
+                M30 = (float)Ar.Read<double>();
+                M31 = (float)Ar.Read<double>();
+                M32 = (float)Ar.Read<double>();
+                M33 = (float)Ar.Read<double>();
             }
             else
             {
@@ -177,7 +177,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         public FVector InverseTransformPosition(FVector v)
         {
             var invSelf = InverseFast();
-            return (FVector) invSelf.TransformPosition(v);
+            return (FVector)invSelf.TransformPosition(v);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -227,78 +227,78 @@ namespace CUE4Parse.UE4.Objects.Core.Math
             var det = new float[4];
             var tmp = new FMatrix();
 
-            tmp.M00	= M22 * M33 - M23 * M32;
-            tmp.M01	= M12 * M33 - M13 * M32;
-            tmp.M02	= M12 * M23 - M13 * M22;
+            tmp.M00 = M22 * M33 - M23 * M32;
+            tmp.M01 = M12 * M33 - M13 * M32;
+            tmp.M02 = M12 * M23 - M13 * M22;
 
-            tmp.M10	= M22 * M33 - M23 * M32;
-            tmp.M11	= M02 * M33 - M03 * M32;
-            tmp.M12	= M02 * M23 - M03 * M22;
+            tmp.M10 = M22 * M33 - M23 * M32;
+            tmp.M11 = M02 * M33 - M03 * M32;
+            tmp.M12 = M02 * M23 - M03 * M22;
 
-            tmp.M20	= M12 * M33 - M13 * M32;
-            tmp.M21	= M02 * M33 - M03 * M32;
-            tmp.M22	= M02 * M13 - M03 * M12;
+            tmp.M20 = M12 * M33 - M13 * M32;
+            tmp.M21 = M02 * M33 - M03 * M32;
+            tmp.M22 = M02 * M13 - M03 * M12;
 
-            tmp.M30	= M12 * M23 - M13 * M22;
-            tmp.M31	= M02 * M23 - M03 * M22;
-            tmp.M32	= M02 * M13 - M03 * M12;
+            tmp.M30 = M12 * M23 - M13 * M22;
+            tmp.M31 = M02 * M23 - M03 * M22;
+            tmp.M32 = M02 * M13 - M03 * M12;
 
-            det[0] = M11*tmp.M00 - M21*tmp.M01 + M31*tmp.M02;
-            det[1] = M01*tmp.M10 - M21*tmp.M11 + M31*tmp.M12;
-            det[2] = M01*tmp.M20 - M11*tmp.M21 + M31*tmp.M22;
-            det[3] = M01*tmp.M30 - M11*tmp.M31 + M21*tmp.M32;
+            det[0] = M11 * tmp.M00 - M21 * tmp.M01 + M31 * tmp.M02;
+            det[1] = M01 * tmp.M10 - M21 * tmp.M11 + M31 * tmp.M12;
+            det[2] = M01 * tmp.M20 - M11 * tmp.M21 + M31 * tmp.M22;
+            det[3] = M01 * tmp.M30 - M11 * tmp.M31 + M21 * tmp.M32;
 
-            var determinant = M00*det[0] - M10*det[1] + M20*det[2] - M30*det[3];
+            var determinant = M00 * det[0] - M10 * det[1] + M20 * det[2] - M30 * det[3];
             var rDet = 1.0f / determinant;
 
-            result.M00 =  rDet * det[0];
+            result.M00 = rDet * det[0];
             result.M01 = -rDet * det[1];
-            result.M02 =  rDet * det[2];
+            result.M02 = rDet * det[2];
             result.M03 = -rDet * det[3];
-            result.M10 = -rDet * (M10*tmp.M00 - M20*tmp.M01 + M30*tmp.M02);
-            result.M11 =  rDet * (M00*tmp.M10 - M20*tmp.M11 + M30*tmp.M12);
-            result.M12 = -rDet * (M00*tmp.M20 - M10*tmp.M21 + M30*tmp.M22);
-            result.M13 =  rDet * (M00*tmp.M30 - M10*tmp.M31 + M20*tmp.M32);
-            result.M20 =  rDet * (
-            	M10 * (M21 * M33 - M23 * M31) -
-            	M20 * (M11 * M33 - M13 * M31) +
-            	M30 * (M11 * M23 - M13 * M21)
-            	);
+            result.M10 = -rDet * (M10 * tmp.M00 - M20 * tmp.M01 + M30 * tmp.M02);
+            result.M11 = rDet * (M00 * tmp.M10 - M20 * tmp.M11 + M30 * tmp.M12);
+            result.M12 = -rDet * (M00 * tmp.M20 - M10 * tmp.M21 + M30 * tmp.M22);
+            result.M13 = rDet * (M00 * tmp.M30 - M10 * tmp.M31 + M20 * tmp.M32);
+            result.M20 = rDet * (
+                M10 * (M21 * M33 - M23 * M31) -
+                M20 * (M11 * M33 - M13 * M31) +
+                M30 * (M11 * M23 - M13 * M21)
+                );
             result.M21 = -rDet * (
-            	M00 * (M21 * M33 - M23 * M31) -
-            	M20 * (M01 * M33 - M03 * M31) +
-            	M30 * (M01 * M23 - M03 * M21)
-            	);
-            result.M22 =  rDet * (
-            	M00 * (M11 * M33 - M13 * M31) -
-            	M10 * (M01 * M33 - M03 * M31) +
-            	M30 * (M01 * M13 - M03 * M11)
-            	);
+                M00 * (M21 * M33 - M23 * M31) -
+                M20 * (M01 * M33 - M03 * M31) +
+                M30 * (M01 * M23 - M03 * M21)
+                );
+            result.M22 = rDet * (
+                M00 * (M11 * M33 - M13 * M31) -
+                M10 * (M01 * M33 - M03 * M31) +
+                M30 * (M01 * M13 - M03 * M11)
+                );
             result.M23 = -rDet * (
-            	M00 * (M11 * M23 - M13 * M21) -
-            	M10 * (M01 * M23 - M03 * M21) +
-            	M20 * (M01 * M13 - M03 * M11)
-            	);
+                M00 * (M11 * M23 - M13 * M21) -
+                M10 * (M01 * M23 - M03 * M21) +
+                M20 * (M01 * M13 - M03 * M11)
+                );
             result.M30 = -rDet * (
-            	M10 * (M21 * M32 - M22 * M31) -
-            	M20 * (M11 * M32 - M12 * M31) +
-            	M30 * (M11 * M22 - M12 * M21)
-            	);
-            result.M31 =  rDet * (
-            	M00 * (M21 * M32 - M22 * M31) -
-            	M20 * (M01 * M32 - M02 * M31) +
-            	M30 * (M01 * M22 - M02 * M21)
-            	);
+                M10 * (M21 * M32 - M22 * M31) -
+                M20 * (M11 * M32 - M12 * M31) +
+                M30 * (M11 * M22 - M12 * M21)
+                );
+            result.M31 = rDet * (
+                M00 * (M21 * M32 - M22 * M31) -
+                M20 * (M01 * M32 - M02 * M31) +
+                M30 * (M01 * M22 - M02 * M21)
+                );
             result.M32 = -rDet * (
-            	M00 * (M11 * M32 - M12 * M31) -
-            	M10 * (M01 * M32 - M02 * M31) +
-            	M30 * (M01 * M12 - M02 * M11)
-            	);
-            result.M33 =  rDet * (
-            	M00 * (M11 * M22 - M12 * M21) -
-            	M10 * (M01 * M22 - M02 * M21) +
-            	M20 * (M01 * M12 - M02 * M11)
-            	);
+                M00 * (M11 * M32 - M12 * M31) -
+                M10 * (M01 * M32 - M02 * M31) +
+                M30 * (M01 * M12 - M02 * M11)
+                );
+            result.M33 = rDet * (
+                M00 * (M11 * M22 - M12 * M21) -
+                M10 * (M01 * M22 - M02 * M21) +
+                M20 * (M01 * M12 - M02 * M11)
+                );
 
             return result;
         }
@@ -323,9 +323,9 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         public void RemoveScaling(float tolerance = UnrealMath.SmallNumber)
         {
             // For each row, find magnitude, and if its non-zero re-scale so its unit length.
-            var squareSum0 = M00*M00 + M01*M01 + M02*M02;
-            var squareSum1 = M10*M10 + M11*M11 + M12*M12;
-            var squareSum2 = M20*M20 + M21*M21 + M22*M22;
+            var squareSum0 = M00 * M00 + M01 * M01 + M02 * M02;
+            var squareSum1 = M10 * M10 + M11 * M11 + M12 * M12;
+            var squareSum2 = M20 * M20 + M21 * M21 + M22 * M22;
 
             //FloatSelect: return Comparand >= 0.f ? ValueGEZero : ValueLTZero;
             var scale0 = squareSum0 - tolerance >= 0 ? squareSum0.InvSqrt() : 1;
@@ -347,9 +347,9 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         public FVector ExtractScaling(float tolerance = UnrealMath.SmallNumber)
         {
             // For each row, find magnitude, and if its non-zero re-scale so its unit length.
-            var squareSum0 = M00*M00 + M01*M01 + M02*M02;
-            var squareSum1 = M10*M10 + M11*M11 + M12*M12;
-            var squareSum2 = M20*M20 + M21*M21 + M22*M22;
+            var squareSum0 = M00 * M00 + M01 * M01 + M02 * M02;
+            var squareSum1 = M10 * M10 + M11 * M11 + M12 * M12;
+            var squareSum2 = M20 * M20 + M21 * M21 + M22 * M22;
 
             FVector scale3D = new();
 
@@ -458,7 +458,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
             var zAxis = GetScaledAxis(EAxis.Z);
 
             var rotator = new FRotator(
-                MathF.Atan2(xAxis.Z, MathF.Sqrt(xAxis.X*xAxis.X + xAxis.Y*xAxis.Y)) * 180.0f / MathF.PI,
+                MathF.Atan2(xAxis.Z, MathF.Sqrt(xAxis.X * xAxis.X + xAxis.Y * xAxis.Y)) * 180.0f / MathF.PI,
                 MathF.Atan2(xAxis.Y, xAxis.X) * 180.0f / MathF.PI,
                 0
             );

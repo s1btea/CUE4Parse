@@ -11,7 +11,7 @@ public class FConstraintBaseParams
     public float Restitution;
     public float ContactDistance;
     public bool bSoftConstraint;
-    
+
     public FConstraintBaseParams(FStructFallback fallback)
     {
         Stiffness = fallback.GetOrDefault<float>(nameof(Stiffness));
@@ -29,8 +29,8 @@ public class FLinearConstraint : FConstraintBaseParams
     public ELinearConstraintMotion XMotion;
     public ELinearConstraintMotion YMotion;
     public ELinearConstraintMotion ZMotion;
-    
-    
+
+
     public FLinearConstraint(FStructFallback fallback) : base(fallback)
     {
         Limit = fallback.GetOrDefault<float>(nameof(Limit));
@@ -49,14 +49,14 @@ public enum ELinearConstraintMotion
 }
 
 [StructFallback]
-public class FConeConstraint  : FConstraintBaseParams
+public class FConeConstraint : FConstraintBaseParams
 {
     public float Swing1LimitDegrees;
     public float Swing2LimitDegrees;
     public EAngularConstraintMotion Swing1Motion;
     public EAngularConstraintMotion Swing2Motion;
-    
-    
+
+
     public FConeConstraint(FStructFallback fallback) : base(fallback)
     {
         Swing1LimitDegrees = fallback.GetOrDefault<float>(nameof(Swing1LimitDegrees));
@@ -67,12 +67,12 @@ public class FConeConstraint  : FConstraintBaseParams
 }
 
 [StructFallback]
-public class FTwistConstraint  : FConstraintBaseParams
+public class FTwistConstraint : FConstraintBaseParams
 {
     public float TwistLimitDegrees;
     public EAngularConstraintMotion TwistMotion;
-    
-    
+
+
     public FTwistConstraint(FStructFallback fallback) : base(fallback)
     {
         TwistLimitDegrees = fallback.GetOrDefault<float>(nameof(TwistLimitDegrees));

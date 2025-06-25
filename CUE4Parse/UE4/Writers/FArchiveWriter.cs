@@ -8,7 +8,7 @@ namespace CUE4Parse.UE4.Writers
 
         public FArchiveWriter()
         {
-            _memoryData = new MemoryStream {Position = 0};
+            _memoryData = new MemoryStream { Position = 0 };
             OutStream = _memoryData;
         }
 

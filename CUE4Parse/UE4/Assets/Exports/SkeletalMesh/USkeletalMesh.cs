@@ -118,7 +118,7 @@ public class USkeletalMesh : UObject
                 {
                     if (j < lodMatMap.Length && lodMatMap[j] >= 0 && lodMatMap[j] < Materials.Length)
                     {
-                        lodModel.Sections[j].MaterialIndex = (short) Math.Clamp((ushort) lodMatMap[j], 0, Materials.Length);
+                        lodModel.Sections[j].MaterialIndex = (short)Math.Clamp((ushort)lodMatMap[j], 0, Materials.Length);
                     }
                 }
             }

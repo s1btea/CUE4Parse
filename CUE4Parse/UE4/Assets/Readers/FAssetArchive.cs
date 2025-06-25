@@ -196,6 +196,6 @@ namespace CUE4Parse.UE4.Assets.Readers
 
         // For performance reasons we carry over the payloads dict to the cloned instance
         // Shouldn't be a big deal since we add the payloads during package initialization phase, not during object serialization
-        public override object Clone() => new FAssetArchive((FArchive) _baseArchive.Clone(), Owner, AbsoluteOffset, _payloads);
+        public override object Clone() => new FAssetArchive((FArchive)_baseArchive.Clone(), Owner, AbsoluteOffset, _payloads);
     }
 }

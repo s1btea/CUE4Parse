@@ -12,7 +12,7 @@ public class FKBoxElem : FKShapeElem
     public float X;
     public float Y;
     public float Z;
-    
+
     public FKBoxElem(FStructFallback fallback) : base(fallback)
     {
         Center = fallback.GetOrDefault(nameof(Center), FVector.ZeroVector);

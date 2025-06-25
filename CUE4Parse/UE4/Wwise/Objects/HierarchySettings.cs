@@ -15,7 +15,7 @@ namespace CUE4Parse.UE4.Wwise.Objects
             Settings = new Setting<EHierarchyParameterType>[SettingsCount];
             var settingIds = Ar.ReadArray<EHierarchyParameterType>(SettingsCount);
             var settingValues = Ar.ReadArray<float>(SettingsCount);
-            for(int index = 0; index < SettingsCount; index++)
+            for (int index = 0; index < SettingsCount; index++)
             {
                 Settings[index] = new Setting<EHierarchyParameterType>(settingIds[index], settingValues[index]);
             }

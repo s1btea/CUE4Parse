@@ -5,7 +5,7 @@ using CUE4Parse.UE4.Exceptions;
 
 namespace CUE4Parse.UE4.Objects.UObject;
 
-public struct FUniversalObjectLocatorFragment: IUStruct
+public struct FUniversalObjectLocatorFragment : IUStruct
 {
     public FStructFallback? FragmentStruct;
 

@@ -63,7 +63,7 @@ public class FRigBaseMetadata<T> : FRigBaseMetadata
             ERigMetadataType.NameArray => new FRigNameArrayMetadata { Value = Ar.ReadArray(Ar.ReadFName) },
             ERigMetadataType.Vector => new FRigVectorMetadata { Value = new FVector(Ar) },
             ERigMetadataType.VectorArray => new FRigVectorArrayMetadata { Value = Ar.ReadArray(() => new FVector(Ar)) },
-            ERigMetadataType.Rotator => new FRigRotatorMetadata{ Value = new FRotator(Ar) },
+            ERigMetadataType.Rotator => new FRigRotatorMetadata { Value = new FRotator(Ar) },
             ERigMetadataType.RotatorArray => new FRigRotatorArrayMetadata { Value = Ar.ReadArray(() => new FRotator(Ar)) },
             ERigMetadataType.Quat => new FRigQuatMetadata { Value = new FQuat(Ar) },
             ERigMetadataType.QuatArray => new FRigQuatArrayMetadata { Value = Ar.ReadArray(() => new FQuat(Ar)) },

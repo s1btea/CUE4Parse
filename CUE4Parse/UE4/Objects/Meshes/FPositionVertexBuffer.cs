@@ -39,7 +39,7 @@ namespace CUE4Parse.UE4.Objects.Meshes
                 }
             }
             if (Ar.Game == EGame.GAME_Gollum) Ar.Position += 25;
-            Verts = Ar.ReadBulkArray<FVector>();           
+            Verts = Ar.ReadBulkArray<FVector>();
         }
     }
 }

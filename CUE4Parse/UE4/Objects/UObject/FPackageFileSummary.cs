@@ -194,12 +194,12 @@ namespace CUE4Parse.UE4.Objects.UObject
             FolderName = Ar.ReadFString(); // PackageGroup
             PackageFlags = Ar.Read<EPackageFlags>();
 
-            /*if (PackageFlags.HasFlag(EPackageFlags.PKG_FilterEditorOnly))
-            {
-                TODO Ar.SetFilterEditorOnly(true);
-            }*/
+        /*if (PackageFlags.HasFlag(EPackageFlags.PKG_FilterEditorOnly))
+        {
+            TODO Ar.SetFilterEditorOnly(true);
+        }*/
 
-            afterPackageFlags:
+        afterPackageFlags:
             NameCount = Ar.Read<int>();
             NameOffset = Ar.Read<int>();
 
@@ -287,7 +287,7 @@ namespace CUE4Parse.UE4.Objects.UObject
 
                 if (engineChangelist != 0)
                 {
-                    SavedByEngineVersion = new FEngineVersion(4, 0, 0, (uint) engineChangelist, string.Empty);
+                    SavedByEngineVersion = new FEngineVersion(4, 0, 0, (uint)engineChangelist, string.Empty);
                 }
             }
 
@@ -303,15 +303,15 @@ namespace CUE4Parse.UE4.Objects.UObject
 
             static bool VerifyCompressionFlagsValid(int compressionFlags)
             {
-                const int CompressionFlagsMask = (int) (COMPRESS_DeprecatedFormatFlagsMask | COMPRESS_OptionsFlagsMask | COMPRESS_ForPurposeMask);
+                const int CompressionFlagsMask = (int)(COMPRESS_DeprecatedFormatFlagsMask | COMPRESS_OptionsFlagsMask | COMPRESS_ForPurposeMask);
                 return (compressionFlags & ~CompressionFlagsMask) == 0;
             }
 
             CompressionFlags = Ar.Read<ECompressionFlags>();
 
-            if (!VerifyCompressionFlagsValid((int) CompressionFlags))
+            if (!VerifyCompressionFlagsValid((int)CompressionFlags))
             {
-                throw new ParserException($"Invalid compression flags ({(uint) CompressionFlags})");
+                throw new ParserException($"Invalid compression flags ({(uint)CompressionFlags})");
             }
 
             var compressedChunks = Ar.ReadArray<FCompressedChunk>();
@@ -323,7 +323,7 @@ namespace CUE4Parse.UE4.Objects.UObject
 
             PackageSource = Ar.Read<int>();
 
-            if (Ar.Game == EGame.GAME_ArkSurvivalEvolved && (int) FileVersionLicenseeUE >= 10)
+            if (Ar.Game == EGame.GAME_ArkSurvivalEvolved && (int)FileVersionLicenseeUE >= 10)
             {
                 Ar.Position += 8;
             }
@@ -349,16 +349,16 @@ namespace CUE4Parse.UE4.Objects.UObject
 
             if (Ar.Game == EGame.GAME_TowerOfFantasy)
             {
-                TotalHeaderSize = (int) (TotalHeaderSize ^ 0xEEB2CEC7);
-                NameCount = (int) (NameCount ^ 0xEEB2CEC7);
-                NameOffset = (int) (NameOffset ^ 0xEEB2CEC7);
-                ExportCount = (int) (ExportCount ^ 0xEEB2CEC7);
-                ExportOffset = (int) (ExportOffset ^ 0xEEB2CEC7);
-                ImportCount = (int) (ImportCount ^ 0xEEB2CEC7);
-                ImportOffset = (int) (ImportOffset ^ 0xEEB2CEC7);
-                DependsOffset = (int) (DependsOffset ^ 0xEEB2CEC7);
-                PackageSource = (int) (PackageSource ^ 0xEEB2CEC7);
-                AssetRegistryDataOffset = (int) (AssetRegistryDataOffset ^ 0xEEB2CEC7);
+                TotalHeaderSize = (int)(TotalHeaderSize ^ 0xEEB2CEC7);
+                NameCount = (int)(NameCount ^ 0xEEB2CEC7);
+                NameOffset = (int)(NameOffset ^ 0xEEB2CEC7);
+                ExportCount = (int)(ExportCount ^ 0xEEB2CEC7);
+                ExportOffset = (int)(ExportOffset ^ 0xEEB2CEC7);
+                ImportCount = (int)(ImportCount ^ 0xEEB2CEC7);
+                ImportOffset = (int)(ImportOffset ^ 0xEEB2CEC7);
+                DependsOffset = (int)(DependsOffset ^ 0xEEB2CEC7);
+                PackageSource = (int)(PackageSource ^ 0xEEB2CEC7);
+                AssetRegistryDataOffset = (int)(AssetRegistryDataOffset ^ 0xEEB2CEC7);
             }
 
             if (Ar.Game is EGame.GAME_SeaOfThieves or EGame.GAME_GearsOfWar4)
@@ -368,7 +368,7 @@ namespace CUE4Parse.UE4.Objects.UObject
 
             if (FileVersionUE >= EUnrealEngineObjectUE4Version.SUMMARY_HAS_BULKDATA_OFFSET)
             {
-                BulkDataStartOffset = (int) Ar.Read<long>();
+                BulkDataStartOffset = (int)Ar.Read<long>();
             }
 
             if (FileVersionUE >= EUnrealEngineObjectUE4Version.WORLD_LEVEL_INFO)
@@ -407,7 +407,7 @@ namespace CUE4Parse.UE4.Objects.UObject
 
             if (Tag == PACKAGE_FILE_TAG_ONE && Ar is FAssetArchive assetAr)
             {
-                assetAr.AbsoluteOffset = NameOffset - (int) Ar.Position;
+                assetAr.AbsoluteOffset = NameOffset - (int)Ar.Position;
             }
         }
 

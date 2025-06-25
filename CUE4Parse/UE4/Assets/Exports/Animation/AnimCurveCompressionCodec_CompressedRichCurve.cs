@@ -198,7 +198,7 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation
 
             fixed (byte* buffer = &animSeq.CompressedCurveByteStream[0])
             {
-                var curveDescriptions = (FCurveDesc*) buffer;
+                var curveDescriptions = (FCurveDesc*)buffer;
 
                 var compressedCurveNames = animSeq.CompressedCurveNames;
                 var numCurves = compressedCurveNames.Length;
@@ -208,7 +208,7 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation
                     var curveName = compressedCurveNames[curveIndex];
                     var curve = curveDescriptions[curveIndex];
                     var compressedKeys = buffer + curve.KeyDataOffset;
-                    var rawCurve = ConverterMap[(int) curve.CompressionFormat][(int) curve.KeyTimeCompressionFormat](curve.PreInfinityExtrap, curve.PostInfinityExtrap, curve.NumKeys, compressedKeys);
+                    var rawCurve = ConverterMap[(int)curve.CompressionFormat][(int)curve.KeyTimeCompressionFormat](curve.PreInfinityExtrap, curve.PostInfinityExtrap, curve.NumKeys, compressedKeys);
                     floatCurves[curveIndex] = new FFloatCurve
                     {
                         CurveName = curveName.DisplayName,

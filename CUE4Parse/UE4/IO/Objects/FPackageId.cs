@@ -41,7 +41,7 @@ public readonly struct FPackageId : IEquatable<FPackageId>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static char ToLower(char input)
     {
-        return (char) ((uint) input + ((((uint) input - 'A' < 26u) ? 1 : 0) << 5));
+        return (char)((uint)input + ((((uint)input - 'A' < 26u) ? 1 : 0) << 5));
     }
 
     public static void ToLower(string input, Span<char> result)

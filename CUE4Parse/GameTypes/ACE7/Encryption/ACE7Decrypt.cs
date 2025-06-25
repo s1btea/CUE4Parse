@@ -18,20 +18,20 @@ public class ACE7Decrypt
         if (stream == null)
             throw new MissingManifestResourceException("Couldn't find ACE7Key.bin in Embedded Resources");
         fullKey = new byte[stream.Length];
-        _ = stream.Read(fullKey, 0, (int) stream.Length);
+        _ = stream.Read(fullKey, 0, (int)stream.Length);
     }
 
     public FArchive DecryptUassetArchive(FArchive Ar, out ACE7XORKey key)
     {
         key = new ACE7XORKey(Ar.Name.SubstringBeforeLast('.').SubstringAfterLast('/'));
         var uasset = new byte[Ar.Length];
-        _ = Ar.Read(uasset, 0, (int) Ar.Length);
+        _ = Ar.Read(uasset, 0, (int)Ar.Length);
         return new FByteArchive(Ar.Name, DecryptUasset(uasset, key), Ar.Versions);
     }
 
     public FArchive DecryptUexpArchive(FArchive Ar, ACE7XORKey key)
     {
-        var uexp = Ar.ReadBytes((int) Ar.Length);
+        var uexp = Ar.ReadBytes((int)Ar.Length);
         return new FByteArchive(Ar.Name, DecryptUexp(uexp, key), Ar.Versions);
     }
 
@@ -61,7 +61,7 @@ public class ACE7Decrypt
     private byte GetXORByte(byte tagb, ref ACE7XORKey? xorkey)
     {
         if (xorkey == null) return tagb;
-        tagb = (byte) ((uint) (tagb ^ fullKey[xorkey.pk1 * 1024 + xorkey.pk2]) ^ 0x77u);
+        tagb = (byte)((uint)(tagb ^ fullKey[xorkey.pk1 * 1024 + xorkey.pk2]) ^ 0x77u);
         xorkey.pk1++;
         xorkey.pk2++;
         if (xorkey.pk1 >= 217) xorkey.pk1 = 0;

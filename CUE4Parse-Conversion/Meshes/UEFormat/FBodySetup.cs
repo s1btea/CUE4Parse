@@ -15,7 +15,7 @@ public readonly struct FBodySetup(USkeletalBodySetup BodySetup) : ISerializable
     public void Serialize(FArchiveWriter Ar)
     {
         Ar.WriteFString(BodySetup.BoneName.Text);
-        Ar.Write((byte) BodySetup.PhysicsType);
+        Ar.Write((byte)BodySetup.PhysicsType);
 
         var aggGeom = BodySetup.AggGeom!;
         Ar.WriteArray(aggGeom.SphereElems.Select(elem => new FSphereMeshCollision(elem)));

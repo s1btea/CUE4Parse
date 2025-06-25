@@ -32,8 +32,8 @@ public static class PlatformDeswizzlers
         using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("CUE4Parse_Conversion.Resources.tegra_swizzle_x64.dll");
         if (stream == null)
             throw new MissingManifestResourceException("Couldn't find tegra_swizzle_x64.dll in Embedded Resources");
-        var ba = new byte[(int) stream.Length];
-        _ = stream.Read(ba, 0, (int) stream.Length);
+        var ba = new byte[(int)stream.Length];
+        _ = stream.Read(ba, 0, (int)stream.Length);
 
         bool fileOk;
 
@@ -79,13 +79,13 @@ public static class PlatformDeswizzlers
                 blockHeight = 4;
                 break;
             default:
-            {
-                if (formatInfo is { BlockSizeX: 1, BlockSizeY: 1 } && heightInBlocks >= 96)
-                    blockHeight = 16;
-                else
-                    blockHeight = 8;
-                break;
-            }
+                {
+                    if (formatInfo is { BlockSizeX: 1, BlockSizeY: 1 } && heightInBlocks >= 96)
+                        blockHeight = 16;
+                    else
+                        blockHeight = 8;
+                    break;
+                }
         }
 
         var widthInBlocks = formatInfo.GetBlockCountForWidth(mip.SizeX);
@@ -124,7 +124,7 @@ public static class PlatformDeswizzlers
 
         fixed (byte* ptr = data)
         {
-            DeswizzleBlockLinearX64((ulong) width, (ulong) height, (ulong) depth, ptr, (ulong) data.Length, output, (ulong) output.Length, (ulong) blockHeight, (ulong) formatInfo.BlockBytes);
+            DeswizzleBlockLinearX64((ulong)width, (ulong)height, (ulong)depth, ptr, (ulong)data.Length, output, (ulong)output.Length, (ulong)blockHeight, (ulong)formatInfo.BlockBytes);
         }
 
         return output;

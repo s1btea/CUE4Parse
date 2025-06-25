@@ -8,8 +8,8 @@
         public const uint SkipNumMask = 0x007fu;
         public const uint HasZeroMask = 0x0080u;
         public const int ValueNumShift = 9;
-        public const uint IsLastMask  = 0x0100u;
-        
+        public const uint IsLastMask = 0x0100u;
+
         public readonly byte SkipNum; // Number of properties to skip before values
         public readonly bool HasAnyZeroes;
         public readonly byte ValueNum;  // Number of subsequent property values stored
@@ -17,9 +17,9 @@
 
         public FFragment(ushort packed)
         {
-            SkipNum = (byte) (packed & SkipNumMask);
+            SkipNum = (byte)(packed & SkipNumMask);
             HasAnyZeroes = (packed & HasZeroMask) != 0;
-            ValueNum = (byte) (packed >> ValueNumShift);
+            ValueNum = (byte)(packed >> ValueNumShift);
             IsLast = (packed & IsLastMask) != 0;
         }
     }

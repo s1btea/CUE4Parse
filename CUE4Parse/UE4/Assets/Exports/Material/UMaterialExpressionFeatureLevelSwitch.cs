@@ -9,8 +9,8 @@ namespace CUE4Parse.UE4.Assets.Exports.Material;
 
 public class UMaterialExpressionFeatureLevelSwitch : UMaterialExpression
 {
-    public FExpressionInput[] Inputs = new FExpressionInput[(int) ERHIFeatureLevel.Num];
-    
+    public FExpressionInput[] Inputs = new FExpressionInput[(int)ERHIFeatureLevel.Num];
+
     public override void Deserialize(FAssetArchive Ar, long validPos)
     {
         base.Deserialize(Ar, validPos);

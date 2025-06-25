@@ -37,7 +37,7 @@ namespace CUE4Parse.MappingsProvider
             var name = structToken["name"]!.ToObject<string>()!;
             var superType = structToken["superType"]?.ToObject<string>();
 
-            var propertiesToken = (JArray) structToken["properties"]!;
+            var propertiesToken = (JArray)structToken["properties"]!;
             var properties = new Dictionary<int, PropertyInfo>();
             foreach (var propToken in propertiesToken)
             {

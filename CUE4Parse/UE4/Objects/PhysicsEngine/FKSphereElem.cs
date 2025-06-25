@@ -9,7 +9,7 @@ public class FKSphereElem : FKShapeElem
 {
     public FVector Center;
     public float Radius;
-    
+
     public FKSphereElem(FStructFallback fallback) : base(fallback)
     {
         Center = fallback.GetOrDefault(nameof(Center), FVector.ZeroVector);

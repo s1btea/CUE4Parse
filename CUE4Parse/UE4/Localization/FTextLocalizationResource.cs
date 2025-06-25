@@ -12,8 +12,8 @@ namespace CUE4Parse.UE4.Localization
     [JsonConverter(typeof(FTextLocalizationResourceConverter))]
     public class FTextLocalizationResource
     {
-        private readonly FGuid _locResMagic = new (0x7574140Eu, 0xFC034A67u, 0x9D90154Au, 0x1B7F37C3u);
-        public readonly Dictionary<FTextKey, Dictionary<FTextKey, FEntry>> Entries = new ();
+        private readonly FGuid _locResMagic = new(0x7574140Eu, 0xFC034A67u, 0x9D90154Au, 0x1B7F37C3u);
+        public readonly Dictionary<FTextKey, Dictionary<FTextKey, FEntry>> Entries = new();
 
         public FTextLocalizationResource(FArchive Ar)
         {
@@ -78,7 +78,7 @@ namespace CUE4Parse.UE4.Localization
                 for (var j = 0; j < keyCount; j++)
                 {
                     var key = new FTextKey(Ar, versionNumber);
-                    FEntry newEntry = new(Ar) {SourceStringHash = Ar.Read<uint>()};
+                    FEntry newEntry = new(Ar) { SourceStringHash = Ar.Read<uint>() };
                     if (versionNumber >= ELocResVersion.Compact)
                     {
                         var localizedStringIndex = Ar.Read<int>();

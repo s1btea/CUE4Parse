@@ -35,6 +35,6 @@ namespace CUE4Parse.UE4.Objects.LevelSequence
         public bool TryGetValue(FGuid key, out FLevelSequenceLegacyObjectReference value) => Map.TryGetValue(key, out value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable) Map).GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)Map).GetEnumerator();
     }
 }

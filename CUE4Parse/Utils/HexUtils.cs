@@ -4,7 +4,8 @@ namespace CUE4Parse.Utils
 {
     public static class HexUtils
     {
-        public static byte[] ParseHexBinary(this string hex) {
+        public static byte[] ParseHexBinary(this string hex)
+        {
             if (hex.Length % 2 == 1)
                 throw new ArgumentException("The binary key cannot have an odd number of digits");
 
@@ -18,7 +19,8 @@ namespace CUE4Parse.Utils
             return arr;
         }
 
-        private static int GetHexVal(char hex) {
+        private static int GetHexVal(char hex)
+        {
             int val = hex;
             //For uppercase A-F letters:
             //return val - (val < 58 ? 48 : 55);

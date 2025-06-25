@@ -198,7 +198,8 @@ namespace CUE4Parse.UE4.Objects.Core.Math
             if (point.X < Min.X)
             {
                 closestPoint.X = Min.X;
-            } else if (point.X > Max.X)
+            }
+            else if (point.X > Max.X)
             {
                 closestPoint.X = Max.X;
             }
@@ -207,7 +208,8 @@ namespace CUE4Parse.UE4.Objects.Core.Math
             if (point.Y < Min.Y)
             {
                 closestPoint.Y = Min.Y;
-            } else if (point.Y > Max.Y)
+            }
+            else if (point.Y > Max.Y)
             {
                 closestPoint.Y = Max.Y;
             }
@@ -216,7 +218,8 @@ namespace CUE4Parse.UE4.Objects.Core.Math
             if (point.Z < Min.Z)
             {
                 closestPoint.Z = Min.Z;
-            } else if (point.Z > Max.Z)
+            }
+            else if (point.Z > Max.Z)
             {
                 closestPoint.Z = Max.Z;
             }
@@ -235,15 +238,18 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         /// <returns></returns>
         public bool Intersects(FBox other)
         {
-            if ((Min.X > other.Max.X) || (other.Min.X > Max.X)) {
+            if ((Min.X > other.Max.X) || (other.Min.X > Max.X))
+            {
                 return false;
             }
 
-            if ((Min.Y > other.Max.Y) || (other.Min.Y > Max.Y)) {
+            if ((Min.Y > other.Max.Y) || (other.Min.Y > Max.Y))
+            {
                 return false;
             }
 
-            if ((Min.Z > other.Max.Z) || (other.Min.Z > Max.Z)) {
+            if ((Min.Z > other.Max.Z) || (other.Min.Z > Max.Z))
+            {
                 return false;
             }
 
@@ -257,11 +263,13 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         /// <returns>true if the boxes intersect in the XY Plane, false otherwise.</returns>
         public bool IntersectsXY(FBox other)
         {
-            if ((Min.X > other.Max.X) || (other.Min.X > Max.X)) {
+            if ((Min.X > other.Max.X) || (other.Min.X > Max.X))
+            {
                 return false;
             }
 
-            if ((Min.Y > other.Max.Y) || (other.Min.Y > Max.Y)) {
+            if ((Min.Y > other.Max.Y) || (other.Min.Y > Max.Y))
+            {
                 return false;
             }
 

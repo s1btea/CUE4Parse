@@ -23,7 +23,7 @@ namespace CUE4Parse.UE4.Versions
         {
             var ver = Ar.CustomVer(GUID);
             if (ver >= 0)
-                return (Type) ver;
+                return (Type)ver;
 
             return Ar.Game switch
             {

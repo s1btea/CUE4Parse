@@ -13,7 +13,7 @@ namespace CUE4Parse_Conversion.Animations.PSA
         public FVector[] KeyScale = Array.Empty<FVector>();
         public float[] KeyTime = Array.Empty<float>();
 
-        public CAnimTrack() {}
+        public CAnimTrack() { }
 
         public CAnimTrack(int length)
         {

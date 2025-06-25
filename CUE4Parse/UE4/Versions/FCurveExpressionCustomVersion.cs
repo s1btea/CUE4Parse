@@ -15,7 +15,7 @@ public static class FCurveExpressionCustomVersion
         // Serialized expressions
         SerializedExpressions,
         ExpressionDataInSharedObject,
-		
+
         VersionPlusOne,
         LatestVersion = VersionPlusOne - 1,
     }
@@ -26,7 +26,7 @@ public static class FCurveExpressionCustomVersion
     {
         var ver = Ar.CustomVer(GUID);
         if (ver >= 0)
-            return (Type) ver;
+            return (Type)ver;
 
         return Ar.Game switch
         {

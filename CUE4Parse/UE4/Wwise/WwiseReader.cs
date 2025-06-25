@@ -62,7 +62,7 @@ public class WwiseReader
                     }
                     break;
                 case ESectionIdentifier.BKHD:
-                        Header = Ar.Read<BankHeader>();
+                    Header = Ar.Read<BankHeader>();
                     break;
                 case ESectionIdentifier.INIT:
                     Initialization = Ar.ReadArray(() =>

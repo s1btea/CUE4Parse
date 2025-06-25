@@ -54,7 +54,7 @@ public class FMorphTargetVertexInfo
         {
             for (var i = 0; i < NumElements; i++)
             {
-                uint vert = (uint) (IndexMin + i + packed.Read(IndexBits));
+                uint vert = (uint)(IndexMin + i + packed.Read(IndexBits));
                 QuantizedDelta[i] = new FQuantizedDelta(packed.ReadIntVector(PositionBits),
                     bTangents ? packed.ReadIntVector(TangentZBits) : FIntVector.Zero, vert);
             }

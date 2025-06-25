@@ -48,54 +48,54 @@ namespace CUE4Parse_Conversion.Animations.PSA
                     switch (skeleton.BoneTree[boneIndex])
                     {
                         case EBoneTranslationRetargetingMode.Skeleton:
-                        {
-                            var targetTransform = sequence.RetargetBasePose?[boneIndex] ?? originalTransform;
-                            bonePosition = targetTransform.Translation;
-                            break;
-                        }
+                            {
+                                var targetTransform = sequence.RetargetBasePose?[boneIndex] ?? originalTransform;
+                                bonePosition = targetTransform.Translation;
+                                break;
+                            }
                         case EBoneTranslationRetargetingMode.AnimationScaled:
-                        {
-                            var sourceTranslationLength = originalTransform.Translation.Size();
-                            if (sourceTranslationLength > UnrealMath.KindaSmallNumber)
                             {
-                                var targetTranslationLength = sequence.RetargetBasePose?[boneIndex].Translation.Size() ?? sourceTranslationLength;
-                                bonePosition.Scale(targetTranslationLength / sourceTranslationLength);
-                            }
-                            break;
-                        }
-                        case EBoneTranslationRetargetingMode.AnimationRelative:
-                        {
-                            // can't tell if it's working or not
-                            var sourceSkelTrans = originalTransform.Translation;
-                            var refPoseTransform  = sequence.RetargetBasePose?[boneIndex] ?? originalTransform;
-
-                            boneOrientation = boneOrientation * FQuat.Conjugate(originalTransform.Rotation) * refPoseTransform.Rotation;
-                            bonePosition += refPoseTransform.Translation - sourceSkelTrans;
-                            boneScale *= refPoseTransform.Scale3D * originalTransform.Scale3D;
-                            boneOrientation.Normalize();
-                            break;
-                        }
-                        case EBoneTranslationRetargetingMode.OrientAndScale:
-                        {
-                            var sourceSkelTrans = originalTransform.Translation;
-                            var targetSkelTrans = sequence.RetargetBasePose?[boneIndex].Translation ?? sourceSkelTrans;
-
-                            if (!sourceSkelTrans.Equals(targetSkelTrans))
-                            {
-                                var sourceSkelTransLength = sourceSkelTrans.Size();
-                                var targetSkelTransLength = targetSkelTrans.Size();
-                                if (!UnrealMath.IsNearlyZero(sourceSkelTransLength * targetSkelTransLength))
+                                var sourceTranslationLength = originalTransform.Translation.Size();
+                                if (sourceTranslationLength > UnrealMath.KindaSmallNumber)
                                 {
-                                    var sourceSkelTransDir = sourceSkelTrans / sourceSkelTransLength;
-                                    var targetSkelTransDir = targetSkelTrans / targetSkelTransLength;
-
-                                    var deltaRotation = FQuat.FindBetweenNormals(sourceSkelTransDir, targetSkelTransDir);
-                                    var scale = targetSkelTransLength / sourceSkelTransLength;
-                                    bonePosition = deltaRotation.RotateVector(bonePosition) * scale;
+                                    var targetTranslationLength = sequence.RetargetBasePose?[boneIndex].Translation.Size() ?? sourceTranslationLength;
+                                    bonePosition.Scale(targetTranslationLength / sourceTranslationLength);
                                 }
+                                break;
                             }
-                            break;
-                        }
+                        case EBoneTranslationRetargetingMode.AnimationRelative:
+                            {
+                                // can't tell if it's working or not
+                                var sourceSkelTrans = originalTransform.Translation;
+                                var refPoseTransform = sequence.RetargetBasePose?[boneIndex] ?? originalTransform;
+
+                                boneOrientation = boneOrientation * FQuat.Conjugate(originalTransform.Rotation) * refPoseTransform.Rotation;
+                                bonePosition += refPoseTransform.Translation - sourceSkelTrans;
+                                boneScale *= refPoseTransform.Scale3D * originalTransform.Scale3D;
+                                boneOrientation.Normalize();
+                                break;
+                            }
+                        case EBoneTranslationRetargetingMode.OrientAndScale:
+                            {
+                                var sourceSkelTrans = originalTransform.Translation;
+                                var targetSkelTrans = sequence.RetargetBasePose?[boneIndex].Translation ?? sourceSkelTrans;
+
+                                if (!sourceSkelTrans.Equals(targetSkelTrans))
+                                {
+                                    var sourceSkelTransLength = sourceSkelTrans.Size();
+                                    var targetSkelTransLength = targetSkelTrans.Size();
+                                    if (!UnrealMath.IsNearlyZero(sourceSkelTransLength * targetSkelTransLength))
+                                    {
+                                        var sourceSkelTransDir = sourceSkelTrans / sourceSkelTransLength;
+                                        var targetSkelTransDir = targetSkelTrans / targetSkelTransLength;
+
+                                        var deltaRotation = FQuat.FindBetweenNormals(sourceSkelTransDir, targetSkelTransDir);
+                                        var scale = targetSkelTransLength / sourceSkelTransLength;
+                                        bonePosition = deltaRotation.RotateVector(bonePosition) * scale;
+                                    }
+                                }
+                                break;
+                            }
                     }
 
                     poses[frameIndex].Bones[boneIndex] = new FPoseBone

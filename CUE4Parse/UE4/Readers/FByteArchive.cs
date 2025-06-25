@@ -22,7 +22,7 @@ namespace CUE4Parse.UE4.Readers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int Read(byte[] buffer, int offset, int count)
         {
-            int n = (int) (Length - Position);
+            int n = (int)(Length - Position);
             if (n > count) n = count;
             if (n <= 0)
                 return 0;
@@ -34,7 +34,7 @@ namespace CUE4Parse.UE4.Readers
                     buffer[offset + byteCount] = _data[Position + byteCount];
             }
             else
-                Buffer.BlockCopy(_data, (int) Position, buffer, offset, n);
+                Buffer.BlockCopy(_data, (int)Position, buffer, offset, n);
             Position += n;
 
             return n;
@@ -42,7 +42,7 @@ namespace CUE4Parse.UE4.Readers
 
         public override int ReadAt(long position, byte[] buffer, int offset, int count)
         {
-            int n = (int) (Length - position);
+            int n = (int)(Length - position);
             if (n > count) n = count;
             if (n <= 0)
                 return 0;
@@ -54,14 +54,14 @@ namespace CUE4Parse.UE4.Readers
                     buffer[offset + byteCount] = _data[position + byteCount];
             }
             else
-                Buffer.BlockCopy(_data, (int) position, buffer, offset, n);
+                Buffer.BlockCopy(_data, (int)position, buffer, offset, n);
 
             return n;
         }
 
         public override Task<int> ReadAtAsync(long position, byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
-            int n = (int) (Length - position);
+            int n = (int)(Length - position);
             if (n > count) n = count;
             if (n <= 0)
                 return Task.FromResult(0);
@@ -73,7 +73,7 @@ namespace CUE4Parse.UE4.Readers
                     buffer[offset + byteCount] = _data[position + byteCount];
             }
             else
-                Buffer.BlockCopy(_data, (int) position, buffer, offset, n);
+                Buffer.BlockCopy(_data, (int)position, buffer, offset, n);
 
             return Task.FromResult(n);
         }
@@ -112,7 +112,7 @@ namespace CUE4Parse.UE4.Readers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override unsafe void Serialize(byte* ptr, int length)
         {
-            Unsafe.CopyBlockUnaligned(ref ptr[0], ref _data[Position], (uint) length);
+            Unsafe.CopyBlockUnaligned(ref ptr[0], ref _data[Position], (uint)length);
             Position += length;
         }
 
@@ -122,7 +122,7 @@ namespace CUE4Parse.UE4.Readers
             var size = length * Unsafe.SizeOf<T>();
             CheckReadSize(size);
             var result = new T[length];
-            if (length > 0) Unsafe.CopyBlockUnaligned(ref Unsafe.As<T, byte>(ref result[0]), ref _data[Position], (uint) size);
+            if (length > 0) Unsafe.CopyBlockUnaligned(ref Unsafe.As<T, byte>(ref result[0]), ref _data[Position], (uint)size);
             Position += size;
             return result;
         }
@@ -133,10 +133,10 @@ namespace CUE4Parse.UE4.Readers
             if (array.Length == 0) return;
             var size = array.Length * Unsafe.SizeOf<T>();
             CheckReadSize(size);
-            Unsafe.CopyBlockUnaligned(ref Unsafe.As<T, byte>(ref array[0]), ref _data[Position], (uint) size);
+            Unsafe.CopyBlockUnaligned(ref Unsafe.As<T, byte>(ref array[0]), ref _data[Position], (uint)size);
             Position += size;
         }
 
-        public override object Clone() => new FByteArchive(Name, _data, Versions) {Position = Position};
+        public override object Clone() => new FByteArchive(Name, _data, Versions) { Position = Position };
     }
 }

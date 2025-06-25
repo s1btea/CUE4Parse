@@ -32,7 +32,7 @@ public class FBitArchive : FArchive
         if (Position + 8 > Length)
         {
             var bytes = new byte[8];
-            Buffer.BlockCopy(_data, (int)Position, bytes, 0 , (int)(Length - Position));
+            Buffer.BlockCopy(_data, (int)Position, bytes, 0, (int)(Length - Position));
             value = BitConverter.ToUInt64(bytes);
         }
         else
@@ -57,11 +57,11 @@ public class FBitArchive : FArchive
     public override int Read(byte[] buffer, int offset, int count)
     {
         Position = _bitIndex >> 3;
-        int n = (int) (Length - Position);
+        int n = (int)(Length - Position);
         if (n > count) n = count;
         if (n <= 0) return 0;
 
-        Buffer.BlockCopy(_data, (int) Position, buffer, offset, n);
+        Buffer.BlockCopy(_data, (int)Position, buffer, offset, n);
         Position += n;
         _bitIndex = Position << 3;
         return n;
@@ -80,5 +80,5 @@ public class FBitArchive : FArchive
         return Position;
     }
 
-    public override object Clone() => new FBitArchive(Name, _data) {Position = Position};
+    public override object Clone() => new FBitArchive(Name, _data) { Position = Position };
 }

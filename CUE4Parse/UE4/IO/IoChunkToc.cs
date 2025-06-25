@@ -28,10 +28,10 @@ namespace CUE4Parse.UE4.IO
                 Meta = new FTocMeta(Ar);
 
             Containers = Ar.ReadArray(() => new FOnDemandTocContainerEntry(Ar, Header.Version));
-            
+
             if (Header.Version >= EOnDemandTocVersion.AdditionalFiles)
                 AdditionalFiles = Ar.ReadArray(() => new FOnDemandTocAdditionalFile(Ar));
-            
+
             if (Header.Version >= EOnDemandTocVersion.TagSets)
                 TagSets = Ar.ReadArray(() => new FOnDemandTocTagSet(Ar));
         }
@@ -62,7 +62,8 @@ namespace CUE4Parse.UE4.IO
                 CheckCertificateRevocationList = false,
                 UseDefaultCredentials = false,
                 AutomaticDecompression = DecompressionMethods.None
-            }) { Timeout = options.Timeout };
+            })
+            { Timeout = options.Timeout };
         }
 
         public async Task<Stream> Download(string url)

@@ -9,10 +9,10 @@ namespace CUE4Parse.UE4.Assets.Exports.StaticMesh;
 public class FStaticMeshRayTracingProxyLOD
 {
     public bool bBuffersInlined = false;
-    
+
     public bool bOwnsBuffers;
     public bool bOwnsRayTracingGeometry;
-    
+
     public FStaticMeshSection[] Sections;
     public FPositionVertexBuffer PositionVertexBuffer;
     public FStaticMeshVertexBuffer VertexBuffer;
@@ -20,7 +20,7 @@ public class FStaticMeshRayTracingProxyLOD
     public FRawStaticIndexBuffer IndexBuffer;
 
     public FByteBulkData StreamableData;
-    
+
     public FStaticMeshRayTracingProxyLOD(FAssetArchive Ar)
     {
         bOwnsBuffers = Ar.ReadBoolean();

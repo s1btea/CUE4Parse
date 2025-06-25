@@ -11,7 +11,7 @@ public class FCustomizableObjectMeshToMeshVertData
     public float Weight;
     public short SourceAssetIndex;
     public short SourceAssetLodIndex;
-    
+
     public FCustomizableObjectMeshToMeshVertData(FArchive Ar)
     {
         for (var i = 0; i < PositionBaryCoordsAndDist.Length; i++)

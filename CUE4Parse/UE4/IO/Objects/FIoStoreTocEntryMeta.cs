@@ -8,8 +8,8 @@ namespace CUE4Parse.UE4.IO.Objects
     public enum FIoStoreTocEntryMetaFlags : byte
     {
         None,
-        Compressed		= (1 << 0),
-        MemoryMapped	= (1 << 1)
+        Compressed = (1 << 0),
+        MemoryMapped = (1 << 1)
     }
 
     public readonly struct FIoStoreTocEntryMeta
@@ -29,7 +29,7 @@ namespace CUE4Parse.UE4.IO.Objects
         {
             unsafe
             {
-                return $"{Flags} | {UnsafePrint.BytesToHex((byte *)Unsafe.AsPointer(ref Unsafe.AsRef(in ChunkHash.Hash)), 32)}";
+                return $"{Flags} | {UnsafePrint.BytesToHex((byte*)Unsafe.AsPointer(ref Unsafe.AsRef(in ChunkHash.Hash)), 32)}";
             }
         }
     }

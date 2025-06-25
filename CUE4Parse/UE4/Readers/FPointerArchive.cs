@@ -18,13 +18,13 @@ namespace CUE4Parse.UE4.Readers
             Name = name;
             Length = length;
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int Read(byte[] buffer, int offset, int count)
         {
             unsafe
             {
-                int n = (int) (Length - Position);
+                int n = (int)(Length - Position);
                 if (n > count) n = count;
                 if (n <= 0)
                     return 0;
@@ -36,7 +36,7 @@ namespace CUE4Parse.UE4.Readers
                         buffer[offset + byteCount] = _ptr[Position + byteCount];
                 }
                 else
-                    Unsafe.CopyBlockUnaligned(ref buffer[offset], ref _ptr[Position], (uint) n);
+                    Unsafe.CopyBlockUnaligned(ref buffer[offset], ref _ptr[Position], (uint)n);
                 Position += n;
 
                 return n;
@@ -47,7 +47,7 @@ namespace CUE4Parse.UE4.Readers
         {
             unsafe
             {
-                int n = (int) (Length - position);
+                int n = (int)(Length - position);
                 if (n > count) n = count;
                 if (n <= 0)
                     return 0;
@@ -59,7 +59,7 @@ namespace CUE4Parse.UE4.Readers
                         buffer[offset + byteCount] = _ptr[position + byteCount];
                 }
                 else
-                    Unsafe.CopyBlockUnaligned(ref buffer[offset], ref _ptr[position], (uint) n);
+                    Unsafe.CopyBlockUnaligned(ref buffer[offset], ref _ptr[position], (uint)n);
 
                 return n;
             }
@@ -69,7 +69,7 @@ namespace CUE4Parse.UE4.Readers
         {
             unsafe
             {
-                int n = (int) (Length - position);
+                int n = (int)(Length - position);
                 if (n > count) n = count;
                 if (n <= 0)
                     return Task.FromResult(0);
@@ -81,8 +81,8 @@ namespace CUE4Parse.UE4.Readers
                         buffer[offset + byteCount] = _ptr[position + byteCount];
                 }
                 else
-                    Unsafe.CopyBlockUnaligned(ref buffer[offset], ref _ptr[position], (uint) n);
-                
+                    Unsafe.CopyBlockUnaligned(ref buffer[offset], ref _ptr[position], (uint)n);
+
                 return Task.FromResult(n);
             }
         }
@@ -120,7 +120,7 @@ namespace CUE4Parse.UE4.Readers
                 return result;
             }
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override byte[] ReadBytes(int length)
         {
@@ -133,7 +133,7 @@ namespace CUE4Parse.UE4.Readers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override unsafe void Serialize(byte* ptr, int length)
         {
-            Unsafe.CopyBlockUnaligned(ref ptr[0], ref _ptr[Position], (uint) length);
+            Unsafe.CopyBlockUnaligned(ref ptr[0], ref _ptr[Position], (uint)length);
             Position += length;
         }
 
@@ -144,7 +144,7 @@ namespace CUE4Parse.UE4.Readers
             {
                 var size = length * Unsafe.SizeOf<T>();
                 var result = new T[length];
-                if (length > 0) Unsafe.CopyBlockUnaligned(ref Unsafe.As<T, byte>(ref result[0]), ref _ptr[Position], (uint) size);
+                if (length > 0) Unsafe.CopyBlockUnaligned(ref Unsafe.As<T, byte>(ref result[0]), ref _ptr[Position], (uint)size);
                 Position += size;
                 return result;
             }
@@ -157,7 +157,7 @@ namespace CUE4Parse.UE4.Readers
             unsafe
             {
                 var size = array.Length * Unsafe.SizeOf<T>();
-                Unsafe.CopyBlockUnaligned(ref Unsafe.As<T, byte>(ref array[0]), ref _ptr[Position], (uint) size);
+                Unsafe.CopyBlockUnaligned(ref Unsafe.As<T, byte>(ref array[0]), ref _ptr[Position], (uint)size);
                 Position += size;
             }
         }
@@ -166,7 +166,7 @@ namespace CUE4Parse.UE4.Readers
         {
             unsafe
             {
-                return new FPointerArchive(Name, _ptr, Length, Versions) {Position = Position};
+                return new FPointerArchive(Name, _ptr, Length, Versions) { Position = Position };
             }
         }
     }

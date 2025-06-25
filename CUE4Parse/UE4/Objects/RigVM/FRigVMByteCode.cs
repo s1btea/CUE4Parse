@@ -70,7 +70,7 @@ public class FRigVMByteCode
             <= ERigVMOpCode.Execute_64_Operands or ERigVMOpCode.Execute => new FRigVMExecuteOp(Ar),
             ERigVMOpCode.Copy => new FRigVMCopyOp(Ar),
             ERigVMOpCode.Zero or ERigVMOpCode.BoolFalse or ERigVMOpCode.BoolTrue or ERigVMOpCode.Increment
-                or ERigVMOpCode.Decrement or ERigVMOpCode.ArrayReset or ERigVMOpCode.ArrayReverse=> Ar.Read<FRigVMUnaryOp>(),
+                or ERigVMOpCode.Decrement or ERigVMOpCode.ArrayReset or ERigVMOpCode.ArrayReverse => Ar.Read<FRigVMUnaryOp>(),
             ERigVMOpCode.Equals or ERigVMOpCode.NotEquals => Ar.Read<FRigVMComparisonOp>(),
             ERigVMOpCode.JumpAbsolute or ERigVMOpCode.JumpForward or ERigVMOpCode.JumpBackward => Ar.Read<FRigVMJumpOp>(),
             ERigVMOpCode.JumpAbsoluteIf or ERigVMOpCode.JumpForwardIf or ERigVMOpCode.JumpBackwardIf => new FRigVMJumpIfOp(Ar),
@@ -194,7 +194,7 @@ public readonly struct FRigVMQuinaryOp : IRigInstruction
     public readonly FRigVMOperand ArgE;
 }
 
-[StructLayout(LayoutKind.Sequential, Pack = 1,Size = 31)]
+[StructLayout(LayoutKind.Sequential, Pack = 1, Size = 31)]
 public readonly struct FRigVMSenaryOp : IRigInstruction
 {
     public readonly ERigVMOpCode OpCode;

@@ -11,7 +11,7 @@ public class FKSphylElem : FKShapeElem
     public FRotator Rotation;
     public float Radius;
     public float Length;
-    
+
     public FKSphylElem(FStructFallback fallback) : base(fallback)
     {
         Center = fallback.GetOrDefault(nameof(Center), FVector.ZeroVector);

@@ -10,7 +10,7 @@ public struct FArgs
     [FieldOffset(0)] public int IntConstantArgs;
     [FieldOffset(0)] public float ScalarConstantArgs;
     [FieldOffset(0)] public ColourConstantArgs ColourConstantArgs;
-    
+
 }
 
 [InlineArray(4)]

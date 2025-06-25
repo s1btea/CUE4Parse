@@ -7,7 +7,7 @@ namespace CUE4Parse.UE4.Assets.Exports.Material.Editor;
 public class UMaterialInterfaceEditorOnlyData : UObject
 {
     public FStructFallback? CachedExpressionData;
-    
+
     public override void Deserialize(FAssetArchive Ar, long validPos)
     {
         base.Deserialize(Ar, validPos);

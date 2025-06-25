@@ -56,7 +56,8 @@ namespace CUE4Parse.UE4.Assets.Objects
                     return null;
                 });
             }
-            else {
+            else
+            {
                 var data = new byte[Header.ElementCount];
                 if (!ReadBulkDataInto(data))
                     throw new ParserException(Ar, "Failed to read bulk data");
@@ -80,14 +81,18 @@ namespace CUE4Parse.UE4.Assets.Objects
             }
         }
 
-        private void CheckReadSize(int read) {
-            if (read != Header.ElementCount) {
+        private void CheckReadSize(int read)
+        {
+            if (read != Header.ElementCount)
+            {
                 Log.Warning("Read {read} bytes, expected {Header.ElementCount}", read, Header.ElementCount);
             }
         }
 
-        public bool ReadBulkDataInto(byte[] data, int offset = 0) {
-            if (data.Length - offset < Header.ElementCount) {
+        public bool ReadBulkDataInto(byte[] data, int offset = 0)
+        {
+            if (data.Length - offset < Header.ElementCount)
+            {
                 Log.Error("Data buffer is too small");
                 return false;
             }
@@ -119,7 +124,7 @@ namespace CUE4Parse.UE4.Assets.Objects
                 if (!Ar.TryGetPayload(PayloadType.UBULK, out var ubulkAr) || ubulkAr == null) return false;
 
                 ubulkAr.Position = Header.OffsetInFile;
-                CheckReadSize(ubulkAr.Read(data, offset, Header.ElementCount));;
+                CheckReadSize(ubulkAr.Read(data, offset, Header.ElementCount)); ;
             }
             else if (BulkDataFlags.HasFlag(BULKDATA_PayloadAtEndOfFile))
             {
@@ -142,7 +147,7 @@ namespace CUE4Parse.UE4.Assets.Objects
             Ar.Dispose();
             return true;
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int GetDataSize() => Header.ElementCount;
     }

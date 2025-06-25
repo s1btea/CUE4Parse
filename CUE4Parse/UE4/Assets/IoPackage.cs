@@ -55,7 +55,7 @@ namespace CUE4Parse.UE4.Assets
                 Summary = new FPackageFileSummary
                 {
                     PackageFlags = summary.PackageFlags,
-                    TotalHeaderSize = summary.GraphDataOffset + (int) summary.HeaderSize,
+                    TotalHeaderSize = summary.GraphDataOffset + (int)summary.HeaderSize,
                     ExportCount = (summary.ExportBundleEntriesOffset - summary.ExportMapOffset) / FExportMapEntry.Size,
                     ImportCount = (summary.ExportMapOffset - summary.ImportMapOffset) / FPackageObjectIndex.Size
                 };
@@ -65,7 +65,7 @@ namespace CUE4Parse.UE4.Assets
                 {
                     var versioningInfo = new FZenPackageVersioningInfo(uassetAr);
                     Summary.FileVersionUE = versioningInfo.PackageVersion;
-                    Summary.FileVersionLicenseeUE = (EUnrealEngineObjectLicenseeUEVersion) versioningInfo.LicenseeVersion;
+                    Summary.FileVersionLicenseeUE = (EUnrealEngineObjectLicenseeUEVersion)versioningInfo.LicenseeVersion;
                     Summary.CustomVersionContainer = versioningInfo.CustomVersions;
                     if (!uassetAr.Versions.bExplicitVer)
                     {
@@ -113,11 +113,11 @@ namespace CUE4Parse.UE4.Assets
                     if (uassetAr.Game >= EGame.GAME_UE5_4)
                     {
                         var pad = uassetAr.Read<ulong>(); // pad
-                        _ = uassetAr.ReadArray<byte>((int) pad);
+                        _ = uassetAr.ReadArray<byte>((int)pad);
                     }
 
                     var bulkDataMapSize = uassetAr.Read<long>();
-                    BulkDataMap = uassetAr.ReadArray<FBulkDataMapEntry>((int) (bulkDataMapSize / FBulkDataMapEntry.Size));
+                    BulkDataMap = uassetAr.ReadArray<FBulkDataMapEntry>((int)(bulkDataMapSize / FBulkDataMapEntry.Size));
                 }
 
                 // Imported public export hashes
@@ -149,8 +149,8 @@ namespace CUE4Parse.UE4.Assets
 
                 importedPackageIds = storeEntry?.ImportedPackages ?? Array.Empty<FPackageId>();
 
-                cookedHeaderSize = (int) summary.CookedHeaderSize;
-                allExportDataOffset = (int) summary.HeaderSize;
+                cookedHeaderSize = (int)summary.CookedHeaderSize;
+                allExportDataOffset = (int)summary.HeaderSize;
             }
             else
             {
@@ -188,7 +188,7 @@ namespace CUE4Parse.UE4.Assets
                 uassetAr.Position = summary.GraphDataOffset;
                 importedPackageIds = LoadGraphData(uassetAr);
 
-                cookedHeaderSize = (int) summary.CookedHeaderSize;
+                cookedHeaderSize = (int)summary.CookedHeaderSize;
                 allExportDataOffset = summary.GraphDataOffset + summary.GraphDataSize;
             }
 
@@ -201,7 +201,8 @@ namespace CUE4Parse.UE4.Assets
                     provider.TryLoadPackage(importedPackageIds[i], out packages[i]);
                 }
                 return packages;
-            } : Array.Empty<IoPackage?>);
+            }
+            : Array.Empty<IoPackage?>);
 
             // Attach ubulk and uptnl
             if (ubulk != null) uassetAr.AddPayload(PayloadType.UBULK, Summary.BulkDataStartOffset, ubulk);
@@ -228,16 +229,16 @@ namespace CUE4Parse.UE4.Assets
                     obj.Flags |= export.ObjectFlags; // We give loaded objects the RF_WasLoaded flag in ConstructObject, so don't remove it again in here
 
                     // Serialize
-                    var Ar = (FAssetArchive) uassetAr.Clone();
-                    Ar.AbsoluteOffset = newPos ? cookedHeaderSize - allExportDataOffset : (int) export.CookedSerialOffset - pos;
+                    var Ar = (FAssetArchive)uassetAr.Clone();
+                    Ar.AbsoluteOffset = newPos ? cookedHeaderSize - allExportDataOffset : (int)export.CookedSerialOffset - pos;
                     Ar.Position = pos;
-                    DeserializeObject(obj, Ar, (long) export.CookedSerialSize);
+                    DeserializeObject(obj, Ar, (long)export.CookedSerialSize);
                     // TODO right place ???
                     obj.Flags |= EObjectFlags.RF_LoadCompleted;
                     obj.PostLoad();
                     return obj;
                 });
-                return (int) export.CookedSerialSize;
+                return (int)export.CookedSerialSize;
             }
 
             if (exportBundleHeaders != null) // 4.26 - 5.2
@@ -253,9 +254,9 @@ namespace CUE4Parse.UE4.Assets
                 }
             }
             else foreach (var entry in exportBundleEntries)
-            {
-                ProcessEntry(entry, allExportDataOffset + (int) ExportMap[entry.LocalExportIndex].CookedSerialOffset, true);
-            }
+                {
+                    ProcessEntry(entry, allExportDataOffset + (int)ExportMap[entry.LocalExportIndex].CookedSerialOffset, true);
+                }
 
             IsFullyLoaded = true;
         }
@@ -277,7 +278,7 @@ namespace CUE4Parse.UE4.Assets
                 // This location is occupied by header, so it is not a bundle entry
                 remainingBundleEntryCount--;
                 var bundleHeader = new FExportBundleHeader(Ar);
-                foundBundlesCount += (int) bundleHeader.EntryCount;
+                foundBundlesCount += (int)bundleHeader.EntryCount;
                 foundBundleHeaders.Add(bundleHeader);
             }
 
@@ -340,7 +341,7 @@ namespace CUE4Parse.UE4.Assets
 
             if (index.IsExport)
             {
-                return new ResolvedExportObject((int) index.AsExport, this);
+                return new ResolvedExportObject((int)index.AsExport, this);
             }
 
             if (index.IsScriptImport)
@@ -408,10 +409,10 @@ namespace CUE4Parse.UE4.Assets
                 ExportObject = package.ExportsLazy[exportIndex];
             }
 
-            public override FName Name => ((IoPackage) Package).CreateFNameFromMappedName(ExportMapEntry.ObjectName);
-            public override ResolvedObject Outer => ((IoPackage) Package).ResolveObjectIndex(ExportMapEntry.OuterIndex) ?? new ResolvedLoadedObject((UObject) Package);
-            public override ResolvedObject? Class => ((IoPackage) Package).ResolveObjectIndex(ExportMapEntry.ClassIndex);
-            public override ResolvedObject? Super => ((IoPackage) Package).ResolveObjectIndex(ExportMapEntry.SuperIndex);
+            public override FName Name => ((IoPackage)Package).CreateFNameFromMappedName(ExportMapEntry.ObjectName);
+            public override ResolvedObject Outer => ((IoPackage)Package).ResolveObjectIndex(ExportMapEntry.OuterIndex) ?? new ResolvedLoadedObject((UObject)Package);
+            public override ResolvedObject? Class => ((IoPackage)Package).ResolveObjectIndex(ExportMapEntry.ClassIndex);
+            public override ResolvedObject? Super => ((IoPackage)Package).ResolveObjectIndex(ExportMapEntry.SuperIndex);
             public override Lazy<UObject> Object => ExportObject;
         }
 
@@ -424,8 +425,8 @@ namespace CUE4Parse.UE4.Assets
                 ScriptImport = scriptImport;
             }
 
-            public override FName Name => ((IoPackage) Package).CreateFNameFromMappedName(ScriptImport.ObjectName);
-            public override ResolvedObject? Outer => ((IoPackage) Package).ResolveObjectIndex(ScriptImport.OuterIndex);
+            public override FName Name => ((IoPackage)Package).CreateFNameFromMappedName(ScriptImport.ObjectName);
+            public override ResolvedObject? Outer => ((IoPackage)Package).ResolveObjectIndex(ScriptImport.OuterIndex);
             // This means we'll have UScriptStruct's shown as UClass which is wrong.
             // Unfortunately because the mappings format does not distinguish between classes and structs, there's no other way around :(
             public override ResolvedObject Class => new ResolvedLoadedObject(new UScriptClass("Class"));

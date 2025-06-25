@@ -11,12 +11,12 @@ namespace CUE4Parse.FileProvider.Vfs
 {
     public class FileProviderDictionary : IReadOnlyDictionary<string, GameFile>
     {
-        private readonly ConcurrentDictionary<FPackageId, GameFile> _byId = new ();
+        private readonly ConcurrentDictionary<FPackageId, GameFile> _byId = new();
         public IReadOnlyDictionary<FPackageId, GameFile> byId => _byId;
 
         private readonly KeyEnumerable _keys;
         private readonly ValueEnumerable _values;
-        private readonly ConcurrentBag<IReadOnlyDictionary<string, GameFile>> _indicesBag = new ();
+        private readonly ConcurrentBag<IReadOnlyDictionary<string, GameFile>> _indicesBag = new();
 
         public readonly bool IsCaseInsensitive;
         public IEnumerable<string> Keys => _keys;
@@ -34,7 +34,7 @@ namespace CUE4Parse.FileProvider.Vfs
         {
             foreach (var file in newFiles.Values)
             {
-                if (file is FIoStoreEntry {IsUE4Package: true} ioEntry)
+                if (file is FIoStoreEntry { IsUE4Package: true } ioEntry)
                 {
                     _byId[ioEntry.ChunkId.AsPackageId()] = file;
                 }

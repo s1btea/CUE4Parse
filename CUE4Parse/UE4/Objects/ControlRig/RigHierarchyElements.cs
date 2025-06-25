@@ -49,7 +49,7 @@ public class FRigBaseElement
 
         //static const UEnum* MetadataTypeEnum = StaticEnum<ERigMetadataType>();
         var MetadataNum = Ar.Read<int>();
-        for(var MetadataIndex = 0; MetadataIndex < MetadataNum; MetadataIndex++)
+        for (var MetadataIndex = 0; MetadataIndex < MetadataNum; MetadataIndex++)
         {
             FName MetadataName = Ar.ReadFName();
             FName MetadataTypeName = Ar.ReadFName();
@@ -109,7 +109,7 @@ public class FRigMultiParentElement : FRigTransformElement
     public override void Load(FAssetArchive Ar, URigHierarchy hierarchy, ESerializationPhase serializationPhase)
     {
         base.Load(Ar, hierarchy, serializationPhase);
-        if(serializationPhase == ESerializationPhase.StaticData)
+        if (serializationPhase == ESerializationPhase.StaticData)
         {
             if (FControlRigObjectVersion.Get(Ar) < FControlRigObjectVersion.Type.RemovedMultiParentParentCache)
             {
@@ -119,9 +119,9 @@ public class FRigMultiParentElement : FRigTransformElement
             var NumParents = Ar.Read<int>();
             ParentConstraints = new FRigElementParentConstraint[NumParents];
         }
-        else if(serializationPhase == ESerializationPhase.InterElementData)
+        else if (serializationPhase == ESerializationPhase.InterElementData)
         {
-            for(var ParentIndex = 0; ParentIndex < ParentConstraints.Length; ParentIndex++)
+            for (var ParentIndex = 0; ParentIndex < ParentConstraints.Length; ParentIndex++)
             {
                 FRigElementParentConstraint constraint = new();
                 FRigElementKey ParentKey = new FRigElementKey(Ar);

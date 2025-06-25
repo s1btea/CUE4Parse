@@ -51,7 +51,7 @@ public class FTexturePlatformData
             SizeX = Ar.Read<short>();
             SizeY = Ar.Read<short>();
             var data = Ar.ReadBytes(3); // int24
-            PackedData = (uint) (data[0] + (data[1] << 8) + (data[2] << 16));
+            PackedData = (uint)(data[0] + (data[1] << 8) + (data[2] << 16));
         }
         else
         {
@@ -116,12 +116,12 @@ public class FTexturePlatformData
             SizeY = Mips[0].SizeY;
 
             if (Owner is UVolumeTexture)
-                PackedData = (uint) ((Mips[0].SizeZ & BitMask_NumSlices) | (PackedData & ~BitMask_NumSlices));
+                PackedData = (uint)((Mips[0].SizeZ & BitMask_NumSlices) | (PackedData & ~BitMask_NumSlices));
         }
         else if (VTData != null)
         {
-            SizeX = (int) VTData.Width;
-            SizeY = (int) VTData.Height;
+            SizeX = (int)VTData.Width;
+            SizeY = (int)VTData.Height;
         }
     }
 
@@ -132,11 +132,11 @@ public class FTexturePlatformData
     public bool IsCubemap() => (PackedData & BitMask_CubeMap) == BitMask_CubeMap;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public int GetNumSlices() => (int) (PackedData & BitMask_NumSlices);
+    public int GetNumSlices() => (int)(PackedData & BitMask_NumSlices);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public int GetNumMipsInTail() => (int) OptData.NumMipsInTail;
+    public int GetNumMipsInTail() => (int)OptData.NumMipsInTail;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public int GetExtData() => (int) OptData.ExtData;
+    public int GetExtData() => (int)OptData.ExtData;
 }

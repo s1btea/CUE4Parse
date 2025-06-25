@@ -25,7 +25,7 @@ namespace CUE4Parse.MappingsProvider.Usmap
         {
             var nameBytes = stackalloc byte[nameLength];
             Ar.Serialize(nameBytes, nameLength);
-            return new string((sbyte*) nameBytes, 0, nameLength);
+            return new string((sbyte*)nameBytes, 0, nameLength);
         }
     }
 }

@@ -10,7 +10,7 @@
         ExportPath,
         LocalizedText
     }
-    
+
     public class FValueId
     {
         private const int _TYPE_BITS = 3;
@@ -18,11 +18,11 @@
 
         public readonly EValueType Type;
         public readonly int Index;
-        
+
         public FValueId(FAssetRegistryReader Ar)
         {
             var id = Ar.Read<uint>();
-            Type = (EValueType) ((id << _INDEX_BITS) >> _INDEX_BITS);
+            Type = (EValueType)((id << _INDEX_BITS) >> _INDEX_BITS);
             Index = (int)id >> _TYPE_BITS;
         }
     }

@@ -71,7 +71,7 @@ namespace CUE4Parse.UE4.IO
             }
             else
             {
-                containerStreams = new List<FArchive>((int) TocResource.Header.PartitionCount);
+                containerStreams = new List<FArchive>((int)TocResource.Header.PartitionCount);
                 var environmentPath = tocStream.Name.SubstringBeforeLast('.');
                 for (int i = 0; i < TocResource.Header.PartitionCount; i++)
                 {
@@ -112,7 +112,7 @@ namespace CUE4Parse.UE4.IO
 #endif
             if (TocResource.Header.Version > EIoStoreTocVersion.Latest)
             {
-                log.Warning("Io Store \"{0}\" has unsupported version {1}", Path, (int) TocResource.Header.Version);
+                log.Warning("Io Store \"{0}\" has unsupported version {1}", Path, (int)TocResource.Header.Version);
             }
         }
 
@@ -140,8 +140,8 @@ namespace CUE4Parse.UE4.IO
                     outOffsetLength = default;
                     return false;
                 }
-                var seedCount = (uint) TocResource.ChunkPerfectHashSeeds.Length;
-                var seedIndex = (uint) (chunkId.HashWithSeed(0) % seedCount);
+                var seedCount = (uint)TocResource.ChunkPerfectHashSeeds.Length;
+                var seedIndex = (uint)(chunkId.HashWithSeed(0) % seedCount);
                 var seed = TocResource.ChunkPerfectHashSeeds[seedIndex];
                 if (seed == 0)
                 {
@@ -151,7 +151,7 @@ namespace CUE4Parse.UE4.IO
                 uint slot;
                 if (seed < 0)
                 {
-                    var seedAsIndex = (uint) (-seed - 1);
+                    var seedAsIndex = (uint)(-seed - 1);
                     if (seedAsIndex < chunkCount)
                     {
                         slot = seedAsIndex;
@@ -164,7 +164,7 @@ namespace CUE4Parse.UE4.IO
                 }
                 else
                 {
-                    slot = (uint) (chunkId.HashWithSeed(seed) % chunkCount);
+                    slot = (uint)(chunkId.HashWithSeed(seed) % chunkCount);
                 }
                 if (TocResource.ChunkIds[slot].GetHashCode() == chunkId.GetHashCode())
                 {
@@ -201,7 +201,7 @@ namespace CUE4Parse.UE4.IO
         {
             if (TryResolve(chunkId, out var offsetLength))
             {
-                return Read((long) offsetLength.Offset, (long) offsetLength.Length);
+                return Read((long)offsetLength.Offset, (long)offsetLength.Length);
             }
 
             throw new KeyNotFoundException($"Couldn't find chunk {chunkId} in IoStore {Name}");
@@ -211,8 +211,8 @@ namespace CUE4Parse.UE4.IO
         {
             var compressionBlockSize = TocResource.Header.CompressionBlockSize;
             var dst = new byte[length];
-            var firstBlockIndex = (int) (offset / compressionBlockSize);
-            var lastBlockIndex = (int) (((offset + dst.Length).Align((int) compressionBlockSize) - 1) / compressionBlockSize);
+            var firstBlockIndex = (int)(offset / compressionBlockSize);
+            var lastBlockIndex = (int)(((offset + dst.Length).Align((int)compressionBlockSize) - 1) / compressionBlockSize);
             var offsetInBlock = offset % compressionBlockSize;
             var remainingSize = length;
             var dstOffset = 0;
@@ -240,21 +240,21 @@ namespace CUE4Parse.UE4.IO
                     uncompressedBuffer = new byte[uncompressedSize];
                 }
 
-                var partitionIndex = (int) ((ulong) compressionBlock.Offset / TocResource.Header.PartitionSize);
-                var partitionOffset = (long) ((ulong) compressionBlock.Offset % TocResource.Header.PartitionSize);
+                var partitionIndex = (int)((ulong)compressionBlock.Offset / TocResource.Header.PartitionSize);
+                var partitionOffset = (long)((ulong)compressionBlock.Offset % TocResource.Header.PartitionSize);
                 FArchive reader;
                 if (IsConcurrent)
                 {
                     clonedReaders ??= new FArchive?[ContainerStreams.Count];
                     ref var clone = ref clonedReaders[partitionIndex];
-                    clone ??= (FArchive) ContainerStreams[partitionIndex].Clone();
+                    clone ??= (FArchive)ContainerStreams[partitionIndex].Clone();
                     reader = clone;
                 }
                 else reader = ContainerStreams[partitionIndex];
 
-                reader.ReadAt(partitionOffset, compressedBuffer, 0, (int) rawSize);
+                reader.ReadAt(partitionOffset, compressedBuffer, 0, (int)rawSize);
                 // FragPunk decided to encrypt the global utoc too.
-                compressedBuffer = DecryptIfEncrypted(compressedBuffer, 0, (int) rawSize, IsEncrypted, Game == EGame.GAME_FragPunk && Path.Contains("global", StringComparison.Ordinal));
+                compressedBuffer = DecryptIfEncrypted(compressedBuffer, 0, (int)rawSize, IsEncrypted, Game == EGame.GAME_FragPunk && Path.Contains("global", StringComparison.Ordinal));
 
                 byte[] src;
                 if (compressionBlock.CompressionMethodIndex == 0)
@@ -265,12 +265,12 @@ namespace CUE4Parse.UE4.IO
                 {
                     var compressionMethod = TocResource.CompressionMethods[compressionBlock.CompressionMethodIndex];
                     Compression.Compression.Decompress(compressedBuffer, 0, (int)compressionBlock.CompressedSize, uncompressedBuffer, 0,
-                        (int) uncompressedSize, compressionMethod, reader);
+                        (int)uncompressedSize, compressionMethod, reader);
                     src = uncompressedBuffer;
                 }
 
-                var sizeInBlock = (int) Math.Min(compressionBlockSize - offsetInBlock, remainingSize);
-                Buffer.BlockCopy(src, (int) offsetInBlock, dst, dstOffset, sizeInBlock);
+                var sizeInBlock = (int)Math.Min(compressionBlockSize - offsetInBlock, remainingSize);
+                Buffer.BlockCopy(src, (int)offsetInBlock, dst, dstOffset, sizeInBlock);
                 offsetInBlock = 0;
                 remainingSize -= sizeInBlock;
                 dstOffset += sizeInBlock;
@@ -298,7 +298,7 @@ namespace CUE4Parse.UE4.IO
                     sb.Append($" ({EncryptedFileCount} encrypted)");
                 if (MountPoint.Contains("/"))
                     sb.Append($", mount point: \"{MountPoint}\"");
-                sb.Append($", version {(int) TocResource.Header.Version} in {elapsed}");
+                sb.Append($", version {(int)TocResource.Header.Version} in {elapsed}");
                 log.Information(sb.ToString());
             }
 
@@ -366,7 +366,7 @@ namespace CUE4Parse.UE4.IO
 
         private FIoContainerHeader ReadContainerHeader()
         {
-            var headerChunkId = new FIoChunkId(TocResource.Header.ContainerId.Id, 0, Game >= EGame.GAME_UE5_0 ? (byte) EIoChunkType5.ContainerHeader : (byte) EIoChunkType.ContainerHeader);
+            var headerChunkId = new FIoChunkId(TocResource.Header.ContainerId.Id, 0, Game >= EGame.GAME_UE5_0 ? (byte)EIoChunkType5.ContainerHeader : (byte)EIoChunkType.ContainerHeader);
             var Ar = new FByteArchive("ContainerHeader", Read(headerChunkId), Versions);
             return new FIoContainerHeader(Ar);
         }

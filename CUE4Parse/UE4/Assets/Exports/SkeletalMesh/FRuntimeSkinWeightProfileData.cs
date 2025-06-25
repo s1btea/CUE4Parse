@@ -27,7 +27,7 @@ namespace CUE4Parse.UE4.Assets.Exports.SkeletalMesh
                 BoneWeights = Ar.ReadArray<byte>();
                 NumWeightsPerVertex = Ar.Read<byte>();
             }
-            
+
             var length = Ar.Read<int>();
             VertexIndexToInfluenceOffset = new Dictionary<uint, uint>();
             for (var i = 0; i < length; i++)

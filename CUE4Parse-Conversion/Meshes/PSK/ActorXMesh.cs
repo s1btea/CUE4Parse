@@ -19,7 +19,7 @@ public class ActorXMesh
 {
     private FArchiveWriter Ar;
     private readonly ExporterOptions Options;
-    
+
     public ActorXMesh(ExporterOptions options)
     {
         Options = options;
@@ -34,22 +34,22 @@ public class ActorXMesh
         ExportSkeletalSockets(sockets, bones);
         ExportSkeletonData(bones);
     }
-    
+
     public ActorXMesh(CStaticMeshLod lod, List<MaterialExporter2>? materialExports, FPackageIndex[] sockets, ExporterOptions options) : this(options)
     {
         ExportStaticMeshLods(lod, materialExports, sockets);
     }
-    
-    public ActorXMesh(CSkelMeshLod lod, List<CSkelMeshBone> refSkeleton, List<MaterialExporter2>? materialExports, FPackageIndex[]? morphTargets,  FPackageIndex[] sockets, int lodIndex, ExporterOptions options) : this(options)
+
+    public ActorXMesh(CSkelMeshLod lod, List<CSkelMeshBone> refSkeleton, List<MaterialExporter2>? materialExports, FPackageIndex[]? morphTargets, FPackageIndex[] sockets, int lodIndex, ExporterOptions options) : this(options)
     {
         ExportSkeletalMeshLod(lod, refSkeleton, materialExports, morphTargets, sockets, lodIndex);
     }
-    
+
     public void Save(FArchiveWriter archive)
     {
         archive.Write(Ar.GetBuffer());
     }
-    
+
     private void ExportStaticMeshLods(CStaticMeshLod lod, List<MaterialExporter2>? materialExports, FPackageIndex[] sockets)
     {
         var share = new CVertexShare();
@@ -107,7 +107,7 @@ public class ActorXMesh
             {
                 Ar.Write(influence.Weight);
                 Ar.Write(i);
-                Ar.Write((int) influence.Bone);
+                Ar.Write((int)influence.Bone);
             }
         }
 
@@ -162,9 +162,9 @@ public class ActorXMesh
             Ar.Write(share.WedgeToVert[i]);
             Ar.Write(verts[i].UV.U);
             Ar.Write(verts[i].UV.V);
-            Ar.Write((byte) wedgeMat[i]);
-            Ar.Write((byte) 0);
-            Ar.Write((short) 0);
+            Ar.Write((byte)wedgeMat[i]);
+            Ar.Write((byte)0);
+            Ar.Write((short)0);
         }
 
         facesHdr.DataCount = numFaces;
@@ -179,15 +179,15 @@ public class ActorXMesh
                     var wedgeIndex = new ushort[3];
                     for (var k = 0; k < wedgeIndex.Length; k++)
                     {
-                        wedgeIndex[k] = (ushort) indices[sections[i].FirstIndex + j * 3 + k];
+                        wedgeIndex[k] = (ushort)indices[sections[i].FirstIndex + j * 3 + k];
                     }
 
                     Ar.Write(wedgeIndex[1]); // MIRROR_MESH
                     Ar.Write(wedgeIndex[0]); // MIRROR_MESH
                     Ar.Write(wedgeIndex[2]);
-                    Ar.Write((byte) i);
-                    Ar.Write((byte) 0);
-                    Ar.Write((uint) 1);
+                    Ar.Write((byte)i);
+                    Ar.Write((byte)0);
+                    Ar.Write((uint)1);
                 }
             }
         }
@@ -208,9 +208,9 @@ public class ActorXMesh
                     Ar.Write(wedgeIndex[1]); // MIRROR_MESH
                     Ar.Write(wedgeIndex[0]); // MIRROR_MESH
                     Ar.Write(wedgeIndex[2]);
-                    Ar.Write((byte) i);
-                    Ar.Write((byte) 0);
-                    Ar.Write((uint) 1);
+                    Ar.Write((byte)i);
+                    Ar.Write((byte)0);
+                    Ar.Write((uint)1);
                 }
             }
         }
@@ -362,53 +362,53 @@ public class ActorXMesh
         switch (Options.SocketFormat)
         {
             case ESocketFormat.Socket:
-            {
-                var socketInfoHdr = new VChunkHeader { DataCount = sockets.Length, DataSize = Constants.VSocket_SIZE };
-                Ar.SerializeChunkHeader(socketInfoHdr, "SKELSOCK");
-
-                for (var i = 0; i < sockets.Length; i++)
                 {
-                    var socket = sockets[i].Load<USkeletalMeshSocket>();
-                    if (socket is null) continue;
+                    var socketInfoHdr = new VChunkHeader { DataCount = sockets.Length, DataSize = Constants.VSocket_SIZE };
+                    Ar.SerializeChunkHeader(socketInfoHdr, "SKELSOCK");
 
-                    var pskSocket = new VSocket(socket.SocketName.Text, socket.BoneName.Text, socket.RelativeLocation, socket.RelativeRotation, socket.RelativeScale);
-                    pskSocket.Serialize(Ar);
-                }
-
-                break;
-            }
-            case ESocketFormat.Bone:
-            {
-                for (var i = 0; i < sockets.Length; i++)
-                {
-                    var socket = sockets[i].Load<USkeletalMeshSocket>();
-                    if (socket is null) continue;
-
-                    var targetBoneIdx = -1;
-                    for (var j = 0; j < bones.Count; j++)
+                    for (var i = 0; i < sockets.Length; i++)
                     {
-                        if (bones[j].Name.Text.Equals(socket.BoneName.Text))
-                        {
-                            targetBoneIdx = j;
-                            break;
-                        }
+                        var socket = sockets[i].Load<USkeletalMeshSocket>();
+                        if (socket is null) continue;
+
+                        var pskSocket = new VSocket(socket.SocketName.Text, socket.BoneName.Text, socket.RelativeLocation, socket.RelativeRotation, socket.RelativeScale);
+                        pskSocket.Serialize(Ar);
                     }
 
-                    if (targetBoneIdx == -1) continue;
-
-                    var meshBone = new CSkelMeshBone
-                    {
-                        Name = socket.SocketName.Text,
-                        ParentIndex = targetBoneIdx,
-                        Position = socket.RelativeLocation,
-                        Orientation = socket.RelativeRotation.Quaternion()
-                    };
-
-                    bones.Add(meshBone);
+                    break;
                 }
+            case ESocketFormat.Bone:
+                {
+                    for (var i = 0; i < sockets.Length; i++)
+                    {
+                        var socket = sockets[i].Load<USkeletalMeshSocket>();
+                        if (socket is null) continue;
 
-                break;
-            }
+                        var targetBoneIdx = -1;
+                        for (var j = 0; j < bones.Count; j++)
+                        {
+                            if (bones[j].Name.Text.Equals(socket.BoneName.Text))
+                            {
+                                targetBoneIdx = j;
+                                break;
+                            }
+                        }
+
+                        if (targetBoneIdx == -1) continue;
+
+                        var meshBone = new CSkelMeshBone
+                        {
+                            Name = socket.SocketName.Text,
+                            ParentIndex = targetBoneIdx,
+                            Position = socket.RelativeLocation,
+                            Orientation = socket.RelativeRotation.Quaternion()
+                        };
+
+                        bones.Add(meshBone);
+                    }
+
+                    break;
+                }
         }
     }
     public void ExportStaticSockets(FPackageIndex[] sockets, List<CSkelMeshBone> bones)
@@ -417,41 +417,41 @@ public class ActorXMesh
         switch (Options.SocketFormat)
         {
             case ESocketFormat.Socket:
-            {
-                var socketInfoHdr = new VChunkHeader { DataCount = sockets.Length, DataSize = Constants.VSocket_SIZE };
-                Ar.SerializeChunkHeader(socketInfoHdr, "SKELSOCK");
-
-                for (var i = 0; i < sockets.Length; i++)
                 {
-                    var socket = sockets[i].Load<UStaticMeshSocket>();
-                    if (socket is null) continue;
+                    var socketInfoHdr = new VChunkHeader { DataCount = sockets.Length, DataSize = Constants.VSocket_SIZE };
+                    Ar.SerializeChunkHeader(socketInfoHdr, "SKELSOCK");
 
-                    var pskSocket = new VSocket(socket.SocketName.Text, string.Empty, socket.RelativeLocation, socket.RelativeRotation, socket.RelativeScale);
-                    pskSocket.Serialize(Ar);
-                }
-
-                break;
-            }
-            case ESocketFormat.Bone:
-            {
-                for (var i = 0; i < sockets.Length; i++)
-                {
-                    var socket = sockets[i].Load<UStaticMeshSocket>();
-                    if (socket is null) continue;
-
-                    var meshBone = new CSkelMeshBone
+                    for (var i = 0; i < sockets.Length; i++)
                     {
-                        Name = socket.SocketName.Text,
-                        ParentIndex = -1,
-                        Position = socket.RelativeLocation,
-                        Orientation = socket.RelativeRotation.Quaternion()
-                    };
+                        var socket = sockets[i].Load<UStaticMeshSocket>();
+                        if (socket is null) continue;
 
-                    bones.Add(meshBone);
+                        var pskSocket = new VSocket(socket.SocketName.Text, string.Empty, socket.RelativeLocation, socket.RelativeRotation, socket.RelativeScale);
+                        pskSocket.Serialize(Ar);
+                    }
+
+                    break;
                 }
+            case ESocketFormat.Bone:
+                {
+                    for (var i = 0; i < sockets.Length; i++)
+                    {
+                        var socket = sockets[i].Load<UStaticMeshSocket>();
+                        if (socket is null) continue;
 
-                break;
-            }
+                        var meshBone = new CSkelMeshBone
+                        {
+                            Name = socket.SocketName.Text,
+                            ParentIndex = -1,
+                            Position = socket.RelativeLocation,
+                            Orientation = socket.RelativeRotation.Quaternion()
+                        };
+
+                        bones.Add(meshBone);
+                    }
+
+                    break;
+                }
         }
     }
 
@@ -465,5 +465,5 @@ public class ActorXMesh
 
         return -1;
     }
-    
+
 }

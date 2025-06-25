@@ -8,7 +8,7 @@ public class ActorXAnim
 {
     private FArchiveWriter Ar;
     private readonly ExporterOptions Options;
-    
+
     public ActorXAnim(ExporterOptions options)
     {
         Options = options;
@@ -19,12 +19,12 @@ public class ActorXAnim
     {
         DoExportPsa(anim, seqIdx);
     }
-    
+
     public void Save(FArchiveWriter archive)
     {
         archive.Write(Ar.GetBuffer());
     }
-    
+
     private void DoExportPsa(CAnimSet anim, int seqIdx)
     {
         var mainHdr = new VChunkHeader { TypeFlag = Constants.PSA_VERSION };

@@ -21,10 +21,10 @@ namespace CUE4Parse.UE4.Assets.Objects
                 if (dataIndex >= 0 && dataIndex < iopkg.BulkDataMap.Length)
                 {
                     var metaData = iopkg.BulkDataMap[dataIndex];
-                    BulkDataFlags = (EBulkDataFlags) metaData.Flags;
-                    ElementCount = (int) metaData.SerialSize;
-                    OffsetInFile = (long) metaData.SerialOffset;
-                    SizeOnDisk = (uint) metaData.SerialSize; // ??
+                    BulkDataFlags = (EBulkDataFlags)metaData.Flags;
+                    ElementCount = (int)metaData.SerialSize;
+                    OffsetInFile = (long)metaData.SerialOffset;
+                    SizeOnDisk = (uint)metaData.SerialSize; // ??
                     return;
                 }
                 Ar.Position -= 4;
@@ -36,18 +36,18 @@ namespace CUE4Parse.UE4.Assets.Objects
                 if (dataIndex >= 0 && dataIndex < pkg.DataResourceMap.Length)
                 {
                     var metaData = pkg.DataResourceMap[dataIndex];
-                    BulkDataFlags = (EBulkDataFlags) metaData.LegacyBulkDataFlags;
-                    ElementCount = (int) metaData.RawSize;
+                    BulkDataFlags = (EBulkDataFlags)metaData.LegacyBulkDataFlags;
+                    ElementCount = (int)metaData.RawSize;
                     OffsetInFile = metaData.SerialOffset;
-                    SizeOnDisk = (uint) metaData.SerialSize;
+                    SizeOnDisk = (uint)metaData.SerialSize;
                     return;
                 }
                 Ar.Position -= 4;
             }
 
             BulkDataFlags = Ar.Read<EBulkDataFlags>();
-            ElementCount = BulkDataFlags.HasFlag(BULKDATA_Size64Bit) ? (int) Ar.Read<long>() : Ar.Read<int>();
-            SizeOnDisk = BulkDataFlags.HasFlag(BULKDATA_Size64Bit) ? (uint) Ar.Read<long>() : Ar.Read<uint>();
+            ElementCount = BulkDataFlags.HasFlag(BULKDATA_Size64Bit) ? (int)Ar.Read<long>() : Ar.Read<int>();
+            SizeOnDisk = BulkDataFlags.HasFlag(BULKDATA_Size64Bit) ? (uint)Ar.Read<long>() : Ar.Read<uint>();
             OffsetInFile = Ar.Ver >= EUnrealEngineObjectUE4Version.BULKDATA_AT_LARGE_OFFSETS ? Ar.Read<long>() : Ar.Read<int>();
             if (!BulkDataFlags.HasFlag(BULKDATA_NoOffsetFixUp)) // UE4.26 flag
             {

@@ -41,26 +41,26 @@ public static class ToaaAes
         0xB5, 0xFD, 0x3C, 0x22, 0x38, 0x9B, 0x43, 0x26, 0x0A, 0x93, 0xEC, 0x3E, 0x3D, 0xE8, 0x70, 0xCF
     ];
 
-    private static uint GETU32(ReadOnlySpan<byte> plaintext) => (uint) (plaintext[0] << 24 | plaintext[1] << 16 | plaintext[2] << 8 | plaintext[3]);
+    private static uint GETU32(ReadOnlySpan<byte> plaintext) => (uint)(plaintext[0] << 24 | plaintext[1] << 16 | plaintext[2] << 8 | plaintext[3]);
 
     private static void PUTU32(Span<byte> ciphertext, uint st)
     {
-        ciphertext[0] = (byte) (st >> 24);
-        ciphertext[1] = (byte) (st >> 16);
-        ciphertext[2] = (byte) (st >> 8);
-        ciphertext[3] = (byte) st;
+        ciphertext[0] = (byte)(st >> 24);
+        ciphertext[1] = (byte)(st >> 16);
+        ciphertext[2] = (byte)(st >> 8);
+        ciphertext[3] = (byte)st;
     }
 
     private static uint ROL4(uint v, uint n)
     {
         n &= 31;
-        return n != 0 ? (v << (int) n) | (v >> (int) (32 - n)) : 0;
+        return n != 0 ? (v << (int)n) | (v >> (int)(32 - n)) : 0;
     }
 
     private static uint ROR4(uint v, uint n)
     {
         n &= 31;
-        return n != 0 ? (v >> (int) n) | (v << (int) (32 - n)) : 0;
+        return n != 0 ? (v >> (int)n) | (v << (int)(32 - n)) : 0;
     }
 
     private static void ExpandKey(ReadOnlySpan<byte> key, Span<uint> rk)

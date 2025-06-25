@@ -45,18 +45,18 @@ namespace CUE4Parse.UE4.Objects.Core.Math
 
         public FVector(double x, double y, double z)
         {
-            X = (float) x;
-            Y = (float) y;
-            Z = (float) z;
+            X = (float)x;
+            Y = (float)y;
+            Z = (float)z;
         }
 
         public FVector(FArchive Ar)
         {
             if (Ar.Ver >= EUnrealEngineObjectUE5Version.LARGE_WORLD_COORDINATES)
             {
-                X = (float) Ar.Read<double>();
-                Y = (float) Ar.Read<double>();
-                Z = (float) Ar.Read<double>();
+                X = (float)Ar.Read<double>();
+                Y = (float)Ar.Read<double>();
+                Z = (float)Ar.Read<double>();
             }
             else
             {
@@ -125,7 +125,9 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         public FVector GetSignVector() => new()
         {
             //FloatSelect: return Comparand >= 0.f ? ValueGEZero : ValueLTZero;
-            X = X >= 0 ? 1 : -1, Y = Y >= 0 ? 1 : -1, Z = Z >= 0 ? 1 : -1
+            X = X >= 0 ? 1 : -1,
+            Y = Y >= 0 ? 1 : -1,
+            Z = Z >= 0 ? 1 : -1
         };
 
         public void Scale(float scale)
@@ -194,7 +196,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
             float s = q.W;
 
             return 2.0f * DotProduct(u, v) * u
-                     + (s*s - DotProduct(u, u)) * v
+                     + (s * s - DotProduct(u, u)) * v
                      + 2.0f * s * CrossProduct(u, v);
         }
 

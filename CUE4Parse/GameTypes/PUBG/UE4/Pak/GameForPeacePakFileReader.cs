@@ -19,7 +19,7 @@ public partial class PakFileReader
         0x35, 0x36, 0x37, 0x38, 0x39, 0x31, 0x32, 0x33, 0x34,
         0x36, 0x37, 0x38, 0x39, 0x31, 0x32, 0x33, 0x34, 0x35,
         0x37, 0x38, 0x39, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36,
-        0x38, 0x39, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 
+        0x38, 0x39, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37,
         0x39, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38,
     ];
     /// <summary>
@@ -31,20 +31,20 @@ public partial class PakFileReader
     /// <returns>The merged and decompressed/decrypted entry data</returns>
     private byte[] GameForPeaceExtract(FArchive reader, FPakEntry pakEntry)
     {
-        var uncompressed = new byte[(int) pakEntry.UncompressedSize];
+        var uncompressed = new byte[(int)pakEntry.UncompressedSize];
         var uncompressedOff = 0;
         foreach (var block in pakEntry.CompressionBlocks)
         {
-            var blockSize = (int) block.Size;
+            var blockSize = (int)block.Size;
             var srcSize = blockSize.Align(pakEntry.IsEncrypted ? Aes.ALIGN : 1);
             // Read the compressed block
             var compressed = ReadAndDecryptAt(block.CompressedStart, srcSize, reader, pakEntry.IsEncrypted);
             // Calculate the uncompressed size,
             // its either just the compression block size,
             // or if it's the last block, it's the remaining data size
-            var uncompressedSize = (int) Math.Min(pakEntry.CompressionBlockSize, pakEntry.UncompressedSize - uncompressedOff);
+            var uncompressedSize = (int)Math.Min(pakEntry.CompressionBlockSize, pakEntry.UncompressedSize - uncompressedOff);
             Decompress(compressed, 0, blockSize, uncompressed, uncompressedOff, uncompressedSize, pakEntry.CompressionMethod);
-            uncompressedOff += (int) pakEntry.CompressionBlockSize;
+            uncompressedOff += (int)pakEntry.CompressionBlockSize;
         }
         if (pakEntry.Extension == "ini" && BitConverter.ToUInt64(uncompressed, 0) == 0x4b4457585d5d5b7d)
         {
@@ -60,15 +60,15 @@ public partial class PakFileReader
     {
         var saved = index.Position;
         var pakentries = index.ReadArray(() => new FPakEntry(this, "", index, Game));
-        var directoryIndex = new FByteArchive($"{Name} - Directory Index", ReadAndDecrypt((int) Ar.Read<long>()));
+        var directoryIndex = new FByteArchive($"{Name} - Directory Index", ReadAndDecrypt((int)Ar.Read<long>()));
         var fileCount = pakentries.Length;
         var files = new Dictionary<string, GameFile>(pakentries.Length);
-        var directoryIndexLength = (int) directoryIndex.Read<long>();
+        var directoryIndexLength = (int)directoryIndex.Read<long>();
         index.Position = saved + 4;
         for (var i = 0; i < directoryIndexLength; i++)
         {
             var dir = directoryIndex.ReadFString();
-            var dirDictLength = (int) directoryIndex.Read<long>();
+            var dirDictLength = (int)directoryIndex.Read<long>();
 
             for (var j = 0; j < dirDictLength; j++)
             {

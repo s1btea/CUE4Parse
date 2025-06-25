@@ -43,9 +43,9 @@ public class FStreamArchive : FArchive
     {
         return _baseStream switch
         {
-            ICloneable cloneable => new FStreamArchive(Name, (Stream) cloneable.Clone(), Versions) {Position = Position},
-            FileStream fileStream => new FStreamArchive(Name, File.Open(fileStream.Name, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), Versions) {Position = Position},
-            _ => new FStreamArchive(Name, _baseStream, Versions) {Position = Position}
+            ICloneable cloneable => new FStreamArchive(Name, (Stream)cloneable.Clone(), Versions) { Position = Position },
+            FileStream fileStream => new FStreamArchive(Name, File.Open(fileStream.Name, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), Versions) { Position = Position },
+            _ => new FStreamArchive(Name, _baseStream, Versions) { Position = Position }
         };
     }
 }
@@ -85,7 +85,7 @@ public class FRandomAccessStreamArchive : FArchive
 
     public override string Name { get; }
 
-    public override object Clone() => new FRandomAccessStreamArchive(Name, _baseStream, Versions) {Position = Position};
+    public override object Clone() => new FRandomAccessStreamArchive(Name, _baseStream, Versions) { Position = Position };
 }
 
 public class FRandomAccessFileStreamArchive : FArchive
@@ -149,5 +149,5 @@ public class FRandomAccessFileStreamArchive : FArchive
 
     public override string Name { get; }
 
-    public override object Clone() => new FRandomAccessFileStreamArchive(Name, Versions) {Position = Position};
+    public override object Clone() => new FRandomAccessFileStreamArchive(Name, Versions) { Position = Position };
 }

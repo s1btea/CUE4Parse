@@ -12,5 +12,5 @@ public class FVectorKey : FAnimKey<FVector>
         base.Serialize(Ar);
         Value.Serialize(Ar);
     }
-    
+
 }

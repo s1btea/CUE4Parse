@@ -423,7 +423,7 @@ public class FLightMap2D : FLightMap
     public readonly FVector4? InvUniformPenumbraSize;
     public readonly bool[]? bShadowChannelValid;
 
-    public FLightMap2D(FAssetArchive Ar): base(Ar)
+    public FLightMap2D(FAssetArchive Ar) : base(Ar)
     {
         Textures = new FPackageIndex[2];
         VirtualTextures = new FPackageIndex[2];

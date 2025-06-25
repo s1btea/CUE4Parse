@@ -38,7 +38,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
             var intG = (floatG * 255.999f).FloorToInt();
             var intB = (floatB * 255.999f).FloorToInt();
 
-            return new FColor((byte) intR, (byte) intG, (byte) intB, (byte) intA);
+            return new FColor((byte)intR, (byte)intG, (byte)intB, (byte)intA);
         }
 
         public FLinearColor ToSRGB()
@@ -106,7 +106,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
                 new uint[] { 0, 1, 2 }
             };
 
-            var swizzleIndex = (uint) hDiv60Floor % 6;
+            var swizzleIndex = (uint)hDiv60Floor % 6;
 
             return new FLinearColor(rgbValues[rgbSwizzle[swizzleIndex][0]],
                 rgbValues[rgbSwizzle[swizzleIndex][1]],

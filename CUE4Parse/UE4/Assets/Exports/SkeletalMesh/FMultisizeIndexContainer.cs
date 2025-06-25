@@ -14,14 +14,14 @@ namespace CUE4Parse.UE4.Assets.Exports.SkeletalMesh
             Indices16 = Array.Empty<ushort>();
             Indices32 = Array.Empty<uint>();
         }
-        
+
         public FMultisizeIndexContainer(FArchive Ar) : this()
         {
             if (Ar.Ver < EUnrealEngineObjectUE4Version.KEEP_SKEL_MESH_INDEX_DATA)
             {
                 Ar.Position += 4; //var bOldNeedsCPUAccess = Ar.ReadBoolean();
             }
-            
+
             var dataSize = Ar.Read<byte>();
             if (Ar.Game == EGame.GAME_OutlastTrials) Ar.Position += 4;
 

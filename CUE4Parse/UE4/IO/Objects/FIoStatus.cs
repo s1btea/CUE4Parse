@@ -22,7 +22,7 @@ namespace CUE4Parse.UE4.IO.Objects
         SignatureError,
         InvalidEncryptionKey,
     }
-    
+
     public class FIoStatus
     {
         public readonly EIoErrorCode ErrorCode;
@@ -48,8 +48,9 @@ namespace CUE4Parse.UE4.IO.Objects
             Status = status;
         }
 
-        public FIoStatusException(EIoErrorCode errorCode, string errorMessage = "", Exception? innerException = null) : 
-            this(new FIoStatus(errorCode, errorMessage), innerException) { }
+        public FIoStatusException(EIoErrorCode errorCode, string errorMessage = "", Exception? innerException = null) :
+            this(new FIoStatus(errorCode, errorMessage), innerException)
+        { }
 
         public FIoStatusException(FArchive Ar, FIoStatus status, Exception? innerException = null) : base(Ar, status.ToString(), innerException)
         {
@@ -57,6 +58,7 @@ namespace CUE4Parse.UE4.IO.Objects
         }
 
         public FIoStatusException(FArchive Ar, EIoErrorCode errorCode, string errorMessage = "", Exception? innerException = null) :
-            this(Ar, new FIoStatus(errorCode, errorMessage), innerException) { }
+            this(Ar, new FIoStatus(errorCode, errorMessage), innerException)
+        { }
     }
 }

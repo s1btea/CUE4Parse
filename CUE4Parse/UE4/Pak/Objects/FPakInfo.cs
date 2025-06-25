@@ -84,7 +84,7 @@ namespace CUE4Parse.UE4.Pak.Objects
                 Version = Ar.Read<EPakFileVersion>();
                 IndexHash = new FSHAHash(Ar);
                 IndexSize = (long)(Ar.Read<ulong>() ^ 0x8924b0e3298b7069);
-                IndexOffset = (long) (Ar.Read<ulong>() ^ 0xd74af37faa6b020d);
+                IndexOffset = (long)(Ar.Read<ulong>() ^ 0xd74af37faa6b020d);
                 CompressionMethods = new List<CompressionMethod>
                 {
                     CompressionMethod.None, CompressionMethod.Zlib, CompressionMethod.Gzip, CompressionMethod.Oodle, CompressionMethod.LZ4, CompressionMethod.Zstd
@@ -126,22 +126,22 @@ namespace CUE4Parse.UE4.Pak.Objects
                 return;
             }
 
-            afterMagic:
-            Version = hottaVersion >= 2 ? (EPakFileVersion) (Ar.Read<int>() ^ 2) : Ar.Read<EPakFileVersion>();
+        afterMagic:
+            Version = hottaVersion >= 2 ? (EPakFileVersion)(Ar.Read<int>() ^ 2) : Ar.Read<EPakFileVersion>();
             if (Ar.Game == EGame.GAME_StateOfDecay2)
             {
                 // ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
-                Version &= (EPakFileVersion) 0xFFFF;
+                Version &= (EPakFileVersion)0xFFFF;
             }
 
             if (Ar.Game == EGame.GAME_KartRiderDrift)
             {
-                Version &= (EPakFileVersion) 0x0F;
+                Version &= (EPakFileVersion)0x0F;
             }
 
             if (Ar.Game == EGame.GAME_FridayThe13th)
             {
-                if (!EncryptedIndex && Magic == 0 && (int) Version == PAK_FILE_MAGIC)
+                if (!EncryptedIndex && Magic == 0 && (int)Version == PAK_FILE_MAGIC)
                 {
                     Magic = PAK_FILE_MAGIC;
                     Version = Ar.Read<EPakFileVersion>();
@@ -176,8 +176,8 @@ namespace CUE4Parse.UE4.Pak.Objects
             if (Ar.Game == EGame.GAME_WildAssault)
             {
                 EncryptionKeyGuid = default;
-                IndexOffset = (long) ((ulong) IndexOffset ^ 0xD5B9B05CE8143A3C) - 0xAA;
-                IndexSize = (long) ((ulong) IndexSize ^ 0x6DB425B4BC084B4B) - 0xA8;
+                IndexOffset = (long)((ulong)IndexOffset ^ 0xD5B9B05CE8143A3C) - 0xAA;
+                IndexSize = (long)((ulong)IndexSize ^ 0x6DB425B4BC084B4B) - 0xA8;
             }
 
             if (Ar.Game == EGame.GAME_DeadByDaylight)
@@ -191,7 +191,7 @@ namespace CUE4Parse.UE4.Pak.Objects
                 IndexIsFrozen = Ar.Read<byte>() != 0;
             }
 
-            beforeCompression:
+        beforeCompression:
             if (Version < EPakFileVersion.PakFile_Version_FNameBasedCompressionMethod)
             {
                 CompressionMethods = new List<CompressionMethod>
@@ -225,7 +225,7 @@ namespace CUE4Parse.UE4.Pak.Objects
                     };
                     for (var i = 0; i < maxNumCompressionMethods; i++)
                     {
-                        var name = new string((sbyte*) buffer + i * COMPRESSION_METHOD_NAME_LEN, 0, COMPRESSION_METHOD_NAME_LEN).TrimEnd('\0');
+                        var name = new string((sbyte*)buffer + i * COMPRESSION_METHOD_NAME_LEN, 0, COMPRESSION_METHOD_NAME_LEN).TrimEnd('\0');
                         if (string.IsNullOrEmpty(name))
                             continue;
                         if (!Enum.TryParse(name, true, out CompressionMethod method))
@@ -298,14 +298,14 @@ namespace CUE4Parse.UE4.Pak.Objects
             unsafe
             {
                 var length = Ar.Length;
-                const long maxOffset = (long) OffsetsToTry.SizeMax;
+                const long maxOffset = (long)OffsetsToTry.SizeMax;
                 if (length < maxOffset)
                 {
                     throw new ParserException($"File {Ar.Name} is too small to be a pak file");
                 }
                 Ar.Seek(-maxOffset, SeekOrigin.End);
-                var buffer = stackalloc byte[(int) maxOffset];
-                Ar.Serialize(buffer, (int) maxOffset);
+                var buffer = stackalloc byte[(int)maxOffset];
+                Ar.Serialize(buffer, (int)maxOffset);
 
                 var reader = new FPointerArchive(Ar.Name, buffer, maxOffset, Ar.Versions);
 
@@ -324,7 +324,7 @@ namespace CUE4Parse.UE4.Pak.Objects
                 };
                 foreach (var offset in offsetsToTry)
                 {
-                    reader.Seek(-(long) offset, SeekOrigin.End);
+                    reader.Seek(-(long)offset, SeekOrigin.End);
                     var info = new FPakInfo(reader, offset);
 
                     if (Ar.Game == EGame.GAME_OutlastTrials && info.Magic == PAK_FILE_MAGIC_OutlastTrials ||

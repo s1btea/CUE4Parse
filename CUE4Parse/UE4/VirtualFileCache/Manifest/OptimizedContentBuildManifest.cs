@@ -47,12 +47,12 @@ namespace CUE4Parse.UE4.VirtualFileCache.Manifest
             switch (storedAs)
             {
                 case EManifestStorageFlags.Compressed:
-                {
-                    data = new byte[dataSizeUncompressed];
-                    var compressed = reader.ReadBytes(dataSizeCompressed);
-                    ZlibHelper.Decompress(compressed, 0, compressed.Length, data, 0, data.Length);
-                    break;
-                }
+                    {
+                        data = new byte[dataSizeUncompressed];
+                        var compressed = reader.ReadBytes(dataSizeCompressed);
+                        ZlibHelper.Decompress(compressed, 0, compressed.Length, data, 0, data.Length);
+                        break;
+                    }
                 case EManifestStorageFlags.Encrypted:
                     throw new NotImplementedException("Encrypted Manifests are not supported yet");
                 default:

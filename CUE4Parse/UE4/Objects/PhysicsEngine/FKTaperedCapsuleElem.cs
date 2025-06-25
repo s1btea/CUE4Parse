@@ -12,7 +12,7 @@ public class FKTaperedCapsuleElem : FKShapeElem
     public float Radius0;
     public float Radius1;
     public float Length;
-    
+
     public FKTaperedCapsuleElem(FStructFallback fallback) : base(fallback)
     {
         Center = fallback.GetOrDefault(nameof(Center), FVector.ZeroVector);

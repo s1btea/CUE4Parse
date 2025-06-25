@@ -34,7 +34,7 @@ namespace CUE4Parse_Conversion.Animations.PSA
         {
             return new FPoseBone
             {
-                Transform = (FTransform) Transform.Clone(),
+                Transform = (FTransform)Transform.Clone(),
                 ParentIndex = ParentIndex,
                 Name = Name,
                 IsValidKey = IsValidKey,

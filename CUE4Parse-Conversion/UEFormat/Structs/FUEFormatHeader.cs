@@ -10,7 +10,7 @@ public struct FUEFormatHeader : ISerializable
     public EFileCompressionFormat CompressionFormat;
     public int CompressedSize;
     public int UncompressedSize;
-    
+
     private readonly string Identifier;
     private EUEFormatVersion FileVersion;
     private string ObjectName;
@@ -23,16 +23,16 @@ public struct FUEFormatHeader : ISerializable
         CompressionFormat = compressionFormat;
         FileVersion = EUEFormatVersion.LatestVersion;
     }
-    
+
     public void Serialize(FArchiveWriter Ar)
     {
         var padded = new byte[MAGIC.Length];
-        var bytes = Encoding.UTF8.GetBytes(MAGIC); 
+        var bytes = Encoding.UTF8.GetBytes(MAGIC);
         Buffer.BlockCopy(bytes, 0, padded, 0, bytes.Length);
         Ar.Write(padded);
-        
+
         Ar.WriteFString(Identifier);
-        Ar.Write((byte) FileVersion);
+        Ar.Write((byte)FileVersion);
         Ar.WriteFString(ObjectName);
 
         var isCompressed = CompressionFormat != EFileCompressionFormat.None;

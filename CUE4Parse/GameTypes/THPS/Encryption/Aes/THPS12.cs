@@ -164,14 +164,14 @@ public static class THPS12Aes
         THPSPUTU32(plaintext[12..], s3);
         return;
 
-        uint THPSGETU32(Span<byte> plaintext) => (uint) (plaintext[0] << 24 | plaintext[1] << 16 | plaintext[2] << 8 | plaintext[3]);
+        uint THPSGETU32(Span<byte> plaintext) => (uint)(plaintext[0] << 24 | plaintext[1] << 16 | plaintext[2] << 8 | plaintext[3]);
 
         void THPSPUTU32(Span<byte> plaintext, uint st)
         {
-            plaintext[0] = (byte) (st >> 24);
-            plaintext[1] = (byte) (st >> 16);
-            plaintext[2] = (byte) (st >> 8);
-            plaintext[3] = (byte) st;
+            plaintext[0] = (byte)(st >> 24);
+            plaintext[1] = (byte)(st >> 16);
+            plaintext[2] = (byte)(st >> 8);
+            plaintext[3] = (byte)st;
         }
 
         uint Replace(uint input, uint output) => (output & 0xFF000000) | (input & 0x00FF0000) | (output & 0x0000FF00) | (output & 0x000000FF);

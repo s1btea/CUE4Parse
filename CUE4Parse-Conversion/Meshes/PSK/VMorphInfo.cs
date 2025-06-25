@@ -14,7 +14,7 @@ public class VMorphInfo
         MorphName = morphName;
         VertexCount = vertexCount;
     }
-    
+
     public void Serialize(FArchiveWriter Ar)
     {
         Ar.Write(MorphName.Substring(0, Math.Min(MorphName.Length, 64)), 64);

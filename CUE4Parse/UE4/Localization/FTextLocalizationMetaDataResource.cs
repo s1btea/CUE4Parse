@@ -10,7 +10,7 @@ namespace CUE4Parse.UE4.Localization
     [JsonConverter(typeof(FTextLocalizationMetaDataResourceConverter))]
     public class FTextLocalizationMetaDataResource
     {
-        private readonly FGuid _locMetaMagic = new (0xA14CEE4Fu, 0x83554868u, 0xBD464C6Cu, 0x7C50DA70u);
+        private readonly FGuid _locMetaMagic = new(0xA14CEE4Fu, 0x83554868u, 0xBD464C6Cu, 0x7C50DA70u);
         public readonly string NativeCulture;
         public readonly string NativeLocRes;
         public readonly string[]? CompiledCultures;

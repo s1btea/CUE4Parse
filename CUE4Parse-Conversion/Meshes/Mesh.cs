@@ -19,7 +19,7 @@ namespace CUE4Parse_Conversion.Meshes
             Materials = materials;
         }
 
-        private readonly object _material = new ();
+        private readonly object _material = new();
         public override bool TryWriteToDir(DirectoryInfo baseDirectory, out string label, out string savedFilePath)
         {
             label = string.Empty;

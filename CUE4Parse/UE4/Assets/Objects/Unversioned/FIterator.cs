@@ -14,7 +14,7 @@ namespace CUE4Parse.UE4.Assets.Objects.Unversioned
         private readonly IEnumerator<FFragment> _fragmentIt;
 
         private int _remainingFragmentValues;
-        
+
         public FIterator(FUnversionedHeader header)
         {
             _zeroMask = header.ZeroMask;
@@ -22,7 +22,7 @@ namespace CUE4Parse.UE4.Assets.Objects.Unversioned
             if (header.HasValues)
                 Skip();
         }
-        
+
         public bool MoveNext()
         {
             _schemaIt++;

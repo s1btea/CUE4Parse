@@ -44,7 +44,7 @@ namespace CUE4Parse.UE4.Pak.Objects
             {
                 CompressedSize = Ar.Read<int>();
                 UncompressedSize = Ar.Read<int>();
-                CompressionMethod = (CompressionMethod) Ar.Read<byte>();
+                CompressionMethod = (CompressionMethod)Ar.Read<byte>();
 
                 if (reader.Info.Version < PakFile_Version_NoTimestamps)
                 {
@@ -69,9 +69,9 @@ namespace CUE4Parse.UE4.Pak.Objects
 
             if (Ar.Game == GAME_WildAssault)
             {
-                Offset = (long) ((ulong) Offset ^ 0xA7CE6A55B275BB25) - 0x7A;
-                CompressedSize = (long) ((ulong) CompressedSize ^ 0xF00DF9C13B6B54B0) - 0xDF;
-                UncompressedSize = (long) ((ulong) UncompressedSize ^ 0x1604EC5A1949330D) - 0x6F;
+                Offset = (long)((ulong)Offset ^ 0xA7CE6A55B275BB25) - 0x7A;
+                CompressedSize = (long)((ulong)CompressedSize ^ 0xF00DF9C13B6B54B0) - 0xDF;
+                UncompressedSize = (long)((ulong)UncompressedSize ^ 0x1604EC5A1949330D) - 0x6F;
             }
 
             if (reader.Info.Version < PakFile_Version_FNameBasedCompressionMethod)
@@ -83,7 +83,7 @@ namespace CUE4Parse.UE4.Pak.Objects
                 {
                     compressionMethodIndex = 0;
                 }
-                else if (legacyCompressionMethod == (ECompressionFlags) 259) // SOD2
+                else if (legacyCompressionMethod == (ECompressionFlags)259) // SOD2
                 {
                     compressionMethodIndex = 4;
                 }
@@ -142,13 +142,13 @@ namespace CUE4Parse.UE4.Pak.Objects
             {
                 if (CompressionMethod != CompressionMethod.None)
                     CompressionBlocks = Ar.ReadArray<FPakCompressedBlock>();
-                Flags = (uint) Ar.ReadByte();
+                Flags = (uint)Ar.ReadByte();
                 CompressionBlockSize = Ar.Read<uint>();
                 if (Ar.Game == GAME_WildAssault)
                     CompressionBlockSize = CompressionBlockSize ^ 0x6431032B - 0x81;
             }
 
-            if (Ar.Game == GAME_TEKKEN7) Flags = (uint) (Flags & ~Flag_Encrypted);
+            if (Ar.Game == GAME_TEKKEN7) Flags = (uint)(Flags & ~Flag_Encrypted);
 
             if (reader.Info.Version >= PakFile_Version_RelativeChunkOffsets)
             {
@@ -160,8 +160,8 @@ namespace CUE4Parse.UE4.Pak.Objects
                 }
             }
 
-            endRead:
-            StructSize = (int) (Ar.Position - startOffset);
+        endRead:
+            StructSize = (int)(Ar.Position - startOffset);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -170,13 +170,13 @@ namespace CUE4Parse.UE4.Pak.Objects
             Path = path;
 
             // UE4 reference: FPakFile::DecodePakEntry()
-            var bitfield = *(uint*) data;
+            var bitfield = *(uint*)data;
             data += sizeof(uint);
 
             uint compressionBlockSize;
             if ((bitfield & 0x3f) == 0x3f) // flag value to load a field
             {
-                compressionBlockSize = *(uint*) data;
+                compressionBlockSize = *(uint*)data;
                 data += sizeof(uint);
             }
             else
@@ -186,7 +186,7 @@ namespace CUE4Parse.UE4.Pak.Objects
             }
 
             // Filter out the CompressionMethod.
-            CompressionMethod = reader.Info.CompressionMethods[(int) ((bitfield >> 23) & 0x3f)];
+            CompressionMethod = reader.Info.CompressionMethods[(int)((bitfield >> 23) & 0x3f)];
 
             // Test for 32-bit safe values. Grab it, or memcpy the 64-bit value
             // to avoid alignment exceptions on platforms requiring 64-bit alignment
@@ -196,12 +196,12 @@ namespace CUE4Parse.UE4.Pak.Objects
             var bIsOffset32BitSafe = (bitfield & (1 << 31)) != 0;
             if (bIsOffset32BitSafe)
             {
-                Offset = *(uint*) data;
+                Offset = *(uint*)data;
                 data += sizeof(uint);
             }
             else
             {
-                Offset = *(long*) data; // Should be ulong
+                Offset = *(long*)data; // Should be ulong
                 data += sizeof(long);
             }
 
@@ -212,12 +212,12 @@ namespace CUE4Parse.UE4.Pak.Objects
             var bIsUncompressedSize32BitSafe = (bitfield & (1 << 30)) != 0;
             if (bIsUncompressedSize32BitSafe)
             {
-                UncompressedSize = *(uint*) data;
+                UncompressedSize = *(uint*)data;
                 data += sizeof(uint);
             }
             else
             {
-                UncompressedSize = *(long*) data; // Should be ulong
+                UncompressedSize = *(long*)data; // Should be ulong
                 data += sizeof(long);
             }
 
@@ -229,12 +229,12 @@ namespace CUE4Parse.UE4.Pak.Objects
                 var bIsSize32BitSafe = (bitfield & (1 << 29)) != 0;
                 if (bIsSize32BitSafe)
                 {
-                    CompressedSize = *(uint*) data;
+                    CompressedSize = *(uint*)data;
                     data += sizeof(uint);
                 }
                 else
                 {
-                    CompressedSize = *(long*) data;
+                    CompressedSize = *(long*)data;
                     data += sizeof(long);
                 }
             }
@@ -260,7 +260,7 @@ namespace CUE4Parse.UE4.Pak.Objects
                 // Per the comment in Encode, if compressionBlocksCount == 1, we use UncompressedSize for CompressionBlockSize
                 if (compressionBlocksCount == 1)
                 {
-                    CompressionBlockSize = (uint) UncompressedSize;
+                    CompressionBlockSize = (uint)UncompressedSize;
                 }
             }
 
@@ -268,7 +268,7 @@ namespace CUE4Parse.UE4.Pak.Objects
             StructSize = sizeof(long) * 3 + sizeof(int) * 2 + 1 + 20;
             // Take into account CompressionBlocks
             if (CompressionMethod != CompressionMethod.None)
-                StructSize += (int) (sizeof(int) + compressionBlocksCount * 2 * sizeof(long));
+                StructSize += (int)(sizeof(int) + compressionBlocksCount * 2 * sizeof(long));
 
             StructSize += reader.Ar.Game switch
             {
@@ -291,7 +291,7 @@ namespace CUE4Parse.UE4.Pak.Objects
             else if (compressionBlocksCount > 0)
             {
                 // Get the right pointer to start copying the CompressionBlocks information from.
-                var compressionBlockSizePtr = (uint*) data;
+                var compressionBlockSizePtr = (uint*)data;
 
                 // Alignment of the compressed blocks
                 var compressedBlockAlignment = IsEncrypted ? Aes.ALIGN : 1;
@@ -334,13 +334,13 @@ namespace CUE4Parse.UE4.Pak.Objects
             StructSize = sizeof(long) * 3 + sizeof(int) * 2 + 1 + 20;
             // Take into account CompressionBlocks
             if (CompressionMethod != CompressionMethod.None)
-                StructSize += (int) (sizeof(int) + CompressionBlocks.Length * 2 * sizeof(long));
+                StructSize += (int)(sizeof(int) + CompressionBlocks.Length * 2 * sizeof(long));
         }
 
         public PakFileReader PakFileReader
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => (PakFileReader) Vfs;
+            get => (PakFileReader)Vfs;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -367,10 +367,10 @@ namespace CUE4Parse.UE4.Pak.Objects
                 if (CompressionMethod != CompressionMethod.None)
                     CompressionBlocks = Ar.ReadArray<FPakCompressedBlock>();
                 CompressionBlockSize = Ar.Read<uint>();
-                Flags = (uint) Ar.ReadByte();
+                Flags = (uint)Ar.ReadByte();
             }
 
-            StructSize = (int) (Ar.Position - startOffset);
+            StructSize = (int)(Ar.Position - startOffset);
         }
     }
 }

@@ -67,7 +67,7 @@ public static class FFortniteReleaseBranchCustomObjectVersion
     {
         var ver = Ar.CustomVer(GUID);
         if (ver >= 0)
-            return (Type) ver;
+            return (Type)ver;
 
         return Ar.Game switch
         {

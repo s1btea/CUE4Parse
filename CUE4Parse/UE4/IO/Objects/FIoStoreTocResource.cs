@@ -10,9 +10,9 @@ namespace CUE4Parse.UE4.IO.Objects
     public enum EIoStoreTocReadOptions
     {
         Default,
-        ReadDirectoryIndex	= 1 << 0,
-        ReadTocMeta			= 1 << 1,
-        ReadAll				= ReadDirectoryIndex | ReadTocMeta
+        ReadDirectoryIndex = 1 << 0,
+        ReadTocMeta = 1 << 1,
+        ReadAll = ReadDirectoryIndex | ReadTocMeta
     }
 
     public class FIoStoreTocResource
@@ -44,7 +44,7 @@ namespace CUE4Parse.UE4.IO.Objects
             }
 
             // Chunk IDs
-            ChunkIds = archive.ReadArray<FIoChunkId>((int) Header.TocEntryCount);
+            ChunkIds = archive.ReadArray<FIoChunkId>((int)Header.TocEntryCount);
 
             // Chunk offsets
             ChunkOffsetLengths = new FIoOffsetAndLength[Header.TocEntryCount];
@@ -67,11 +67,11 @@ namespace CUE4Parse.UE4.IO.Objects
             }
             if (perfectHashSeedsCount > 0)
             {
-                ChunkPerfectHashSeeds = archive.ReadArray<int>((int) perfectHashSeedsCount);
+                ChunkPerfectHashSeeds = archive.ReadArray<int>((int)perfectHashSeedsCount);
             }
             if (chunksWithoutPerfectHashCount > 0)
             {
-                ChunkIndicesWithoutPerfectHash = archive.ReadArray<int>((int) chunksWithoutPerfectHashCount);
+                ChunkIndicesWithoutPerfectHash = archive.ReadArray<int>((int)chunksWithoutPerfectHashCount);
             }
 
             // Compression blocks
@@ -84,14 +84,14 @@ namespace CUE4Parse.UE4.IO.Objects
             // Compression methods
             unsafe
             {
-                var bufferSize = (int) (Header.CompressionMethodNameLength * Header.CompressionMethodNameCount);
+                var bufferSize = (int)(Header.CompressionMethodNameLength * Header.CompressionMethodNameCount);
                 var buffer = stackalloc byte[bufferSize];
                 archive.Serialize(buffer, bufferSize);
                 CompressionMethods = new CompressionMethod[Header.CompressionMethodNameCount + 1];
                 CompressionMethods[0] = CompressionMethod.None;
                 for (var i = 0; i < Header.CompressionMethodNameCount; i++)
                 {
-                    var name = new string((sbyte*) buffer + i * Header.CompressionMethodNameLength, 0, (int) Header.CompressionMethodNameLength).TrimEnd('\0');
+                    var name = new string((sbyte*)buffer + i * Header.CompressionMethodNameLength, 0, (int)Header.CompressionMethodNameLength).TrimEnd('\0');
                     if (string.IsNullOrEmpty(name))
                         continue;
                     if (!Enum.TryParse(name, true, out CompressionMethod method))
@@ -121,7 +121,7 @@ namespace CUE4Parse.UE4.IO.Objects
                 Header.DirectoryIndexSize > 0)
             {
                 if (readOptions.HasFlag(EIoStoreTocReadOptions.ReadDirectoryIndex))
-                    DirectoryIndexBuffer = archive.ReadBytes((int) Header.DirectoryIndexSize);
+                    DirectoryIndexBuffer = archive.ReadBytes((int)Header.DirectoryIndexSize);
                 else
                     archive.Position += Header.DirectoryIndexSize;
             }

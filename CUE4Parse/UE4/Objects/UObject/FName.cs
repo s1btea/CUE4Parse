@@ -48,7 +48,7 @@ namespace CUE4Parse.UE4.Objects.UObject
 
         public FName(FNameEntrySerialized[] nameMap, int index, int number, FNameComparisonMethod compare = FNameComparisonMethod.Index) : this(nameMap[index], index, number, compare) { }
 
-        public FName(FMappedName mappedName, FNameEntrySerialized[] nameMap, FNameComparisonMethod compare = FNameComparisonMethod.Index) : this(nameMap, (int) mappedName.NameIndex, (int) mappedName.ExtraIndex, compare) { }
+        public FName(FMappedName mappedName, FNameEntrySerialized[] nameMap, FNameComparisonMethod compare = FNameComparisonMethod.Index) : this(nameMap, (int)mappedName.NameIndex, (int)mappedName.ExtraIndex, compare) { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator FName(string s) => new(s);

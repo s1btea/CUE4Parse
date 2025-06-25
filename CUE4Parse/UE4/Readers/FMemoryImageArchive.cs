@@ -27,7 +27,7 @@ public struct FFrozenMemoryImagePtr
         if (Ar.Game >= EGame.GAME_UE5_0)
         {
             OffsetFromThis = (long)_packed >> 24;
-            TypeIndex = (int) ((_packed & TypeIndexMask) >> 1) - 1;
+            TypeIndex = (int)((_packed & TypeIndexMask) >> 1) - 1;
         }
         else
         {
@@ -210,7 +210,7 @@ public class FMemoryImageArchive : FArchive
         return Encoding.Unicode.GetString(ucs2Bytes, 0, ucs2Bytes.Length - 2);
     }
 
-    public override object Clone() => new FMemoryImageArchive((FArchive) InnerArchive.Clone());
+    public override object Clone() => new FMemoryImageArchive((FArchive)InnerArchive.Clone());
 
     public IEnumerable<(KeyType, ValueType)> ReadTMap<KeyType, ValueType>(Func<KeyType> keyGetter, Func<ValueType> valueGetter, int keyStructSize, int valueStructSize) where KeyType : notnull
     {
@@ -275,7 +275,7 @@ public class FMemoryImageArchive : FArchive
 
     public override FName ReadFName()
     {
-        if (Names != null && Names.TryGetValue((int) Position, out (FName name, bool bIsScriptName) name))
+        if (Names != null && Names.TryGetValue((int)Position, out (FName name, bool bIsScriptName) name))
         {
             Position += name.bIsScriptName ? 12 : 8;
             return name.name;

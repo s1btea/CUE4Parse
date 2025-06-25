@@ -23,7 +23,7 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation.ACL
 
         public void SerializeCompressedData(FAssetArchive Ar)
         {
-            ((ICompressedAnimData) this).BaseSerializeCompressedData(Ar);
+            ((ICompressedAnimData)this).BaseSerializeCompressedData(Ar);
 
             SequenceNameHash = Ar.Read<uint>();
 

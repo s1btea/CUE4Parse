@@ -12,5 +12,5 @@ public class FQuatKey : FAnimKey<FQuat>
         base.Serialize(Ar);
         Value.Serialize(Ar);
     }
-    
+
 }

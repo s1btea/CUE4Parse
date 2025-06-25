@@ -41,7 +41,7 @@ namespace CUE4Parse_Conversion.Animations
                     default:
                         throw new ArgumentOutOfRangeException(nameof(Options.MeshFormat), Options.MeshFormat, null);
                 }
-            
+
                 AnimSequences.Add(sequenceIndex > 0
                     ? new Anim($"{PackagePath}_SEQ{sequenceIndex}.{ext}", Ar.GetBuffer())
                     : new Anim($"{PackagePath}.{ext}", Ar.GetBuffer()));
@@ -69,7 +69,7 @@ namespace CUE4Parse_Conversion.Animations
         public AnimExporter(UAnimSequence animSequence, ExporterOptions options) : this(options, animSequence.Skeleton.Load<USkeleton>()!, animSequence) { }
         public AnimExporter(UAnimMontage animMontage, ExporterOptions options) : this(options, animMontage.Skeleton.Load<USkeleton>()!, animMontage) { }
         public AnimExporter(UAnimComposite animComposite, ExporterOptions options) : this(options, animComposite.Skeleton.Load<USkeleton>()!, animComposite) { }
-        
+
 
         public override bool TryWriteToDir(DirectoryInfo baseDirectory, out string label, out string savedFilePath)
         {

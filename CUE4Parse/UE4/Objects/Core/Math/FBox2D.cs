@@ -33,7 +33,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
         public readonly byte bIsValid;
 
         public TBox2() { }
-        
+
         public TBox2(FArchive Ar)
         {
             Min = Ar.Read<TIntVector2<T>>();

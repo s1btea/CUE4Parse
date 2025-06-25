@@ -11,7 +11,7 @@ public class UPhysicsAsset : Assets.Exports.UObject
     public int[] BoundsBodies;
     public FPackageIndex[] SkeletalBodySetups; // USkeletalBodySetup
     public FPackageIndex[] ConstraintSetup; // UPhysicsConstraintTemplate
-    
+
     public Dictionary<FRigidBodyIndexPair, bool>? CollisionDisableTable;
 
     public override void Deserialize(FAssetArchive Ar, long validPos)

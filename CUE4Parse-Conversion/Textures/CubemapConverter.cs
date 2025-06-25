@@ -28,12 +28,12 @@ namespace CUE4Parse_Conversion.Textures
 
                     x = Math.Sin(phi) * Math.Sin(theta) * -1;
                     y = Math.Cos(theta);
-                    z = Math.Cos(phi) * Math.Sin(theta) * -1; 
+                    z = Math.Cos(phi) * Math.Sin(theta) * -1;
 
                     MapCartesianToUv(x, y, z, out var u, out var v);
 
                     //sample edges directly
-                    if (u <= boundary || u >= 1- boundary || IsCloseToVerticalEdge(v, boundary))
+                    if (u <= boundary || u >= 1 - boundary || IsCloseToVerticalEdge(v, boundary))
                     {
                         int xPixel = (int)(u * cubeMap.Width);
                         int yPixel = (int)(v * cubeMap.Height);
@@ -78,7 +78,7 @@ namespace CUE4Parse_Conversion.Textures
             }
             return false;
         }
-        private static void MapCartesianToUv(double x, double y, double z,out double u, out double v)
+        private static void MapCartesianToUv(double x, double y, double z, out double u, out double v)
         {
             double a = Math.Max(Math.Max(Math.Abs(x), Math.Abs(y)), Math.Abs(z));
             //parallel to unit vector

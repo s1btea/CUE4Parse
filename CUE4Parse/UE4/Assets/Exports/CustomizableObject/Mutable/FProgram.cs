@@ -6,7 +6,7 @@ public class FProgram
 {
     public string Name;
     // public 
-    
+
     public FProgram(FArchive Ar)
     {
         Name = Ar.ReadFString();

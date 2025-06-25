@@ -60,27 +60,27 @@ namespace CUE4Parse_Conversion.Meshes.glTF
                     var morphModel = morphTarget.MorphLODModels[lodIndex];
 
                     targetNames += $"\"{morphTarget.Name}\"";
-                    targetNames += i != morphTargets.Length-1 ? "," : "";
+                    targetNames += i != morphTargets.Length - 1 ? "," : "";
 
                     var verts = morphBuilder.Vertices.ToArray();
                     for (int j = 0; j < morphModel.Vertices.Length; j++) // morphModel.NumBaseMeshVerts can be different from verts.Length
                     {
                         var delta = morphModel.Vertices[j];
                         var vert = lod.Verts[delta.SourceIdx];
-                        var srcVert = new VertexPositionNormalTangent(SwapYZ(vert.Position*0.01f),SwapYZAndNormalize((FVector)vert.Normal) , SwapYZAndNormalize((Vector4)vert.Tangent));
+                        var srcVert = new VertexPositionNormalTangent(SwapYZ(vert.Position * 0.01f), SwapYZAndNormalize((FVector)vert.Normal), SwapYZAndNormalize((Vector4)vert.Tangent));
                         var index = FindVert(srcVert, verts);
-                        if (index == -1)  continue;
+                        if (index == -1) continue;
 
-                        morphBuilder.SetVertexDelta(morphBuilder.Vertices.ElementAt(index), new VertexGeometryDelta(SwapYZ(delta.PositionDelta*0.01f), Vector3.Zero, SwapYZAndNormalize(delta.TangentZDelta)));
+                        morphBuilder.SetVertexDelta(morphBuilder.Vertices.ElementAt(index), new VertexGeometryDelta(SwapYZ(delta.PositionDelta * 0.01f), Vector3.Zero, SwapYZAndNormalize(delta.TangentZDelta)));
                     }
                 }
 
                 targetNames += "]}";
-                mesh.Extras = (JsonContent) targetNames;
+                mesh.Extras = (JsonContent)targetNames;
             }
 
             var sceneBuilder = new SceneBuilder();
-            var armatureNodeBuilder = new NodeBuilder(name+".ao");
+            var armatureNodeBuilder = new NodeBuilder(name + ".ao");
 
             var armature = CreateGltfSkeleton(bones, armatureNodeBuilder);
             sceneBuilder.AddSkinnedMesh(mesh, Matrix4x4.Identity, armature);
@@ -139,7 +139,7 @@ namespace CUE4Parse_Conversion.Meshes.glTF
         {
             var res = new List<NodeBuilder>();
 
-            var bonePos = SwapYZ(bone.Position*0.01f);
+            var bonePos = SwapYZ(bone.Position * 0.01f);
             var boneRot = SwapYZ(bone.Orientation);
             var node = parent.CreateNode(bone.Name.ToString())
                 .WithLocalRotation(boneRot.ToQuaternion())
@@ -261,9 +261,9 @@ namespace CUE4Parse_Conversion.Meshes.glTF
             FColor[] colors, CMeshVertex vert1, CMeshVertex vert2, CMeshVertex vert3, FMeshUVFloat[][] uvs, int[] indices)
         {
             var (uvs1, uvs2, uvs3) = PrepareUVs(vert1, vert2, vert3, uvs, indices);
-            var c1 = new VertexColorXTextureX((Vector4)colors[indices[0]]/255, uvs1);
-            var c2 = new VertexColorXTextureX((Vector4)colors[indices[1]]/255, uvs2);
-            var c3 = new VertexColorXTextureX((Vector4)colors[indices[2]]/255, uvs3);
+            var c1 = new VertexColorXTextureX((Vector4)colors[indices[0]] / 255, uvs1);
+            var c2 = new VertexColorXTextureX((Vector4)colors[indices[1]] / 255, uvs2);
+            var c3 = new VertexColorXTextureX((Vector4)colors[indices[2]] / 255, uvs3);
             return (c1, c2, c3);
         }
 
@@ -284,9 +284,9 @@ namespace CUE4Parse_Conversion.Meshes.glTF
 
         private static (VERTEX, VERTEX, VERTEX) PrepareTris(CMeshVertex vert1, CMeshVertex vert2, CMeshVertex vert3)
         {
-            var v1 = new VertexPositionNormalTangent(SwapYZ(vert1.Position*0.01f),SwapYZAndNormalize((FVector)vert1.Normal) , SwapYZAndNormalize((Vector4)vert1.Tangent));
-            var v2 = new VertexPositionNormalTangent(SwapYZ(vert2.Position*0.01f), SwapYZAndNormalize((FVector)vert2.Normal), SwapYZAndNormalize((Vector4)vert2.Tangent));
-            var v3 = new VertexPositionNormalTangent(SwapYZ(vert3.Position*0.01f), SwapYZAndNormalize((FVector)vert3.Normal), SwapYZAndNormalize((Vector4)vert3.Tangent));
+            var v1 = new VertexPositionNormalTangent(SwapYZ(vert1.Position * 0.01f), SwapYZAndNormalize((FVector)vert1.Normal), SwapYZAndNormalize((Vector4)vert1.Tangent));
+            var v2 = new VertexPositionNormalTangent(SwapYZ(vert2.Position * 0.01f), SwapYZAndNormalize((FVector)vert2.Normal), SwapYZAndNormalize((Vector4)vert2.Tangent));
+            var v3 = new VertexPositionNormalTangent(SwapYZ(vert3.Position * 0.01f), SwapYZAndNormalize((FVector)vert3.Normal), SwapYZAndNormalize((Vector4)vert3.Tangent));
 
             return (v1, v2, v3);
         }
@@ -304,11 +304,11 @@ namespace CUE4Parse_Conversion.Meshes.glTF
             return res;
         }
 
-        public static FQuat SwapYZ(FQuat quat) => new (quat.X, quat.Z, quat.Y, quat.W);
+        public static FQuat SwapYZ(FQuat quat) => new(quat.X, quat.Z, quat.Y, quat.W);
 
         public static Vector4 SwapYZAndNormalize(Vector4 vec)
         {
-          return Vector4.Normalize(new Vector4(vec.X, vec.Z, vec.Y, vec.W));
+            return Vector4.Normalize(new Vector4(vec.X, vec.Z, vec.Y, vec.W));
         }
     }
 }

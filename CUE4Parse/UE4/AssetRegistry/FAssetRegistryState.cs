@@ -31,17 +31,17 @@ namespace CUE4Parse.UE4.AssetRegistry
                     Log.Warning("Cannot read registry state before {Version}", version);
                     break;
                 case < FAssetRegistryVersionType.FixedTags:
-                {
-                    var nameTableReader = new FNameTableArchiveReader(Ar, header);
-                    Load(nameTableReader);
-                    break;
-                }
+                    {
+                        var nameTableReader = new FNameTableArchiveReader(Ar, header);
+                        Load(nameTableReader);
+                        break;
+                    }
                 default:
-                {
-                    var reader = new FAssetRegistryReader(Ar, header);
-                    Load(reader);
-                    break;
-                }
+                    {
+                        var reader = new FAssetRegistryReader(Ar, header);
+                        Load(reader);
+                        break;
+                    }
             }
         }
 

@@ -21,30 +21,30 @@ namespace CUE4Parse.UE4.IO.Objects
             {
                 ContainerId = Ar.Read<FIoContainerId>();
             }
-            
+
             ContainerName = Ar.ReadFString();
             EncryptionKeyGuid = Ar.ReadFString();
             Entries = Ar.ReadArray(() => new FOnDemandTocEntry(Ar));
             BlockSizes = Ar.ReadArray<uint>();
             BlockHashes = Ar.ReadArray<uint>();
             UTocHash = new FSHAHash(Ar);
-            
+
             if (version >= EOnDemandTocVersion.ContainerFlags)
             {
                 ContainerFlags = Ar.Read<EOnDemandContainerFlags>();
             }
         }
     }
-    
+
     [Flags]
     public enum EOnDemandContainerFlags : byte
     {
-        None					= 0,
-        PendingEncryptionKey	= (1 << 0),
-        Mounted					= (1 << 1),
-        StreamOnDemand			= (1 << 2),
-        InstallOnDemand			= (1 << 3),
-        Encrypted				= (1 << 4),
+        None = 0,
+        PendingEncryptionKey = (1 << 0),
+        Mounted = (1 << 1),
+        StreamOnDemand = (1 << 2),
+        InstallOnDemand = (1 << 3),
+        Encrypted = (1 << 4),
         Count
     }
 }

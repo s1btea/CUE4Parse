@@ -430,14 +430,14 @@ public static class MarvelAes
         /* for 128-bit blocks, Rijndael never uses more than 10 rcon values */
     ];
 
-    private static uint GETU32(Span<byte> plaintext) => (uint) (plaintext[3] << 24 | plaintext[2] << 16 | plaintext[1] << 8 | plaintext[0]);
+    private static uint GETU32(Span<byte> plaintext) => (uint)(plaintext[3] << 24 | plaintext[2] << 16 | plaintext[1] << 8 | plaintext[0]);
 
     private static void PUTU32(Span<byte> plaintext, uint st)
     {
-        plaintext[3] = (byte) (st >> 24);
-        plaintext[2] = (byte) (st >> 16);
-        plaintext[1] = (byte) (st >> 8);
-        plaintext[0] = (byte) st;
+        plaintext[3] = (byte)(st >> 24);
+        plaintext[2] = (byte)(st >> 16);
+        plaintext[1] = (byte)(st >> 8);
+        plaintext[0] = (byte)st;
     }
 
     /**
@@ -456,7 +456,7 @@ public static class MarvelAes
         rk[3] = GETU32(key[12..]);
         if (keybits == 128)
         {
-            for (;;)
+            for (; ; )
             {
                 temp = rk[3];
                 rk[4] = rk[0] ^
@@ -481,7 +481,7 @@ public static class MarvelAes
         rk[5] = GETU32(key[20..]);
         if (keybits == 192)
         {
-            for (;;)
+            for (; ; )
             {
                 temp = rk[5];
                 rk[6] = rk[0] ^
@@ -508,7 +508,7 @@ public static class MarvelAes
         rk[7] = GETU32(key[28..]);
         if (keybits == 256)
         {
-            for (;;)
+            for (; ; )
             {
                 temp = rk[7];
                 rk[8] = rk[0] ^

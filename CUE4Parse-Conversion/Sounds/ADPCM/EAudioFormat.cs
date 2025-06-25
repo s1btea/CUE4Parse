@@ -15,7 +15,7 @@
         WAVE_FORMAT_MEDIASPACE_ADPCM = 0x0012,
         WAVE_FORMAT_SIERRA_ADPCM = 0x0013,
         WAVE_FORMAT_G723_ADPCM = 0x0014,
-        
+
         WAVE_FORMAT_EXTENSIBLE = 0xFFFE // Determined by SubFormat
     }
 }

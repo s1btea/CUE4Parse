@@ -16,10 +16,10 @@ public class USkeletalMeshComponent : USceneComponent
     {
         var skeletalMesh = GetSkeletalMesh("SkeletalMesh"); // deprecated in 5.1 so fallback below
         if (skeletalMesh.IsNull) skeletalMesh = GetSkeletalMesh("SkinnedAsset");
-        
+
         return skeletalMesh;
     }
-    
+
     public FPackageIndex GetSkeletalMesh(string parameterName)
     {
         var mesh = new FPackageIndex();

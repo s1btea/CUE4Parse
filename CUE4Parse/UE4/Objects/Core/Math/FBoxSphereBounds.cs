@@ -27,7 +27,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
             BoxExtent = new FVector(Ar);
             if (Ar.Ver >= EUnrealEngineObjectUE5Version.LARGE_WORLD_COORDINATES)
             {
-                SphereRadius = (float) Ar.Read<double>();
+                SphereRadius = (float)Ar.Read<double>();
             }
             else
             {

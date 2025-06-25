@@ -4,7 +4,6 @@ using CUE4Parse.UE4.Assets.Utils;
 
 namespace CUE4Parse.GameTypes.FN.Assets.Exports.Sound;
 
-
 [StructFallback]
 public class USoundSequenceData
 {

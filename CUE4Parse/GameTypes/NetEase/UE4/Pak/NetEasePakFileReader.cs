@@ -22,15 +22,15 @@ public partial class PakFileReader
     /// <returns>The merged and decompressed/decrypted entry data</returns>
     private byte[] NetEaseCompressedExtract(FArchive reader, FPakEntry pakEntry)
     {
-        var uncompressed = new byte[(int) pakEntry.UncompressedSize];
+        var uncompressed = new byte[(int)pakEntry.UncompressedSize];
         var uncompressedOff = 0;
         var limit = reader.Game == UE4.Versions.EGame.GAME_MarvelRivals ? CalculateEncryptedBytesCountForMarvelRivals(pakEntry) : 0x1000;
 
-        Span<byte> compressedBuffer = stackalloc byte[pakEntry.CompressionBlocks.Max(block => (int) block.Size.Align(pakEntry.IsEncrypted ? Aes.ALIGN : 1))];
+        Span<byte> compressedBuffer = stackalloc byte[pakEntry.CompressionBlocks.Max(block => (int)block.Size.Align(pakEntry.IsEncrypted ? Aes.ALIGN : 1))];
 
         foreach (var block in pakEntry.CompressionBlocks)
         {
-            var blockSize = (int) block.Size;
+            var blockSize = (int)block.Size;
             var srcSize = blockSize.Align(pakEntry.IsEncrypted ? Aes.ALIGN : 1);
 
             // Read the encrypted block
@@ -48,10 +48,10 @@ public partial class PakFileReader
 
             // Calculate the uncompressed size,
             // its either just the compression block size or if it's the last block
-            var uncompressedSize = (int) Math.Min(pakEntry.CompressionBlockSize, pakEntry.UncompressedSize - uncompressedOff);
+            var uncompressedSize = (int)Math.Min(pakEntry.CompressionBlockSize, pakEntry.UncompressedSize - uncompressedOff);
 
             Decompress(compressed.ToArray(), 0, blockSize, uncompressed, uncompressedOff, uncompressedSize, pakEntry.CompressionMethod);
-            uncompressedOff += (int) pakEntry.CompressionBlockSize;
+            uncompressedOff += (int)pakEntry.CompressionBlockSize;
             limit -= srcSize;
         }
 
@@ -61,16 +61,16 @@ public partial class PakFileReader
     private byte[] NetEaseExtract(FArchive reader, FPakEntry pakEntry)
     {
         var limit = reader.Game == UE4.Versions.EGame.GAME_MarvelRivals ? CalculateEncryptedBytesCountForMarvelRivals(pakEntry) : 0x1000;
-        var size = (int) pakEntry.UncompressedSize.Align(pakEntry.IsEncrypted ? Aes.ALIGN : 1);
+        var size = (int)pakEntry.UncompressedSize.Align(pakEntry.IsEncrypted ? Aes.ALIGN : 1);
         var bytesToRead = size <= limit ? size : limit;
         var encrypted = ReadAndDecryptAt(pakEntry.Offset + pakEntry.StructSize, bytesToRead, reader, pakEntry.IsEncrypted);
 
         if (size > limit)
         {
-            var decrypted = reader.ReadBytesAt(pakEntry.Offset + pakEntry.StructSize + bytesToRead, (int) pakEntry.UncompressedSize - limit);
+            var decrypted = reader.ReadBytesAt(pakEntry.Offset + pakEntry.StructSize + bytesToRead, (int)pakEntry.UncompressedSize - limit);
             return encrypted.Concat(decrypted).ToArray();
         }
-        return encrypted[..(int) pakEntry.UncompressedSize];
+        return encrypted[..(int)pakEntry.UncompressedSize];
     }
 
     private int CalculateEncryptedBytesCountForMarvelRivals(FPakEntry pakEntry)

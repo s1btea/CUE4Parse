@@ -60,10 +60,10 @@ namespace CUE4Parse.UE4.Objects.Core.Math
 
         public FPlane(TIntVector3<double> vector, double w) : this()
         {
-            X = (float) vector.X;
-            Y = (float) vector.Y;
-            Z = (float) vector.Z;
-            W = (float) w;
+            X = (float)vector.X;
+            Y = (float)vector.Y;
+            Z = (float)vector.Z;
+            W = (float)w;
         }
 
         public FPlane(FArchive Ar)
@@ -71,7 +71,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
             Vector = new FVector(Ar);
             if (Ar.Ver >= EUnrealEngineObjectUE5Version.LARGE_WORLD_COORDINATES)
             {
-                W = (float) Ar.Read<double>();
+                W = (float)Ar.Read<double>();
             }
             else
             {

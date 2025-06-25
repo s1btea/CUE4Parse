@@ -62,7 +62,7 @@ public struct FRigVMFunctionCompilationData
         OperandToDebugRegisters = [];
         for (var i = 0; i < num; i++)
         {
-            OperandToDebugRegisters[Ar.Read<FRigVMOperand>()] = Ar.ReadArray(Ar.Read<byte>(),Ar.Read<FRigVMOperand>);
+            OperandToDebugRegisters[Ar.Read<FRigVMOperand>()] = Ar.ReadArray(Ar.Read<byte>(), Ar.Read<FRigVMOperand>);
         }
     }
 }

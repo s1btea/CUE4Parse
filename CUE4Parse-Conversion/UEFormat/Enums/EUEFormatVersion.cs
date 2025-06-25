@@ -8,7 +8,7 @@ public enum EUEFormatVersion
     AddConvexCollisionGeom = 3,
     LevelOfDetailFormatRestructure = 4,
     SerializeVirtualBones = 5,
-        
+
     VersionPlusOne,
     LatestVersion = VersionPlusOne - 1
 }

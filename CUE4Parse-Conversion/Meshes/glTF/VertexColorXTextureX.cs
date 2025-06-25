@@ -6,7 +6,7 @@ using SharpGLTF.Schema2;
 
 namespace CUE4Parse_Conversion.Meshes.glTF
 {
-    public struct VertexColorXTextureX: IVertexMaterial, IEquatable<VertexColorXTextureX>
+    public struct VertexColorXTextureX : IVertexMaterial, IEquatable<VertexColorXTextureX>
     {
         public int MaxColors => 1; // Do we need more?
         public int MaxTextCoords => Constants.MAX_MESH_UV_SETS;
@@ -90,7 +90,7 @@ namespace CUE4Parse_Conversion.Meshes.glTF
                     list.Add(val);
             else if (size < list.Count)
                 while (list.Count - size > 0)
-                    list.RemoveAt(list.Count-1);
+                    list.RemoveAt(list.Count - 1);
         }
 
         public bool Equals(VertexColorXTextureX other)

@@ -13,7 +13,7 @@ namespace CUE4Parse.UE4.Assets.Exports.StaticMesh
         public FLumenCardBuildData(FArchive Ar)
         {
             OBB = Ar.Read<FLumenCardOBB>();
-            LODLevel = Ar.Game < EGame.GAME_UE5_1 ? Ar.Read<byte>() : (byte) 0x00;
+            LODLevel = Ar.Game < EGame.GAME_UE5_1 ? Ar.Read<byte>() : (byte)0x00;
             AxisAlignedDirectionIndex = Ar.Read<byte>();
         }
     }

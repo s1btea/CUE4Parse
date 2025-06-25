@@ -92,7 +92,7 @@ public class FMaterialResourceProxyReader : FArchive
     public override void ReadArray<T>(T[] array)
         => InnerArchive.ReadArray(array);
 
-    public override object Clone() => new FMaterialResourceProxyReader((FArchive) InnerArchive.Clone());
+    public override object Clone() => new FMaterialResourceProxyReader((FArchive)InnerArchive.Clone());
 }
 
 public enum EMaterialQualityLevel : byte

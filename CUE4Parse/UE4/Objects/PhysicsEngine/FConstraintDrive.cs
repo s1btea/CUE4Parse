@@ -12,7 +12,7 @@ public class FConstraintDrive
     public float MaxForce;
     public bool bEnablePositionDrive;
     public bool bEnableVelocityDrive;
-    
+
     public FConstraintDrive(FStructFallback fallback)
     {
         Stiffness = fallback.GetOrDefault<float>(nameof(Stiffness));
@@ -31,7 +31,7 @@ public class FLinearDriveConstraint
     public FConstraintDrive XDrive;
     public FConstraintDrive YDrive;
     public FConstraintDrive ZDrive;
-    
+
     public FLinearDriveConstraint(FStructFallback fallback)
     {
         PositionTarget = fallback.GetOrDefault<FVector>(nameof(PositionTarget));
@@ -51,7 +51,7 @@ public class FAngularDriveConstraint
     public FRotator OrientationTarget;
     public FVector AngularVelocityTarget;
     public EAngularDriveMode AngularDriveMode;
-    
+
     public FAngularDriveConstraint(FStructFallback fallback)
     {
         TwistDrive = fallback.GetOrDefault<FConstraintDrive>(nameof(TwistDrive));

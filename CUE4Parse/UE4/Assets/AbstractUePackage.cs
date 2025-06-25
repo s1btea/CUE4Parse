@@ -56,7 +56,7 @@ public abstract class AbstractUePackage : UObject, IPackage
             {
                 // added guard for infinite loop
                 if (string.IsNullOrEmpty(structMappings.SuperType) || previous.Name == structMappings.SuperType) break;
-                current = new UScriptClass(structMappings.SuperType) ;
+                current = new UScriptClass(structMappings.SuperType);
             }
         }
 

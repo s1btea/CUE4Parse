@@ -26,7 +26,7 @@ public struct FAttributeCurve : IUStruct
         if (assetPath.IsNone)
             return;
 
-        if( assetPath.Text.StartsWith("/Script"))
+        if (assetPath.Text.StartsWith("/Script"))
         {
             var ScriptStructType = ScriptStructPath.AssetPathName.Text.SubstringAfterLast('.');
             Values = new FStructFallback[Keys.Length];

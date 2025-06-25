@@ -266,7 +266,7 @@ public class FCluster
         if (materialEncoding < 0xFE000000u)
         {
             MaterialTableOffset = 0;
-            MaterialTableLength	= 0;
+            MaterialTableLength = 0;
             Material0Index = GetBits(materialEncoding, 6, 0);
             Material1Index = GetBits(materialEncoding, 6, 6);
             Material2Index = GetBits(materialEncoding, 6, 12);

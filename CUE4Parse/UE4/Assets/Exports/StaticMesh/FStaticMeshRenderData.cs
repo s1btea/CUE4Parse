@@ -67,7 +67,7 @@ public class FStaticMeshRenderData
         if (Ar.Game >= EGame.GAME_UE5_0)
         {
             NaniteResources = new FNaniteResources(Ar);
-            
+
             if (Ar.Game >= EGame.GAME_UE5_5)
             {
                 var bHasRayTracingProxy = Ar.ReadBoolean();
@@ -76,7 +76,7 @@ public class FStaticMeshRenderData
                     var rayTracingProxy = new FStaticMeshRayTracingProxy(Ar);
                 }
             }
-            
+
             SerializeInlineDataRepresentations(Ar);
         }
 

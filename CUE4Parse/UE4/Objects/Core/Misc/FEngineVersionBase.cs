@@ -3,7 +3,8 @@
 namespace CUE4Parse.UE4.Objects.Core.Misc
 {
     /** Enum for the components of a version string. */
-    public enum EVersionComponent {
+    public enum EVersionComponent
+    {
         /** Major version increments introduce breaking API changes. */
         Major,
         /** Minor version increments add additional functionality without breaking existing APIs. */

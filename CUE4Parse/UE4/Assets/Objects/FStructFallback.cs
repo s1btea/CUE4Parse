@@ -81,7 +81,8 @@ namespace CUE4Parse.UE4.Assets.Objects
             }
 
             obj = new T[maxIndex + 1];
-            foreach (var prop in collected) {
+            foreach (var prop in collected)
+            {
                 obj[prop.ArrayIndex] = (T)prop.Tag?.GetValue(typeof(T))!;
             }
 

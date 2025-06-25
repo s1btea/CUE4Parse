@@ -751,7 +751,7 @@ public class EX_LetMulticastDelegate : EX_LetBase
 {
     public override EExprToken Token => EExprToken.EX_LetMulticastDelegate;
 
-    public EX_LetMulticastDelegate (FKismetArchive Ar) : base(Ar) { }
+    public EX_LetMulticastDelegate(FKismetArchive Ar) : base(Ar) { }
 }
 
 public class EX_LetObj : EX_LetBase
@@ -786,7 +786,7 @@ public class EX_LetWeakObjPtr : EX_LetBase
 {
     public override EExprToken Token => EExprToken.EX_LetWeakObjPtr;
 
-    public EX_LetWeakObjPtr (FKismetArchive Ar) : base(Ar) { }
+    public EX_LetWeakObjPtr(FKismetArchive Ar) : base(Ar) { }
 }
 
 public class EX_LocalFinalFunction : EX_FinalFunction
@@ -810,11 +810,11 @@ public class EX_LocalVariable : EX_VariableBase
     public EX_LocalVariable(FKismetArchive Ar) : base(Ar) { }
 }
 
-public class EX_LocalVirtualFunction  : EX_VirtualFunction
+public class EX_LocalVirtualFunction : EX_VirtualFunction
 {
-    public override EExprToken Token => EExprToken.EX_LocalVirtualFunction ;
+    public override EExprToken Token => EExprToken.EX_LocalVirtualFunction;
 
-    public EX_LocalVirtualFunction (FKismetArchive Ar) : base(Ar) { }
+    public EX_LocalVirtualFunction(FKismetArchive Ar) : base(Ar) { }
 }
 
 public class EX_MapConst : KismetExpression
@@ -1194,7 +1194,7 @@ public class EX_SoftObjectConst : KismetExpression<KismetExpression>
 
 public class EX_StringConst : KismetExpression<string>
 {
-    public override EExprToken Token=> EExprToken.EX_StringConst;
+    public override EExprToken Token => EExprToken.EX_StringConst;
     public EX_StringConst(FKismetArchive Ar)
     {
         Value = Ar.XFERSTRING();
@@ -1441,8 +1441,8 @@ public class EX_AutoRtfmTransact : KismetExpression
 
     public EX_AutoRtfmTransact(FKismetArchive Ar)
     {
-        Id =  Ar.Read<int>();
-        CodeOffset =  Ar.Read<uint>();
+        Id = Ar.Read<int>();
+        CodeOffset = Ar.Read<uint>();
         Parameters = Ar.ReadExpressionArray(EExprToken.EX_AutoRtfmStopTransact);
     }
 

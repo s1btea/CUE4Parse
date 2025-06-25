@@ -24,7 +24,7 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation
             var fX = (x - Quant16BitOffs) / Quant16BitDiv;
             var fY = (y - Quant16BitOffs) / Quant16BitDiv;
             var fZ = (z - Quant16BitOffs) / Quant16BitDiv;
-            var wSquared = 1.0f - fX*fX - fY*fY - fZ*fZ;
+            var wSquared = 1.0f - fX * fX - fY * fY - fZ * fZ;
 
             return new FQuat(fX, fY, fZ, wSquared > 0.0f ? MathF.Sqrt(wSquared) : 0.0f);
         }
@@ -43,10 +43,10 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation
             var unpackedY = (packed & YMask) >> YShift;
             var unpackedZ = (packed & ZMask);
 
-            var x = ((int) unpackedX - Quant11BitOffs) / Quant11BitDiv;
-            var y = ((int) unpackedY - Quant11BitOffs) / Quant11BitDiv;
-            var z = ((int) unpackedZ - Quant10BitOffs) / Quant10BitDiv;
-            var wSquared = 1.0f - x*x - y*y - z*z;
+            var x = ((int)unpackedX - Quant11BitOffs) / Quant11BitDiv;
+            var y = ((int)unpackedY - Quant11BitOffs) / Quant11BitDiv;
+            var z = ((int)unpackedZ - Quant10BitOffs) / Quant10BitDiv;
+            var wSquared = 1.0f - x * x - y * y - z * z;
 
             return new FQuat(x, y, z, wSquared > 0.0f ? MathF.Sqrt(wSquared) : 0.0f);
         }
@@ -56,7 +56,7 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation
             var x = Ar.Read<float>();
             var y = Ar.Read<float>();
             var z = Ar.Read<float>();
-            var wSquared = 1.0f - x*x - y*y - z*z;
+            var wSquared = 1.0f - x * x - y * y - z * z;
 
             return new FQuat(x, y, z, wSquared > 0.0f ? MathF.Sqrt(wSquared) : 0.0f);
         }
@@ -87,9 +87,9 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation
             var unpackedY = (packed & YMask) >> YShift;
             var unpackedX = (packed & XMask);
 
-            var x = (((int) unpackedX - Quant10BitOffs) / Quant10BitDiv) * ranges.X + mins.X;
-            var y = (((int) unpackedY - Quant11BitOffs) / Quant11BitDiv) * ranges.Y + mins.Y;
-            var z = (((int) unpackedZ - Quant11BitOffs) / Quant11BitDiv) * ranges.Z + mins.Z;
+            var x = (((int)unpackedX - Quant10BitOffs) / Quant10BitDiv) * ranges.X + mins.X;
+            var y = (((int)unpackedY - Quant11BitOffs) / Quant11BitDiv) * ranges.Y + mins.Y;
+            var z = (((int)unpackedZ - Quant11BitOffs) / Quant11BitDiv) * ranges.Z + mins.Z;
 
             return new FVector(x, y, z);
         }
@@ -107,10 +107,10 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation
             var unpackedY = (packed & YMask) >> YShift;
             var unpackedZ = (packed & ZMask);
 
-            var x = (((int) unpackedX - Quant11BitOffs) / Quant11BitDiv) * ranges.X + mins.X;
-            var y = (((int) unpackedY - Quant11BitOffs) / Quant11BitDiv) * ranges.Y + mins.Y;
-            var z = (((int) unpackedZ - Quant10BitOffs) / Quant10BitDiv) * ranges.Z + mins.Z;
-            var wSquared = 1.0f - x*x - y*y - z*z;
+            var x = (((int)unpackedX - Quant11BitOffs) / Quant11BitDiv) * ranges.X + mins.X;
+            var y = (((int)unpackedY - Quant11BitOffs) / Quant11BitDiv) * ranges.Y + mins.Y;
+            var z = (((int)unpackedZ - Quant10BitOffs) / Quant10BitDiv) * ranges.Z + mins.Z;
+            var wSquared = 1.0f - x * x - y * y - z * z;
 
             return new FQuat(x, y, z, wSquared > 0.0f ? MathF.Sqrt(wSquared) : 0.0f);
         }
@@ -128,10 +128,10 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation
             var unpackedY = (packed & YMask) >> YShift;
             var unpackedZ = (packed & ZMask);
 
-            var x = BitConverter.Int32BitsToSingle((int) (((((unpackedX >> 7) & 7) + 123) << 23) | ((unpackedX & 0x7F | 32 * (unpackedX & 0xFFFFFC00)) << 16)));
-            var y = BitConverter.Int32BitsToSingle((int) (((((unpackedY >> 7) & 7) + 123) << 23) | ((unpackedY & 0x7F | 32 * (unpackedY & 0xFFFFFC00)) << 16)));
-            var z = BitConverter.Int32BitsToSingle((int) (((((unpackedZ >> 6) & 7) + 123) << 23) | ((unpackedZ & 0x3F | 32 * (unpackedZ & 0xFFFFFE00)) << 17)));
-            var wSquared = 1.0f - x*x - y*y - z*z;
+            var x = BitConverter.Int32BitsToSingle((int)(((((unpackedX >> 7) & 7) + 123) << 23) | ((unpackedX & 0x7F | 32 * (unpackedX & 0xFFFFFC00)) << 16)));
+            var y = BitConverter.Int32BitsToSingle((int)(((((unpackedY >> 7) & 7) + 123) << 23) | ((unpackedY & 0x7F | 32 * (unpackedY & 0xFFFFFC00)) << 16)));
+            var z = BitConverter.Int32BitsToSingle((int)(((((unpackedZ >> 6) & 7) + 123) << 23) | ((unpackedZ & 0x3F | 32 * (unpackedZ & 0xFFFFFE00)) << 17)));
+            var wSquared = 1.0f - x * x - y * y - z * z;
 
             return new FQuat(x, y, z, wSquared > 0.0f ? MathF.Sqrt(wSquared) : 0.0f);
         }

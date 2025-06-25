@@ -8,8 +8,8 @@ namespace CUE4Parse.UE4.Assets.Exports.Material;
 
 public class UMaterialExpressionQualitySwitch : UMaterialExpression
 {
-    public readonly FExpressionInput[] Inputs = new FExpressionInput[(int) EMaterialQualityLevel.Num];
-    
+    public readonly FExpressionInput[] Inputs = new FExpressionInput[(int)EMaterialQualityLevel.Num];
+
     public override void Deserialize(FAssetArchive Ar, long validPos)
     {
         base.Deserialize(Ar, validPos);

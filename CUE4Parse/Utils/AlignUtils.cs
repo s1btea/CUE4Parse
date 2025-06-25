@@ -15,7 +15,7 @@ namespace CUE4Parse.Utils
         {
             return ptr + alignment - 1 & ~(alignment - 1);
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long Align(this uint ptr, int alignment)
         {

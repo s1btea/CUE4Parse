@@ -7,7 +7,7 @@ namespace CUE4Parse.UE4.Assets.Exports.StaticMesh;
 public class FStaticMeshRayTracingProxy
 {
     public FStaticMeshRayTracingProxyLOD[] LODs;
-    
+
     public FStaticMeshRayTracingProxy(FAssetArchive Ar)
     {
         var stripFlags = new FStripDataFlags(Ar);

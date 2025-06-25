@@ -168,7 +168,7 @@ namespace CUE4Parse.UE4.Assets.Exports.SkeletalMesh
                         Ar.Position -= 4;
 
                         var internalStripFlags = new FStripDataFlags(Ar);
-                        if (internalStripFlags.IsClassDataStripped((byte) EClassDataStripFlag.CDSF_AdjacencyData))
+                        if (internalStripFlags.IsClassDataStripped((byte)EClassDataStripFlag.CDSF_AdjacencyData))
                         {
                             Ar.Position -= 2;
                             return;
@@ -190,7 +190,7 @@ namespace CUE4Parse.UE4.Assets.Exports.SkeletalMesh
                         return;
                     }
 
-                    if (!stripDataFlags.IsClassDataStripped((byte) EClassDataStripFlag.CDSF_AdjacencyData))
+                    if (!stripDataFlags.IsClassDataStripped((byte)EClassDataStripFlag.CDSF_AdjacencyData))
                         AdjacencyIndexBuffer = new FMultisizeIndexContainer(Ar);
 
                     if (Ar.Ver >= EUnrealEngineObjectUE4Version.APEX_CLOTH && HasClothData())
@@ -268,7 +268,7 @@ namespace CUE4Parse.UE4.Assets.Exports.SkeletalMesh
                         }
 
                         var skipBytes = 5;
-                        if (FUE5ReleaseStreamObjectVersion.Get(Ar) < FUE5ReleaseStreamObjectVersion.Type.RemovingTessellation && !stripDataFlags.IsClassDataStripped((byte) EClassDataStripFlag.CDSF_AdjacencyData))
+                        if (FUE5ReleaseStreamObjectVersion.Get(Ar) < FUE5ReleaseStreamObjectVersion.Type.RemovingTessellation && !stripDataFlags.IsClassDataStripped((byte)EClassDataStripFlag.CDSF_AdjacencyData))
                             skipBytes += 5;
                         skipBytes += 4 * 4 + 2 * 4 + 2 * 4;
                         skipBytes += FSkinWeightVertexBuffer.MetadataSize(Ar);
@@ -312,7 +312,7 @@ namespace CUE4Parse.UE4.Assets.Exports.SkeletalMesh
             ActiveBoneIndices = Ar.ReadArray<short>();
             RequiredBones = Ar.ReadArray<short>();
 
-            if (!stripDataFlags.IsDataStrippedForServer() && !stripDataFlags.IsClassDataStripped((byte) EClassDataStripFlag.CDSF_MinLodData))
+            if (!stripDataFlags.IsDataStrippedForServer() && !stripDataFlags.IsClassDataStripped((byte)EClassDataStripFlag.CDSF_MinLodData))
             {
                 var positionVertexBuffer = new FPositionVertexBuffer(Ar);
                 var staticMeshVertexBuffer = new FStaticMeshVertexBuffer(Ar);
@@ -332,7 +332,7 @@ namespace CUE4Parse.UE4.Assets.Exports.SkeletalMesh
                     ColorVertexBuffer = new FSkeletalMeshVertexColorBuffer(newColorVertexBuffer.Data);
                 }
 
-                if (!stripDataFlags.IsClassDataStripped((byte) EClassDataStripFlag.CDSF_AdjacencyData))
+                if (!stripDataFlags.IsClassDataStripped((byte)EClassDataStripFlag.CDSF_AdjacencyData))
                     AdjacencyIndexBuffer = new FMultisizeIndexContainer(Ar);
 
                 if (HasClothData())
@@ -377,7 +377,7 @@ namespace CUE4Parse.UE4.Assets.Exports.SkeletalMesh
                 ColorVertexBuffer = new FSkeletalMeshVertexColorBuffer(newColorVertexBuffer.Data);
             }
 
-            if (FUE5ReleaseStreamObjectVersion.Get(Ar) < FUE5ReleaseStreamObjectVersion.Type.RemovingTessellation && !stripDataFlags.IsClassDataStripped((byte) EClassDataStripFlag.CDSF_AdjacencyData))
+            if (FUE5ReleaseStreamObjectVersion.Get(Ar) < FUE5ReleaseStreamObjectVersion.Type.RemovingTessellation && !stripDataFlags.IsClassDataStripped((byte)EClassDataStripFlag.CDSF_AdjacencyData))
                 AdjacencyIndexBuffer = new FMultisizeIndexContainer(Ar);
 
             if (HasClothData())
@@ -387,7 +387,7 @@ namespace CUE4Parse.UE4.Assets.Exports.SkeletalMesh
             {
                 _ = new FMultisizeIndexContainer(Ar);
             }
-            
+
             var skinWeightProfilesData = new FSkinWeightProfilesData(Ar);
 
             if (Ar.Versions["SkeletalMesh.HasRayTracingData"])

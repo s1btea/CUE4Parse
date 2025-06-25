@@ -1,6 +1,6 @@
 namespace CUE4Parse.UE4.Wwise.Enums
 {
-    public enum EEventActionType: byte
+    public enum EEventActionType : byte
     {
         Stop = 0x01,
         Pause,

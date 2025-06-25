@@ -287,7 +287,7 @@ public enum EPropertyFlags : ulong
     /// <summary>
     /// Flags that are propagated to properties inside array container
     /// </summary>
-    PropagateToArrayInner =	ExportObject | PersistentInstance | InstancedReference | ContainsInstancedReference | Config | EditConst | Deprecated | EditorOnly | AutoWeak | UObjectWrapper,
+    PropagateToArrayInner = ExportObject | PersistentInstance | InstancedReference | ContainsInstancedReference | Config | EditConst | Deprecated | EditorOnly | AutoWeak | UObjectWrapper,
 
     /// <summary>
     /// Flags that are propagated to value properties inside map container
@@ -307,7 +307,7 @@ public enum EPropertyFlags : ulong
     /// <summary>
     /// The flags that should never be set on interface properties
     /// </summary>
-    InterfaceClearMask = ExportObject|InstancedReference|ContainsInstancedReference,
+    InterfaceClearMask = ExportObject | InstancedReference | ContainsInstancedReference,
 
     /// <summary>
     /// All the properties that can be stripped for final release console builds
@@ -342,7 +342,7 @@ public class FProperty : FField
         PropertyFlags = Ar.Read<EPropertyFlags>();
         RepIndex = Ar.Read<ushort>();
         RepNotifyFunc = Ar.ReadFName();
-        BlueprintReplicationCondition = (ELifetimeCondition) Ar.Read<byte>();
+        BlueprintReplicationCondition = (ELifetimeCondition)Ar.Read<byte>();
     }
 
     protected internal override void WriteJson(JsonWriter writer, JsonSerializer serializer)
@@ -394,7 +394,7 @@ public class FArrayProperty : FProperty
     public override void Deserialize(FAssetArchive Ar)
     {
         base.Deserialize(Ar);
-        Inner = (FProperty?) SerializeSingleField(Ar);
+        Inner = (FProperty?)SerializeSingleField(Ar);
     }
 
     protected internal override void WriteJson(JsonWriter writer, JsonSerializer serializer)
@@ -516,7 +516,7 @@ public class FEnumProperty : FProperty
     {
         base.Deserialize(Ar);
         Enum = new FPackageIndex(Ar);
-        UnderlyingProp = (FNumericProperty?) SerializeSingleField(Ar);
+        UnderlyingProp = (FNumericProperty?)SerializeSingleField(Ar);
     }
 
     protected internal override void WriteJson(JsonWriter writer, JsonSerializer serializer)
@@ -581,8 +581,8 @@ public class FMapProperty : FProperty
     public override void Deserialize(FAssetArchive Ar)
     {
         base.Deserialize(Ar);
-        KeyProp = (FProperty?) SerializeSingleField(Ar);
-        ValueProp = (FProperty?) SerializeSingleField(Ar);
+        KeyProp = (FProperty?)SerializeSingleField(Ar);
+        ValueProp = (FProperty?)SerializeSingleField(Ar);
     }
 
     protected internal override void WriteJson(JsonWriter writer, JsonSerializer serializer)
@@ -686,7 +686,7 @@ public class FSetProperty : FProperty
     public override void Deserialize(FAssetArchive Ar)
     {
         base.Deserialize(Ar);
-        ElementProp = (FProperty?) SerializeSingleField(Ar);
+        ElementProp = (FProperty?)SerializeSingleField(Ar);
     }
 
     protected internal override void WriteJson(JsonWriter writer, JsonSerializer serializer)
@@ -734,7 +734,7 @@ public class FOptionalProperty : FProperty
     public override void Deserialize(FAssetArchive Ar)
     {
         base.Deserialize(Ar);
-        ValueProperty = (FProperty?) SerializeSingleField(Ar);
+        ValueProperty = (FProperty?)SerializeSingleField(Ar);
     }
 
     protected internal override void WriteJson(JsonWriter writer, JsonSerializer serializer)
@@ -753,7 +753,7 @@ public class FVerseStringProperty : FProperty
     public override void Deserialize(FAssetArchive Ar)
     {
         base.Deserialize(Ar);
-        ValueProperty = (FProperty?) SerializeSingleField(Ar);
+        ValueProperty = (FProperty?)SerializeSingleField(Ar);
     }
 
     protected internal override void WriteJson(JsonWriter writer, JsonSerializer serializer)

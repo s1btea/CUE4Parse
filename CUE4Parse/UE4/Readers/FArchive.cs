@@ -88,7 +88,7 @@ namespace CUE4Parse.UE4.Readers
         public virtual unsafe void Serialize(byte* ptr, int length)
         {
             var bytes = ReadBytes(length);
-            Unsafe.CopyBlockUnaligned(ref ptr[0], ref bytes[0], (uint) length);
+            Unsafe.CopyBlockUnaligned(ref ptr[0], ref bytes[0], (uint)length);
         }
 
         public virtual T Read<T>()
@@ -285,8 +285,8 @@ namespace CUE4Parse.UE4.Readers
             {
                 var nextByte = Read<byte>();               // Read next byte
                 more = (nextByte & 1) != 0;                // Check 1 bit to see if there's more after this
-                nextByte = (byte) (nextByte >> 1);         // Shift to get actual 7 bit value
-                value += (uint) (nextByte << (7 * cnt++)); // Add to total value
+                nextByte = (byte)(nextByte >> 1);         // Shift to get actual 7 bit value
+                value += (uint)(nextByte << (7 * cnt++)); // Add to total value
             }
 
             return value;
@@ -294,11 +294,11 @@ namespace CUE4Parse.UE4.Readers
 
         public virtual unsafe void SerializeBits(void* v, long lengthBits)
         {
-            Serialize((byte*) v, (int) ((lengthBits + 7) / 8));
+            Serialize((byte*)v, (int)((lengthBits + 7) / 8));
 
             if (/*IsLoading &&*/ (lengthBits % 8) != 0)
             {
-                ((byte*)v)[lengthBits / 8] &= (byte) ((1 << (int)(lengthBits & 7)) - 1);
+                ((byte*)v)[lengthBits / 8] &= (byte)((1 << (int)(lengthBits & 7)) - 1);
             }
         }
 
@@ -330,7 +330,7 @@ namespace CUE4Parse.UE4.Readers
             {
                 var ansiBytes = stackalloc byte[length];
                 Serialize(ansiBytes, length);
-                return new string((sbyte*) ansiBytes, 0, length);
+                return new string((sbyte*)ansiBytes, 0, length);
             }
         }
 
@@ -372,7 +372,7 @@ namespace CUE4Parse.UE4.Readers
                             throw new ParserException(this, "Serialized FString is not null terminated");
                         }
 #endif
-                        return new string((char*) ucs2BytesPtr, 0 , length - 1);
+                        return new string((char*)ucs2BytesPtr, 0, length - 1);
                     }
                 }
             }
@@ -389,7 +389,7 @@ namespace CUE4Parse.UE4.Readers
                         throw new ParserException(this, "Serialized FString is not null terminated");
                     }
 #endif
-                    return new string((sbyte*) ansiBytesPtr, 0, length - 1);
+                    return new string((sbyte*)ansiBytesPtr, 0, length - 1);
                 }
             }
         }
@@ -421,7 +421,7 @@ namespace CUE4Parse.UE4.Readers
             // this header does not otherwise match FPackageFileSummary in any way
 
             // low 32 bits of ARCHIVE_V2_HEADER_TAG are == PACKAGE_FILE_TAG
-            const ulong ARCHIVE_V2_HEADER_TAG = PACKAGE_FILE_TAG | ((ulong) 0x22222222 << 32);
+            const ulong ARCHIVE_V2_HEADER_TAG = PACKAGE_FILE_TAG | ((ulong)0x22222222 << 32);
 
             if (packageFileTag.CompressedSize == PACKAGE_FILE_TAG)
             {
@@ -429,18 +429,18 @@ namespace CUE4Parse.UE4.Readers
                 bHeaderWasValid = true;
             }
             else if (packageFileTag.CompressedSize == PACKAGE_FILE_TAG_SWAPPED ||
-                     packageFileTag.CompressedSize == (long) BYTESWAP_ORDER64(PACKAGE_FILE_TAG))
+                     packageFileTag.CompressedSize == (long)BYTESWAP_ORDER64(PACKAGE_FILE_TAG))
             {
                 // v1 header, swapped
                 bHeaderWasValid = true;
                 bWasByteSwapped = true;
             }
-            else if (packageFileTag.CompressedSize == (long) ARCHIVE_V2_HEADER_TAG ||
-                     packageFileTag.CompressedSize == (long) BYTESWAP_ORDER64(ARCHIVE_V2_HEADER_TAG))
+            else if (packageFileTag.CompressedSize == (long)ARCHIVE_V2_HEADER_TAG ||
+                     packageFileTag.CompressedSize == (long)BYTESWAP_ORDER64(ARCHIVE_V2_HEADER_TAG))
             {
                 // v2 header
                 bHeaderWasValid = true;
-                bWasByteSwapped = (packageFileTag.CompressedSize != (long) ARCHIVE_V2_HEADER_TAG);
+                bWasByteSwapped = (packageFileTag.CompressedSize != (long)ARCHIVE_V2_HEADER_TAG);
                 bReadCompressionFormat = true;
 
                 // read CompressionFormatToDecode
@@ -474,9 +474,9 @@ namespace CUE4Parse.UE4.Readers
 
             if (bWasByteSwapped)
             {
-                summary.CompressedSize = (long) BYTESWAP_ORDER64((ulong) summary.CompressedSize);
-                summary.UncompressedSize = (long) BYTESWAP_ORDER64((ulong) summary.UncompressedSize);
-                packageFileTag.UncompressedSize = (long) BYTESWAP_ORDER64((ulong) packageFileTag.UncompressedSize);
+                summary.CompressedSize = (long)BYTESWAP_ORDER64((ulong)summary.CompressedSize);
+                summary.UncompressedSize = (long)BYTESWAP_ORDER64((ulong)summary.UncompressedSize);
+                packageFileTag.UncompressedSize = (long)BYTESWAP_ORDER64((ulong)packageFileTag.UncompressedSize);
             }
 
 
@@ -509,8 +509,8 @@ namespace CUE4Parse.UE4.Readers
                 compressionChunks[chunkIndex] = Read<FCompressedChunkInfo>();
                 if (bWasByteSwapped)
                 {
-                    compressionChunks[chunkIndex].CompressedSize = (long) BYTESWAP_ORDER64((ulong) compressionChunks[chunkIndex].CompressedSize);
-                    compressionChunks[chunkIndex].UncompressedSize = (long) BYTESWAP_ORDER64((ulong) compressionChunks[chunkIndex].UncompressedSize);
+                    compressionChunks[chunkIndex].CompressedSize = (long)BYTESWAP_ORDER64((ulong)compressionChunks[chunkIndex].CompressedSize);
+                    compressionChunks[chunkIndex].UncompressedSize = (long)BYTESWAP_ORDER64((ulong)compressionChunks[chunkIndex].UncompressedSize);
                 }
                 maxCompressedSize = Math.Max(compressionChunks[chunkIndex].CompressedSize, maxCompressedSize);
 
@@ -532,12 +532,12 @@ namespace CUE4Parse.UE4.Readers
             {
                 ref var chunk = ref compressionChunks[chunkIndex];
                 // Read compressed data.
-                Read(compressedBuffer, 0, (int) chunk.CompressedSize);
+                Read(compressedBuffer, 0, (int)chunk.CompressedSize);
 
                 // Decompress into dest pointer directly.
                 try
                 {
-                    Decompress(compressedBuffer, 0, (int) chunk.CompressedSize, dest, destPos, (int) chunk.UncompressedSize, compressionFormat);
+                    Decompress(compressedBuffer, 0, (int)chunk.CompressedSize, dest, destPos, (int)chunk.UncompressedSize, compressionFormat);
                 }
                 catch (Exception e)
                 {
@@ -545,7 +545,7 @@ namespace CUE4Parse.UE4.Readers
                 }
 
                 // And advance it by read amount.
-                destPos += (int) chunk.UncompressedSize;
+                destPos += (int)chunk.UncompressedSize;
             }
         }
 

@@ -33,12 +33,12 @@ namespace CUE4Parse.UE4.Objects.Engine
     public enum EBspNodeFlags : byte
     {
         // Flags.
-        NF_NotCsg           = 0x01, // Node is not a Csg splitter, i.e. is a transparent poly.
-        NF_NotVisBlocking   = 0x04, // Node does not block visibility, i.e. is an invisible collision hull.
-        NF_BrightCorners    = 0x10, // Temporary.
-        NF_IsNew            = 0x20, // Editor: Node was newly-added.
-        NF_IsFront          = 0x40, // Filter operation bounding-sphere precomputed and guaranteed to be front.
-        NF_IsBack           = 0x80, // Guaranteed back.
+        NF_NotCsg = 0x01, // Node is not a Csg splitter, i.e. is a transparent poly.
+        NF_NotVisBlocking = 0x04, // Node does not block visibility, i.e. is an invisible collision hull.
+        NF_BrightCorners = 0x10, // Temporary.
+        NF_IsNew = 0x20, // Editor: Node was newly-added.
+        NF_IsFront = 0x40, // Filter operation bounding-sphere precomputed and guaranteed to be front.
+        NF_IsBack = 0x80, // Guaranteed back.
     }
 
     /**
@@ -172,8 +172,8 @@ namespace CUE4Parse.UE4.Objects.Engine
 
             if (FRenderingObjectVersion.Get(Ar) < FRenderingObjectVersion.Type.IncreaseNormalPrecision)
             {
-                TangentX = (FVector) Ar.Read<FDeprecatedSerializedPackedNormal>();
-                TangentZ = (FVector4) Ar.Read<FDeprecatedSerializedPackedNormal>();
+                TangentX = (FVector)Ar.Read<FDeprecatedSerializedPackedNormal>();
+                TangentZ = (FVector4)Ar.Read<FDeprecatedSerializedPackedNormal>();
             }
             else
             {
@@ -185,7 +185,7 @@ namespace CUE4Parse.UE4.Objects.Engine
             ShadowTexCoord = Ar.Read<FVector2D>();
         }
 
-        public FVector GetTangentY() => ((FVector) TangentZ ^ TangentX) * TangentZ.W;
+        public FVector GetTangentY() => ((FVector)TangentZ ^ TangentX) * TangentZ.W;
     }
 
     public struct FDeprecatedModelVertex : IUStruct
@@ -199,8 +199,8 @@ namespace CUE4Parse.UE4.Objects.Engine
         public static implicit operator FModelVertex(FDeprecatedModelVertex v) => new()
         {
             Position = v.Position,
-            TangentX = (FVector) v.TangentX,
-            TangentZ = (FVector4) v.TangentZ,
+            TangentX = (FVector)v.TangentX,
+            TangentZ = (FVector4)v.TangentZ,
             TexCoord = v.TexCoord,
             ShadowTexCoord = v.ShadowTexCoord
         };

@@ -33,7 +33,7 @@ namespace CUE4Parse.UE4.AssetRegistry.Objects
                 throw new ParserException(baseArchive, $"FName could not be read, requested index {index}, name map size {NameMap.Length}");
             }
 #endif
-            return new FName(NameMap, (int) index, (int) number);
+            return new FName(NameMap, (int)index, (int)number);
         }
 
         public override void SerializeTagsAndBundles(FAssetData assetData)
@@ -50,6 +50,6 @@ namespace CUE4Parse.UE4.AssetRegistry.Objects
             assetData.TaggedAssetBundles = new FAssetBundleData(this);
         }
 
-        public override object Clone() => new FAssetRegistryReader((FArchive) baseArchive.Clone(), Header);
+        public override object Clone() => new FAssetRegistryReader((FArchive)baseArchive.Clone(), Header);
     }
 }

@@ -21,10 +21,10 @@ public struct FMaterialLayersFunctionsTree : IUStruct
     [StructLayout(LayoutKind.Sequential)]
     public readonly struct FNode
     {
-        public readonly int	Parent = InvalidId;
-        public readonly int	NextSibling = InvalidId;
-        public readonly int	ChildrenHead = InvalidId;
-        public readonly int	Spare = InvalidId;
+        public readonly int Parent = InvalidId;
+        public readonly int NextSibling = InvalidId;
+        public readonly int ChildrenHead = InvalidId;
+        public readonly int Spare = InvalidId;
 
         public FNode() { }
     }

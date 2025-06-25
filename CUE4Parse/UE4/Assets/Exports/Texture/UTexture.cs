@@ -33,7 +33,7 @@ public abstract class UTexture : UUnrealMaterial
     public override void Deserialize(FAssetArchive Ar, long validPos)
     {
         base.Deserialize(Ar, validPos);
-        LightingGuid = GetOrDefault(nameof(LightingGuid), new FGuid((uint) GetFullName().GetHashCode()));
+        LightingGuid = GetOrDefault(nameof(LightingGuid), new FGuid((uint)GetFullName().GetHashCode()));
         CompressionSettings = GetOrDefault(nameof(CompressionSettings), TextureCompressionSettings.TC_Default);
         SRGB = GetOrDefault(nameof(SRGB), true);
 

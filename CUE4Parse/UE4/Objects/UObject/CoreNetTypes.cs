@@ -24,8 +24,8 @@
 
     public enum ELifetimeRepNotifyCondition
     {
-	    REPNOTIFY_OnChanged = 0,		// Only call the property's RepNotify function if it changes from the local value
-	    REPNOTIFY_Always = 1,		// Always Call the property's RepNotify function when it is received from the server
+        REPNOTIFY_OnChanged = 0,        // Only call the property's RepNotify function if it changes from the local value
+        REPNOTIFY_Always = 1,		// Always Call the property's RepNotify function when it is received from the server
     }
 
     public enum EChannelCloseReason : byte
@@ -36,6 +36,6 @@
         Relevancy,
         TearOff,
         /* reserved */
-        MAX	= 15		// this value is used for serialization, modifying it may require a network version change
+        MAX = 15		// this value is used for serialization, modifying it may require a network version change
     }
 }

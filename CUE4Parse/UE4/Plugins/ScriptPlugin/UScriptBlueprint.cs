@@ -22,7 +22,7 @@ public class UScriptBlueprintGeneratedClass : UBlueprintGeneratedClass
 
         if (FCoreObjectVersion.Get(Ar) >= FCoreObjectVersion.Type.FProperties)
         {
-            ScriptProperties = [..Ar.ReadArray(() => new FFieldPath(Ar))];
+            ScriptProperties = [.. Ar.ReadArray(() => new FFieldPath(Ar))];
         }
         else
         {

@@ -6,7 +6,7 @@ public class FOnDemandTocTagSetPackageList
 {
     public uint ContainerIndex;
     public uint[] PackageIndicies;
-    
+
     public FOnDemandTocTagSetPackageList(FArchive Ar)
     {
         ContainerIndex = Ar.Read<uint>();

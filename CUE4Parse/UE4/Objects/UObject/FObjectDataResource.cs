@@ -33,7 +33,7 @@ namespace CUE4Parse.UE4.Objects.UObject
 
         public FObjectDataResource(FAssetArchive Ar)
         {
-            Flags = (EObjectDataResourceFlags) Ar.Read<uint>();
+            Flags = (EObjectDataResourceFlags)Ar.Read<uint>();
             SerialOffset = Ar.Read<long>();
             DuplicateSerialOffset = Ar.Read<long>();
             SerialSize = Ar.Read<long>();

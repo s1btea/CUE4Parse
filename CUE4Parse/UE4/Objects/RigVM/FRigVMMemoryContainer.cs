@@ -21,7 +21,7 @@ public class FRigVMMemoryContainer
         ScriptStructPaths = Ar.ReadArray(Ar.ReadFString);
         TotalBytes = Ar.Read<ulong>();
 
-        object? view; 
+        object? view;
         foreach (var register in Registers)
         {
             if (register.ElementCount == 0 && !register.IsDynamic()) continue;
@@ -48,7 +48,7 @@ public class FRigVMMemoryContainer
                         ERigVMRegisterType.Struct or ERigVMRegisterType.String => Ar.ReadArray(Ar.ReadFString),
                         _ => null
                     };
-                    ((List<object>) view).Add(cView);
+                    ((List<object>)view).Add(cView);
                 }
             }
             register.View = view;

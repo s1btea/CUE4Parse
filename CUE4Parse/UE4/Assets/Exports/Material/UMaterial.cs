@@ -75,33 +75,33 @@ namespace CUE4Parse.UE4.Assets.Exports.Material
             switch (Ar.Owner)
             {
                 case IoPackage io:
-                {
-                    foreach (var import in io.ImportMap)
                     {
-                        var resolved = io.ResolveObjectIndex(import);
-                        if (resolved?.Class == null) continue;
+                        foreach (var import in io.ImportMap)
+                        {
+                            var resolved = io.ResolveObjectIndex(import);
+                            if (resolved?.Class == null) continue;
 
-                        if (!resolved.Class.Name.Text.StartsWith("Texture", StringComparison.OrdinalIgnoreCase) ||
-                            !resolved.TryLoad(out var tex) || tex is not UTexture texture) continue;
+                            if (!resolved.Class.Name.Text.StartsWith("Texture", StringComparison.OrdinalIgnoreCase) ||
+                                !resolved.TryLoad(out var tex) || tex is not UTexture texture) continue;
 
-                        _displayedReferencedTextures.Add(resolved);
-                        ReferencedTextures.Add(texture);
+                            _displayedReferencedTextures.Add(resolved);
+                            ReferencedTextures.Add(texture);
+                        }
+                        break;
                     }
-                    break;
-                }
                 case Package pak: // ue5?
-                {
-                    for (var i = 0; i < pak.ImportMap.Length; i++)
                     {
-                        if (!pak.ImportMap[i].ClassName.Text.StartsWith("Texture", StringComparison.OrdinalIgnoreCase)) continue;
-                        var resolved = pak.ResolvePackageIndex(new FPackageIndex(Ar, -i - 1));
-                        if (resolved?.Class == null || !resolved.TryLoad(out var tex) || tex is not UTexture texture) continue;
+                        for (var i = 0; i < pak.ImportMap.Length; i++)
+                        {
+                            if (!pak.ImportMap[i].ClassName.Text.StartsWith("Texture", StringComparison.OrdinalIgnoreCase)) continue;
+                            var resolved = pak.ResolvePackageIndex(new FPackageIndex(Ar, -i - 1));
+                            if (resolved?.Class == null || !resolved.TryLoad(out var tex) || tex is not UTexture texture) continue;
 
-                        _displayedReferencedTextures.Add(resolved);
-                        ReferencedTextures.Add(texture);
+                            _displayedReferencedTextures.Add(resolved);
+                            ReferencedTextures.Add(texture);
+                        }
+                        break;
                     }
-                    break;
-                }
             }
             _shouldDisplay = _displayedReferencedTextures.Count > 0;
         }

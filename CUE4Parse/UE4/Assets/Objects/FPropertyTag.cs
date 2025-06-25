@@ -38,12 +38,12 @@ public enum EPropertyTagFlags : byte
 [Flags]
 public enum EPropertyTagExtension : byte
 {
-    NoExtension					= 0x00,
-    ReserveForFutureUse			= 0x01, // Can be use to add a next group of extension
+    NoExtension = 0x00,
+    ReserveForFutureUse = 0x01, // Can be use to add a next group of extension
 
     ////////////////////////////////////////////////
     // First extension group
-    OverridableInformation		= 0x02,
+    OverridableInformation = 0x02,
 
     //
     // Add more extension for the first group here
@@ -113,7 +113,7 @@ public class FPropertyTag
             throw new ParserException($"Failed to read FPropertyTagType {TagData?.ToString() ?? PropertyType.Text} {Name.Text}", e);
         }
 
-        Size = (int) (Ar.Position - pos);
+        Size = (int)(Ar.Position - pos);
     }
 
     public FPropertyTag(FAssetArchive Ar, bool readData)
@@ -139,7 +139,7 @@ public class FPropertyTag
             TagData = new FPropertyTagData(typeName, Name.Text);
 
             Size = Ar.Read<int>();
-            PropertyTagFlags = (EPropertyTagFlags) Ar.ReadByte();
+            PropertyTagFlags = (EPropertyTagFlags)Ar.ReadByte();
             if (PropertyTagFlags.HasFlag(EPropertyTagFlags.BoolTrue)) TagData.Bool = true;
             ArrayIndex = PropertyTagFlags.HasFlag(EPropertyTagFlags.HasArrayIndex) ? Ar.Read<int>() : 0;
             HasPropertyGuid = PropertyTagFlags.HasFlag(EPropertyTagFlags.HasPropertyGuid);

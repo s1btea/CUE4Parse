@@ -7,7 +7,7 @@ namespace CUE4Parse_Conversion.Meshes.PSK
     public class CSkelMeshLod : CBaseMeshLod
     {
         public CSkelMeshVertex[] Verts;
-        
+
         public void AllocateVerts(int count)
         {
             Verts = new CSkelMeshVertex[count];
@@ -26,7 +26,7 @@ namespace CUE4Parse_Conversion.Meshes.PSK
             // BuildNormalsCommon(Verts, Indices);
             HasNormals = true;
         }
-        
+
         public void BuildTangents()
         {
             if (HasTangents) return;

@@ -86,7 +86,7 @@ namespace CUE4Parse.UE4.Assets.Exports.StaticMesh
                 if (FEditorObjectVersion.Get(Ar) >= FEditorObjectVersion.Type.RefactorMeshEditorMaterials)
                 {
                     // UE4.14+ - "Materials" are deprecated, added StaticMaterials
-                    StaticMaterials = bHasSpeedTreeWind ? GetOrDefault("StaticMaterials",  Array.Empty<FStaticMaterial>()) : Ar.ReadArray(() => new FStaticMaterial(Ar));
+                    StaticMaterials = bHasSpeedTreeWind ? GetOrDefault("StaticMaterials", Array.Empty<FStaticMaterial>()) : Ar.ReadArray(() => new FStaticMaterial(Ar));
 
                     Materials = new ResolvedObject[StaticMaterials.Length];
                     for (var i = 0; i < Materials.Length; i++)

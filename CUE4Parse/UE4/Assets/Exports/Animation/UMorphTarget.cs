@@ -21,7 +21,7 @@ public class FMorphTargetDelta
         PositionDelta = Ar.Read<FVector>();
         if (Ar.Ver < EUnrealEngineObjectUE4Version.MORPHTARGET_CPU_TANGENTZDELTA_FORMATCHANGE)
         {
-            TangentZDelta = (FVector) Ar.Read<FDeprecatedSerializedPackedNormal>();
+            TangentZDelta = (FVector)Ar.Read<FDeprecatedSerializedPackedNormal>();
         }
         else
         {

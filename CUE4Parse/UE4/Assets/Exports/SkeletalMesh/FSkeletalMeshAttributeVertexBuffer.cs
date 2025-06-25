@@ -40,7 +40,7 @@ namespace CUE4Parse.UE4.Assets.Exports.SkeletalMesh
         public FSkeletalMeshAttributeVertexBuffer(FArchive Ar)
         {
             ComponentCount = Ar.Read<int>();
-            PixelFormat = (EPixelFormat) Ar.Read<int>();
+            PixelFormat = (EPixelFormat)Ar.Read<int>();
             ComponentStride = Ar.Read<int>();
             ValueData = new FSkeletalMeshVertexAttributeData(Ar);
         }

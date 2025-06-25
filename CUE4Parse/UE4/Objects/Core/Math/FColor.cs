@@ -24,7 +24,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
 
         public string Hex => A is byte.MaxValue or byte.MinValue ? UnsafePrint.BytesToHex(R, G, B) : UnsafePrint.BytesToHex(A, R, G, B);
 
-        public FColor(byte b) : this(b,b, b,byte.MaxValue) { }
+        public FColor(byte b) : this(b, b, b, byte.MaxValue) { }
         public FColor(byte r, byte g, byte b) : this(r, g, b, byte.MaxValue) { }
         public FColor(byte r, byte g, byte b, byte a)
         {
@@ -42,7 +42,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
             Ar.Write(A);
         }
 
-        public static implicit operator Vector4(FColor color) => new (
+        public static implicit operator Vector4(FColor color) => new(
             Convert.ToSingle(color.R) / 255f, Convert.ToSingle(color.G) / 255f,
             Convert.ToSingle(color.B) / 255f, Convert.ToSingle(color.A) / 255f);
 
@@ -61,7 +61,7 @@ namespace CUE4Parse.UE4.Objects.Core.Math
             // matches exactly with :
             //  (int)( (Value16/65535.f) * 255.f + 0.5f );
             var value8 = (value16 * 255 + 32895) >> 16;
-            return (byte) value8;
+            return (byte)value8;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -56,6 +56,6 @@ namespace CUE4Parse.MappingsProvider.Usmap
         public override void ReadArray<T>(T[] array)
             => InnerArchive.ReadArray(array);
 
-        public override object Clone() => new FUsmapReader((FArchive) InnerArchive.Clone(), Version);
+        public override object Clone() => new FUsmapReader((FArchive)InnerArchive.Clone(), Version);
     }
 }

@@ -60,13 +60,13 @@ namespace CUE4Parse.UE4.IO.Objects
         public FIoChunkId(ulong chunkId, ushort chunkIndex, byte chunkType)
         {
             ChunkId = chunkId;
-            _chunkIndex = (ushort) ((chunkIndex & 0xFF) << 8 | (chunkIndex & 0xFF00) >> 8); // NETWORK_ORDER16
+            _chunkIndex = (ushort)((chunkIndex & 0xFF) << 8 | (chunkIndex & 0xFF00) >> 8); // NETWORK_ORDER16
             ChunkType = chunkType;
             _padding = 0;
         }
 
-        public FIoChunkId(ulong chunkId, ushort chunkIndex, EIoChunkType chunkType) : this(chunkId, chunkIndex, (byte) chunkType) { }
-        public FIoChunkId(ulong chunkId, ushort chunkIndex, EIoChunkType5 chunkType) : this(chunkId, chunkIndex, (byte) chunkType) { }
+        public FIoChunkId(ulong chunkId, ushort chunkIndex, EIoChunkType chunkType) : this(chunkId, chunkIndex, (byte)chunkType) { }
+        public FIoChunkId(ulong chunkId, ushort chunkIndex, EIoChunkType5 chunkType) : this(chunkId, chunkIndex, (byte)chunkType) { }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public FPackageId AsPackageId() => new(ChunkId);
@@ -76,10 +76,10 @@ namespace CUE4Parse.UE4.IO.Objects
             fixed (FIoChunkId* ptr = &this)
             {
                 var dataSize = sizeof(FIoChunkId);
-                var hash = seed != 0 ? (ulong) seed : 0xcbf29ce484222325;
+                var hash = seed != 0 ? (ulong)seed : 0xcbf29ce484222325;
                 for (var index = 0; index < dataSize; ++index)
                 {
-                    hash = (hash * 0x00000100000001B3) ^ ((byte*) ptr)[index];
+                    hash = (hash * 0x00000100000001B3) ^ ((byte*)ptr)[index];
                 }
                 return hash;
             }
@@ -101,7 +101,7 @@ namespace CUE4Parse.UE4.IO.Objects
                 var hash = 5381;
                 for (int i = 0; i < dataSize; ++i)
                 {
-                    hash = hash * 33 + ((byte*) ptr)[i];
+                    hash = hash * 33 + ((byte*)ptr)[i];
                 }
                 return hash;
             }

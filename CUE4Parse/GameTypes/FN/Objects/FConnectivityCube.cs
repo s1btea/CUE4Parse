@@ -20,7 +20,7 @@ namespace CUE4Parse.GameTypes.FN.Objects
     [JsonConverter(typeof(FConnectivityCubeConverter))]
     public class FConnectivityCube : IUStruct
     {
-        public readonly BitArray[] Faces = new BitArray[(int) EFortConnectivityCubeFace.MAX];
+        public readonly BitArray[] Faces = new BitArray[(int)EFortConnectivityCubeFace.MAX];
 
         public FConnectivityCube(FArchive Ar)
         {

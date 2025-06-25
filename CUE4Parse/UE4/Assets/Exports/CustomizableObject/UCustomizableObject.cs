@@ -12,7 +12,7 @@ public class UCustomizableObject : UObject
     public FCustomizableObjectMeshToMeshVertData[] ClothMeshToMeshVertData;
     public FCustomizableObjectClothingAssetData[] ContributingClothingAssetsData;
     public FCustomizableObjectClothConfigData[] ClothSharedConfigsData;
-    
+
     public override void Deserialize(FAssetArchive Ar, long validPos)
     {
         base.Deserialize(Ar, validPos);
