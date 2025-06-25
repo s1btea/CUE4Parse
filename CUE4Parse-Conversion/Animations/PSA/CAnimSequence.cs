@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using CUE4Parse.UE4.Assets.Exports.Animation;
 using CUE4Parse.UE4.Objects.Core.Math;
@@ -45,11 +45,15 @@ namespace CUE4Parse_Conversion.Animations.PSA
 
         public void RetargetTracks(USkeleton skeleton)
         {
+            var retargetBasePose = RetargetBasePose is not null;
             for (int skeletonBoneIndex = 0; skeletonBoneIndex < Tracks.Count; skeletonBoneIndex++)
             {
                 switch (skeleton.BoneTree[skeletonBoneIndex])
                 {
                     case EBoneTranslationRetargetingMode.Skeleton:
+                    {
+                        var targetTransform = retargetBasePose && skeletonBoneIndex < RetargetBasePose!.Length ? RetargetBasePose![skeletonBoneIndex] : skeleton.ReferenceSkeleton.FinalRefBonePose[skeletonBoneIndex];
+                        for (int i = 0; i < Tracks[skeletonBoneIndex].KeyPos.Length; i++)
                         {
                             var targetTransform = RetargetBasePose?[skeletonBoneIndex] ?? skeleton.ReferenceSkeleton.FinalRefBonePose[skeletonBoneIndex];
                             for (int i = 0; i < Tracks[skeletonBoneIndex].KeyPos.Length; i++)
@@ -58,7 +62,12 @@ namespace CUE4Parse_Conversion.Animations.PSA
                             }
                             break;
                         }
-                    case EBoneTranslationRetargetingMode.AnimationScaled:
+                        break;
+                    }
+                    case EBoneTranslationRetargetingMode.AnimationRelative:
+                    {
+                        var refPoseTransform = retargetBasePose && skeletonBoneIndex < RetargetBasePose!.Length ? RetargetBasePose![skeletonBoneIndex] : skeleton.ReferenceSkeleton.FinalRefBonePose[skeletonBoneIndex];
+                        for (int i = 0; i < Tracks[skeletonBoneIndex].KeyQuat.Length; i++)
                         {
                             for (int i = 0; i < Tracks[skeletonBoneIndex].KeyPos.Length; i++)
                             {

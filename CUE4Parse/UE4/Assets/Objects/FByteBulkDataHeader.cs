@@ -1,4 +1,5 @@
 using CUE4Parse.UE4.Assets.Readers;
+using CUE4Parse.UE4.IO.Objects;
 using CUE4Parse.UE4.Versions;
 using Newtonsoft.Json;
 using static CUE4Parse.UE4.Assets.Objects.EBulkDataFlags;
@@ -12,19 +13,23 @@ namespace CUE4Parse.UE4.Assets.Objects
         public readonly int ElementCount;
         public readonly uint SizeOnDisk;
         public readonly long OffsetInFile;
+        public readonly FBulkDataCookedIndex CookedIndex;
 
         public FByteBulkDataHeader(FAssetArchive Ar)
         {
+            CookedIndex = FBulkDataCookedIndex.Default;
+
             if (Ar.Owner is IoPackage { BulkDataMap.Length: > 0 } iopkg)
             {
                 var dataIndex = Ar.Read<int>();
                 if (dataIndex >= 0 && dataIndex < iopkg.BulkDataMap.Length)
                 {
                     var metaData = iopkg.BulkDataMap[dataIndex];
-                    BulkDataFlags = (EBulkDataFlags)metaData.Flags;
-                    ElementCount = (int)metaData.SerialSize;
-                    OffsetInFile = (long)metaData.SerialOffset;
-                    SizeOnDisk = (uint)metaData.SerialSize; // ??
+                    BulkDataFlags = (EBulkDataFlags) metaData.Flags;
+                    ElementCount = (int) metaData.SerialSize;
+                    SizeOnDisk = (uint) metaData.SerialSize; // ??
+                    OffsetInFile = (long) metaData.SerialOffset;
+                    CookedIndex = metaData.CookedIndex;
                     return;
                 }
                 Ar.Position -= 4;
@@ -39,7 +44,8 @@ namespace CUE4Parse.UE4.Assets.Objects
                     BulkDataFlags = (EBulkDataFlags)metaData.LegacyBulkDataFlags;
                     ElementCount = (int)metaData.RawSize;
                     OffsetInFile = metaData.SerialOffset;
-                    SizeOnDisk = (uint)metaData.SerialSize;
+                    SizeOnDisk = (uint) metaData.SerialSize;
+                    CookedIndex = metaData.CookedIndex;
                     return;
                 }
                 Ar.Position -= 4;

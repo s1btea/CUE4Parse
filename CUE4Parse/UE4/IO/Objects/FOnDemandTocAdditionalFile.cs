@@ -11,7 +11,7 @@ public class FOnDemandTocAdditionalFile
 
     public FOnDemandTocAdditionalFile(FArchive Ar)
     {
-        Hash = Ar.Read<FSHAHash>();
+        Hash = new FSHAHash(Ar);
         Filename = Ar.ReadFString();
         FileSize = Ar.Read<ulong>();
     }

@@ -13,7 +13,7 @@ namespace CUE4Parse.UE4.Objects.Core.i18N
         {
             LocalizedString = string.Empty;
             LocResName = Ar.Name;
-            SourceStringHash = 0;
+            SourceStringHash = Ar.Read<uint>();
             Priority = 0;
         }
     }

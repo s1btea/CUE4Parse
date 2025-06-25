@@ -19,18 +19,18 @@ public class UCustomizableObject : UObject
 
         var version = Ar.Read<int>();
 
-        // if (CurrentVersion == version)
-        {
-            ContributingMorphTargetsInfo = Ar.ReadArray<FMorphTargetInfo>();
-            MorphTargetReconstructionData = Ar.ReadArray<FMorphTargetVertexData>();
-        }
+        // // if (CurrentVersion == version)
+        // {
+        //     ContributingMorphTargetsInfo = Ar.ReadArray<FMorphTargetInfo>();
+        //     MorphTargetReconstructionData = Ar.ReadArray<FMorphTargetVertexData>();
+        // }
 
-        {
-            ClothMeshToMeshVertData = Ar.ReadBulkArray(() => new FCustomizableObjectMeshToMeshVertData(Ar));
-            ContributingClothingAssetsData = Ar.ReadArray(() => new FCustomizableObjectClothingAssetData(Ar));
-            ClothSharedConfigsData = Ar.ReadArray(() => new FCustomizableObjectClothConfigData(Ar));
-        }
+        // {
+        //     ClothMeshToMeshVertData = Ar.ReadBulkArray(() => new FCustomizableObjectMeshToMeshVertData(Ar));
+        //     ContributingClothingAssetsData = Ar.ReadArray(() => new FCustomizableObjectClothingAssetData(Ar));
+        //     ClothSharedConfigsData = Ar.ReadArray(() => new FCustomizableObjectClothConfigData(Ar));
+        // }
 
-        var model = new Model(Ar);
+        // var model = new Model(Ar);
     }
 }

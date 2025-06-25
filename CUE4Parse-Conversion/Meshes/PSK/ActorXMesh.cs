@@ -40,7 +40,7 @@ public class ActorXMesh
         ExportStaticMeshLods(lod, materialExports, sockets);
     }
 
-    public ActorXMesh(CSkelMeshLod lod, List<CSkelMeshBone> refSkeleton, List<MaterialExporter2>? materialExports, FPackageIndex[]? morphTargets, FPackageIndex[] sockets, int lodIndex, ExporterOptions options) : this(options)
+    public ActorXMesh(CSkelMeshLod lod, List<CSkelMeshBone> refSkeleton, List<MaterialExporter2>? materialExports, FPackageIndex[]? morphTargets,  FPackageIndex[] sockets, int lodIndex, ExporterOptions options) : this(options)
     {
         ExportSkeletalMeshLod(lod, refSkeleton, materialExports, morphTargets, sockets, lodIndex);
     }
@@ -226,7 +226,7 @@ public class ActorXMesh
                 materialName = tex.Name;
                 materialExports?.Add(new MaterialExporter2(tex, Options));
             }
-            else materialName = $"material_{i}";
+            else materialName = sections[i].MaterialName ?? $"material_{i}";
 
             new VMaterial(materialName, i, 0u, 0, 0u, 0, 0).Serialize(Ar);
         }

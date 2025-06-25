@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using CUE4Parse.UE4.Assets.Objects.Properties;
 using CUE4Parse.UE4.Assets.Readers;
 using CUE4Parse.UE4.Exceptions;
+using CUE4Parse.UE4.Versions;
 using Newtonsoft.Json;
 using Serilog;
 
@@ -19,11 +20,33 @@ public class UScriptSet
 
     public UScriptSet(FAssetArchive Ar, FPropertyTagData? tagData)
     {
+        if (Ar.Game == EGame.GAME_StateOfDecay2 && tagData is not null)
+        {
+            tagData.InnerType = tagData.Name switch
+            {
+                "AllEntityIds" or "SceneNameSet" => "NameProperty",
+                "TextVarSources" => "StrProperty",
+                _ => null
+            };
+        }
+
         var innerType = tagData?.InnerType ?? throw new ParserException(Ar, "UScriptSet needs inner type");
 
         if (tagData.InnerTypeData is null && !Ar.HasUnversionedProperties && innerType == "StructProperty")
         {
             if (tagData.Name is "AnimSequenceInstances" or "PostProcessInstances")
+            {
+                tagData.InnerTypeData = new FPropertyTagData("Guid");
+            }
+            if (Ar.Game == EGame.GAME_ThroneAndLiberty && tagData.Name is "ExcludeMeshes" or "IncludeMeshes")
+            {
+                tagData.InnerTypeData = new FPropertyTagData("SoftObjectPath");
+            }
+            if (Ar.Game == EGame.GAME_MetroAwakening && tagData.Name is "SoundscapePaletteCollection")
+            {
+                tagData.InnerTypeData = new FPropertyTagData("SoftObjectPath");
+            }
+            if (Ar.Game == EGame.GAME_Avowed && tagData.Name.EndsWith("IDs"))
             {
                 tagData.InnerTypeData = new FPropertyTagData("Guid");
             }

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CUE4Parse_Conversion.Animations.PSA;
 using CUE4Parse_Conversion.UEFormat;
 using CUE4Parse_Conversion.UEFormat.Structs;
+using CUE4Parse.UE4.Assets.Exports.Animation;
 using CUE4Parse.UE4.Objects.Core.Math;
 
 namespace CUE4Parse_Conversion.Animations.UEFormat;
@@ -14,8 +16,21 @@ public class UEAnim : UEFormatExport
     {
         var sequence = animSet.Sequences[sequenceIndex];
         var originalSequence = sequence.OriginalSequence;
-        Ar.Write(sequence.NumFrames);
-        Ar.Write(sequence.FramesPerSecond);
+
+        using (var metaDataChunk = new FDataChunk("METADATA", 1))
+        {
+            metaDataChunk.Write(sequence.NumFrames);
+            metaDataChunk.Write(sequence.FramesPerSecond);
+            
+            var referencePath = originalSequence.RefPoseSeq?.GetPathName() ?? string.Empty;
+            metaDataChunk.WriteFString(referencePath);
+            
+            metaDataChunk.Write((byte) originalSequence.AdditiveAnimType); // EAdditiveAnimationType
+            metaDataChunk.Write((byte) originalSequence.RefPoseType); // EAdditiveBasePoseType
+            metaDataChunk.Write(originalSequence.RefFrameIndex);
+            
+            metaDataChunk.Serialize(Ar);
+        }
 
         var refSkeleton = animSet.Skeleton.ReferenceSkeleton;
         using (var trackChunk = new FDataChunk("TRACKS", sequence.Tracks.Count))
@@ -39,14 +54,10 @@ public class UEAnim : UEFormatExport
                     var translation = boneTransform.Translation;
                     var rotation = boneTransform.Rotation;
                     var scale = boneTransform.Scale3D;
-                    if (sequence.OriginalSequence.FindTrackForBoneIndex(i) >= 0)
+                    if (originalSequence.FindTrackForBoneIndex(i) >= 0)
                     {
                         track.GetBoneTransform(frame, sequence.NumFrames, ref rotation, ref translation, ref scale);
                     }
-
-                    rotation.Y = -rotation.Y;
-                    rotation.W = -rotation.W;
-                    translation.Y = -translation.Y;
 
                     // dupe key reduction, could be better but it works for now
                     if (prevPos is null || prevPos != translation)
@@ -77,7 +88,7 @@ public class UEAnim : UEFormatExport
         }
 
         var floatCurves = originalSequence.CompressedCurveData.FloatCurves;
-        if (floatCurves is not null)
+        if (floatCurves is not null && floatCurves.Length > 0)
         {
             using var curveChunk = new FDataChunk("CURVES", floatCurves.Length);
 

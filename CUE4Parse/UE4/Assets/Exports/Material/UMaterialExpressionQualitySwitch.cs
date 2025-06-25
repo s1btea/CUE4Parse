@@ -8,7 +8,7 @@ namespace CUE4Parse.UE4.Assets.Exports.Material;
 
 public class UMaterialExpressionQualitySwitch : UMaterialExpression
 {
-    public readonly FExpressionInput[] Inputs = new FExpressionInput[(int)EMaterialQualityLevel.Num];
+    public List<FExpressionInput> Inputs = new((int) EMaterialQualityLevel.Num);
 
     public override void Deserialize(FAssetArchive Ar, long validPos)
     {
@@ -16,14 +16,12 @@ public class UMaterialExpressionQualitySwitch : UMaterialExpression
 
         var toRemove = new List<FPropertyTag>();
 
-        var i = 0;
         foreach (var property in Properties)
         {
             if (property.Tag?.GenericValue is FScriptStruct { StructType: FExpressionInput input } && property.Name.Text == "Inputs")
             {
-                Inputs[i] = input;
+                Inputs.Add(input);
                 toRemove.Add(property);
-                i++;
             }
         }
 
